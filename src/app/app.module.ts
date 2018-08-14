@@ -11,6 +11,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
 import { CarouselModule } from 'primeng/carousel';
 import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -109,6 +110,7 @@ import { BreadcrumbService } from './breadcrumb.service';
     BreadcrumbModule,
     ButtonModule,
     CalendarModule,
+    CardModule,
     CarouselModule,
     ChartModule,
     CheckboxModule,

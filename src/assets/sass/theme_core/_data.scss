@@ -16,10 +16,14 @@ body {
             padding: $paginatorElementPadding;
             margin: $paginatorElementMargin;
             vertical-align: top;
+            border-top: 8px solid transparent;
 
             &:not(.ui-state-disabled):not(.ui-state-active):hover {
                 background-color: $paginatorElementHoverBgColor;
                 color: $paginatorElementHoverIconColor;
+            }
+            &:focus {
+                outline: 0;
             }
         }
 
@@ -68,6 +72,7 @@ body {
             vertical-align: top;
             display: inline-block;
             padding: 0;
+            height: auto;
 
             .ui-paginator-page {
                 color: $paginatorIconColor;
@@ -80,8 +85,9 @@ body {
                 vertical-align: top;
 
                 &.ui-state-active {
-                    background-color: $highlightBgColor;
-                    color: $highlightColorText;
+                    background-color: $paginatorBgColor;
+                    color: $primaryColor;
+                    font-weight: 700;
                 }
 
                 &:not(.ui-state-active):hover {
@@ -96,14 +102,38 @@ body {
             height: $paginatorElementHeight;
             min-width: auto;
         }
+
+        &.ui-paginator-top {
+            .ui-paginator-pages {
+                padding: 0 0 0.286em 0;
+                .ui-paginator-page {
+                    border-top: 4px solid transparent;
+                    &.ui-state-active {
+                        border-top: 4px solid $primaryColor;
+                    }
+                }
+            }
+        }
+
+        &.ui-paginator-bottom {
+            .ui-paginator-pages {
+                padding:0.286em 0 0 0;
+                .ui-paginator-page {
+                    border-bottom: 4px solid transparent;
+                    &.ui-state-active {
+                        border-bottom: 4px solid $primaryColor;
+                    }
+                }
+            }
+        }
     }
 
     .ui-table {
         .ui-table-caption,
         .ui-table-summary {
-            background-color: $panelHeaderBgColor;
-            color: $panelHeaderTextColor;
-            border: $panelHeaderBorder;
+            background-color: $tableCaptionBgColor;
+            color: $tableCaptionTextColor;
+            border: $tableCaptionBorder;
             padding: $panelHeaderPadding;
             font-weight: $panelHeaderFontWeight;
             text-align: center;
@@ -111,6 +141,9 @@ body {
 
         .ui-table-caption {
             border-bottom: 0 none;
+            & + .ui-paginator-top {
+                border-top: 0 none;
+            }
         }
 
         .ui-table-summary {
@@ -123,6 +156,7 @@ body {
             font-weight: $tableHeaderCellFontWeight;
             color: $tableHeaderCellTextColor;
             background-color: $tableHeaderCellBgColor;
+            font-size: $fontSize + 2;
         }
 
         .ui-table-tbody > tr > td {
@@ -135,6 +169,7 @@ body {
             font-weight: $tableFooterCellFontWeight;
             color: $tableFooterCellTextColor;
             background-color: $tableFooterCellBgColor;
+            font-size: $fontSize + 2;
         }
 
         .ui-sortable-column {
@@ -320,7 +355,7 @@ body {
             border-top: 0 none;
         }
     }
-    
+
     .ui-dataview {
         .ui-dataview-header {
             background-color: $panelHeaderBgColor;
@@ -561,7 +596,7 @@ body {
         .ui-tree-container {
             padding: 0;
             margin: 0;
-        
+
             .ui-treenode {
                 padding: $treeNodePadding;
 
@@ -573,14 +608,14 @@ body {
                         display: inline-block;
                         float: none;
                         margin: 0 $treeNodeContentSpacing 0 0;
-                        color: $dataIconColor;
+                        color: $treeNodeIconColor;
                     }
 
                     .ui-treenode-icon {
                         vertical-align: middle;
                         display: inline-block;
                         margin: 0 $treeNodeContentSpacing 0 0;
-                        color: $dataIconColor;
+                        color: $treeNodeIconColor;
                     }
 
                     .ui-treenode-label {
@@ -590,8 +625,9 @@ body {
                         padding: $treeNodeLabelPadding;
 
                         &.ui-state-highlight {
-                            background-color: $highlightBgColor;
-                            color: $highlightColorText;
+                            background-color: transparent;
+                            color: $primaryColor;
+                            font-weight: 600;
                         }
                     }
 
@@ -599,14 +635,15 @@ body {
                         margin: 0 $inlineSpacing 0 0;
 
                         .ui-chkbox-icon {
+                            color: $treeNodeIconColor;
                             margin: 1px 0 0 0;
                         }
                     }
 
                     &.ui-treenode-selectable {
                         .ui-treenode-label:not(.ui-state-highlight):hover {
-                            background-color: $inputListItemHoverBgColor;
-                            color: $inputListItemHoverTextColor;
+                            background-color: transparent;
+                            color: $primaryColor;
                         }
                     }
 
@@ -623,7 +660,7 @@ body {
 
             .ui-treenode-droppoint {
                 &.ui-treenode-droppoint-active {
-                    background-color: $highlightBgColor;
+                    background-color: transparent;
                 }
             }
         }
@@ -675,7 +712,7 @@ body {
             &.ui-state-highlight {
                 background-color: $highlightBgColor;
                 color: $highlightColorText;
-                        
+
                 .ui-node-toggler {
                     i {
                         color: darken($highlightBgColor, 25%);

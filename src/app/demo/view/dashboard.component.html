@@ -523,12 +523,18 @@
         </div>
 
         <div class="ui-g-12 ui-md-12 ui-lg-6">
-            <p-panel styleClass="profile-details ui-g-12">
+            <div class="card profile-details ui-g-12"  style="padding: 0">
                 <img src="assets/layout/images/image-profile.png" alt="california-layout" />
-                <img src="assets/layout/images/profile-avatar.png" alt="california-layout" class="profile-avatar" />
-                <span class="profile-name">Pauline Harrell</span>
-                <span class="profile-role">Administrator</span>
-                <p-button type="button" label="Edit Profile" ></p-button>
+                <div class="ui-g-12" style="text-align: center">
+                    <img src="assets/layout/images/profile-avatar.png" alt="california-layout" class="profile-avatar" />
+                </div>
+                <div class="ui-g-12" style="text-align: center">
+                    <span class="profile-name">Pauline Harrell</span>
+                    <span class="profile-role">Administrator</span>
+                </div>
+                <div class="ui-g-12" style="text-align: center; margin-top: -50px">
+                    <p-button type="button" label="Edit Profile" ></p-button>
+                </div>
                 <div class="ui-g-12">
                     <div class="profile-statistics-panel ui-g-4">
                         <span class="profile-statistics">1098</span>
@@ -543,7 +549,7 @@
                         <span class="statistics-title">Following</span>
                     </div>
                 </div>
-            </p-panel>
+            </div>
         </div>
     </div>
 </div>

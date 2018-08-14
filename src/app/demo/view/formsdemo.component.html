@@ -11,7 +11,7 @@
                     <input type="text" pInputText placeholder="Email">
                 </div>
                 <div class="ui-g-12 ui-md-4">
-                    <input type="text" pInputText class="ui-ef" placeholder="Enhanced Focus">
+                    <input type="text" pInputText placeholder="Phone">
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <input type="text" pInputText placeholder="Disabled" disabled="disabled">
@@ -69,28 +69,22 @@
 
             <div class="ui-g form-group" style="margin-top:20px">
                 <div class="ui-g-12">
-                    <label for="popup">Popup:</label>
+                    <p-calendar placeholder="Popup" [showButtonBar]="true"></p-calendar>
                 </div>
                 <div class="ui-g-12">
-                    <p-calendar id="popup"></p-calendar>
+                    <p-calendar dateFormat="mm/dd/yy" showTime="true" placeholder="DateTime" [minDate]="yesterday"></p-calendar>
                 </div>
                 <div class="ui-g-12">
-                    <label for="datetime">DateTime:</label>
+                    <p-calendar showTime="true" [timeOnly]="true" placeholder="Time"></p-calendar>
                 </div>
                 <div class="ui-g-12">
-                    <p-calendar id="datetime" dateFormat="mm/dd/yy" showTime="true"></p-calendar>
+                    <p-calendar [showIcon]="true" placeholder="Button"></p-calendar>
                 </div>
                 <div class="ui-g-12">
-                    <label for="time">Time:</label>
+                    <p-calendar [numberOfMonths]="3" placeholder="Multiple Months"></p-calendar>
                 </div>
                 <div class="ui-g-12">
-                    <p-calendar id="time" showTime="true" [timeOnly]="true"></p-calendar>
-                </div>
-                <div class="ui-g-12">
-                    <label for="showIcon">Button:</label>
-                </div>
-                <div class="ui-g-12">
-                    <p-calendar id="showIcon" [showIcon]="true"></p-calendar>
+                    <p-calendar placeholder="Month Picker" dateFormat="mm/yy" view="month"></p-calendar>
                 </div>
             </div>
         </div>

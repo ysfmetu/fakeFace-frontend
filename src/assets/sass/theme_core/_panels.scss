@@ -64,9 +64,9 @@ body {
         .ui-fieldset-legend {
             a {
                 padding: $panelHeaderPadding;
-                border: $panelHeaderBorder;
-                color: $panelHeaderTextColor;
-                background-color: $panelHeaderBgColor;
+                border: $headerLightBorder;
+                background-color: $headerLightBgColor;
+                color: $headerLightTextColor;
                 @include transition($panelHeaderTransition);
 
                 .ui-fieldset-toggler {
@@ -74,9 +74,9 @@ body {
                     display: inline-block;
                     vertical-align: middle;
                     margin-right: .5em;
-                    color: $panelHeaderIconColor;
+                    color: $headerLightTextColor;
                 }
-    
+
                 .ui-fieldset-legend-text{
                     padding: 0;
                 }
@@ -90,7 +90,7 @@ body {
                         background-color: $panelHeaderHoverBgColor;
                         border: $panelHeaderHoverBorder;
                         color: $panelHeaderHoverTextColor;
-    
+
                         .ui-fieldset-toggler {
                             color: $panelHeaderHoverIconColor;
                         }
@@ -110,20 +110,19 @@ body {
 
             a {
                 padding: $panelHeaderPadding;
-                border: $panelHeaderBorder;
-                color: $panelHeaderTextColor;
-                background-color: $panelHeaderBgColor;
-                color: $panelHeaderTextColor;
+                border: $headerLightBorder;
+                color: $headerLightTextColor;
+                background-color: $headerLightBgColor;
                 font-weight: $panelHeaderFontWeight;
                 @include transition($panelHeaderTransition);
 
                 .ui-accordion-toggle-icon {
-                    color: $panelHeaderIconColor;
+                    color: $headerLightTextColor;
 
                     &.pi-caret-right {
                         @include icon_override("\e901");
                     }
-        
+
                     &.pi-caret-down {
                         @include icon_override("\e902");
                     }
@@ -142,14 +141,24 @@ body {
                 }
             }
 
+            :focus {
+                background-color: $headerLightHoverBgColor;
+                color: $headerLightTextColor;
+                outline: 0 none;
+            }
+
             &:not(.ui-state-disabled).ui-state-active {
                 a {
                     background-color: $panelHeaderActiveBgColor;
                     border: $panelHeaderActiveBorder;
                     color: $panelHeaderActiveTextColor;
-                    
+
                     .ui-accordion-toggle-icon {
                         color: $panelHeaderActiveIconColor;
+                    }
+
+                    &:focus {
+                        background-color: $primaryDarkColor;
                     }
                 }
 
@@ -158,7 +167,7 @@ body {
                         border: $panelHeaderActiveHoverBorder;
                         background-color: $panelHeaderActiveHoverBgColor;
                         color: $panelHeaderActiveHoverTextColor;
-                        
+
                         .ui-accordion-toggle-icon {
                             color: $panelHeaderActiveHoverIconColor;
                         }
@@ -169,10 +178,9 @@ body {
 
         .ui-accordion-content {
             padding: $panelContentPadding;
-            border: $panelContentBorder;
+            border: none;
             background-color: $panelContentBgColor;
             color: $panelContentTextColor;
-            padding: $panelContentPadding;
         }
     }
 
@@ -188,14 +196,15 @@ body {
                 background: $tabsNavBgColor;
 
                 li {
-                    border: $panelHeaderBorder;
-                    background-color: $panelHeaderBgColor;
+                    border: $headerLightBorder;
+                    top: 4px;
+                    //background-color: $headerLightBgColor;
                     @include transition($panelHeaderTransition);
 
                     a {
                         float: none;
                         display: inline-block;
-                        color: $panelHeaderTextColor;
+                        color: $headerLightTextColor;
                         padding: $panelHeaderPadding;
                         font-weight: $panelHeaderFontWeight;
 
@@ -215,39 +224,42 @@ body {
                     }
 
                     &:not(.ui-state-active):not(.ui-state-disabled):hover {
-                        background-color: $panelHeaderHoverBgColor;
-                        border: $panelHeaderHoverBorder;
-                        
+                        //background-color: $panelHeaderHoverBgColor;
+                        //border: $panelHeaderHoverBorder;
+
                         a {
-                            color: $panelHeaderHoverTextColor;
+                            color: $primaryColor;
                         }
 
                         .ui-tabview-close {
-                            color: $panelHeaderHoverTextColor;
+                            color: $primaryColor;
                         }
                     }
 
                     &.ui-state-active {
-                        background-color: $panelHeaderActiveBgColor;
-                        border: $panelHeaderActiveBorder;
+                        //border-bottom: none;
+                        top: 1px;
+                        border-top: 4px solid $primaryColor;
+                       // background-color: $panelHeaderActiveBgColor;
+                       // border: $panelHeaderActiveBorder;
 
                         a {
-                            color: $panelHeaderActiveTextColor;
+                            color: $primaryColor;
                         }
 
                         .ui-tabview-close {
-                            color: $panelHeaderActiveIconColor;
+                            color: $primaryColor;
                         }
 
                         &:hover {
-                            border: $panelHeaderActiveHoverBorder;
-                            background-color: $panelHeaderActiveHoverBgColor;
+                           // border: $panelHeaderActiveHoverBorder;
+                           // background-color: $panelHeaderActiveHoverBgColor;
 
                             a {
-                                color: $panelHeaderActiveHoverTextColor;
-                                
+                                color: $primaryColor;
+
                                 .ui-tabview-left-icon, .ui-tabview-right-icon{
-                                    color: $panelHeaderActiveHoverIconColor;
+                                    color: $primaryColor;
                                 }
                             }
                         }
@@ -300,7 +312,7 @@ body {
                     margin-bottom: $tabHeaderSpacing;
                 }
             }
-        }     
+        }
 
         .ui-tabview-panels {
             background-color: $panelContentBgColor;
@@ -315,9 +327,9 @@ body {
     }
 
     .ui-toolbar {
-        background-color: $panelHeaderBgColor;
-        border: $panelHeaderBorder;
-        padding: $panelHeaderPadding;
+        border: $headerLightBorder;
+        color: $headerLightTextColor;
+        background-color: $headerLightBgColor;
 
         button {
             vertical-align: middle;
@@ -325,7 +337,7 @@ body {
 
         .ui-toolbar-separator {
             vertical-align: middle;
-            color: $panelHeaderIconColor;
+            color: $headerLightTextColor;
             margin: 0 $inlineSpacing;
         }
     }
@@ -334,5 +346,5 @@ body {
         background-color: $panelContentBgColor;
         color: $panelContentTextColor;
         @include shadow($cardShadow);
-    } 
+    }
 }

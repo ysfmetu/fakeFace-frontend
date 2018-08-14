@@ -37,12 +37,6 @@ body {
                 border-color: $inputHoverBorderColor;
             }
 
-            &.ui-state-focus {
-                border-color: $checkboxFocusBorderColor;
-                background-color: $checkboxFocusBgColor;
-                color: $checkboxFocusTextColor;
-            }
-
             &.ui-state-active {
                 border-color: $checkboxActiveBorderColor;
                 background-color: $checkboxActiveBgColor;
@@ -59,6 +53,13 @@ body {
                     background-color: $checkboxActiveFocusBgColor;
                     color: $checkboxActiveFocusTextColor;
                 }
+            }
+
+            &.ui-state-focus {
+                border-color: $checkboxFocusBorderColor;
+                background-color: $checkboxFocusBgColor;
+                color: $checkboxFocusTextColor;
+                @include focused-input
             }
 
             .ui-chkbox-icon {
@@ -98,6 +99,7 @@ body {
                 border-color: $radiobuttonFocusBorderColor;
                 background-color: $radiobuttonFocusBgColor;
                 color: $radiobuttonFocusTextColor;
+                @include focused-input();
             }
 
             &.ui-state-active {
@@ -154,13 +156,15 @@ body {
             @include transition($inputSwitchTransition);
             border-radius: $inputSwitchBorderRadius;
             background: $inputSwitchSliderOffBgColor;
+            border: 1px solid $dividerColor;
 
             &:before {
                 background-color: $inputSwitchHandleOffBgColor;
+                border: 1px solid transparent;
                 height: 1.250em;
                 width: 1.250em;
-                left: .25em;
-                bottom: .25em;
+                left: 0;
+                bottom: .06em;
                 border-radius: 50%;
                 -webkit-transition: $transitionDuration;
                 transition: $transitionDuration;
@@ -177,7 +181,13 @@ body {
 
         &.ui-inputswitch-focus {
             .ui-inputswitch-slider {
-                background: $inputSwitchSliderOffFocusBgColor;   
+                background: $inputSwitchSliderOffFocusBgColor;
+                &:before {
+                    border: 1px solid $primaryColor;
+                    -webkit-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+                    -moz-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+                    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+                }
             }
         }
 
@@ -191,7 +201,7 @@ body {
             .ui-inputswitch-slider {
                 background-color: $inputSwitchSliderOnBgColor;
             }
-    
+
             &:not(.ui-state-disabled):hover {
                 .ui-inputswitch-slider {
                     background-color: $inputSwitchSliderOnHoverBgColor;
@@ -200,12 +210,12 @@ body {
 
             &.ui-inputswitch-focus {
                 .ui-inputswitch-slider {
-                    background: $inputSwitchSliderOnFocusBgColor;   
+                    background: $inputSwitchSliderOnFocusBgColor;
                 }
             }
         }
     }
-    
+
     .ui-autocomplete {
         .ui-autocomplete-dropdown {
             .ui-button-icon-left {
@@ -295,7 +305,7 @@ body {
                     width: calc(100% - #{$buttonIconOnlyWidth});
                 }
             }
-    
+
             &.ui-autocomplete-dd {
                 .ui-inputtext {
                     border-right: 0 none;
@@ -725,6 +735,10 @@ body {
 
             .ui-rating-icon {
                 font-size: $ratingIconFontSize;
+
+                &.pi.pi-star {
+                    color: $primaryColor;
+                }
             }
         }
 
@@ -732,9 +746,15 @@ body {
             a {
                 &:hover {
                     color: $ratingStarIconHoverColor;
+
+                    .ui-rating-icon {
+                        &.pi.pi-star {
+                            color: $ratingStarIconHoverColor;
+                        }
+                    }
                 }
 
-                &.ui-rating-cancel {    
+                &.ui-rating-cancel {
                     &:hover {
                         color: $ratingCancelHoverIconColor;
                     }
@@ -863,15 +883,18 @@ body {
         }
 
         .ui-datepicker-header {
-            padding: $inputListHeaderPaddingTop $inputListHeaderPaddingRight $inputListHeaderPaddingBottom $inputListHeaderPaddingLeft;
-            background-color: $inputListHeaderBgColor;
-            color: $inputListHeaderTextColor;
+            font-size: $fontSize + 2;
+            font-weight: bold;
+            line-height: 20;
+            padding:$calendarHeaderPadding;
+            background-color: $primaryColor;
+            color: $primaryTextColor;
             @include border-radius(0);
 
             .ui-datepicker-prev,
             .ui-datepicker-next {
                 cursor: pointer;
-                top: 0;
+                top: 0.143em;
                 color: $calendarNavIconColor;
                 @include transition($calendarNavIconTransition);
             }
@@ -909,6 +932,7 @@ body {
             }
 
             td {
+                padding: 0.1em;
                 > a, > span {
                     display: block;
                     text-align: center;
@@ -919,7 +943,7 @@ body {
 
                 > a {
                     cursor: pointer;
-                    
+
                     &.ui-state-active {
                         color: $calendarCellDateSelectedTextColor;
                         background-color: $calendarCellDateSelectedBgColor;
@@ -993,7 +1017,7 @@ body {
                 &:first-child {
                     padding-left: 0;
                 }
-    
+
                 &:last-child {
                     padding-right: 0;
                     border-right: 0 none;
@@ -1142,6 +1166,7 @@ body {
 
     /* Validations */
     .ui-inputtext.ng-dirty.ng-invalid,
+    .ui-inputtext.ui-state-error,
     p-dropdown.ng-dirty.ng-invalid > .ui-dropdown,
     p-autocomplete.ng-dirty.ng-invalid > .ui-autocomplete > .ui-inputtext,
     p-calendar.ng-dirty.ng-invalid > .ui-calendar > .ui-inputtext,

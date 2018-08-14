@@ -7,7 +7,7 @@ body {
         ul {
             li {
                 .ui-menuitem-link {
-                    color: $panelContentTextColor;
+                    color: $primaryColor;
                     margin: 0;
                 }
 
@@ -32,17 +32,17 @@ body {
 
     .ui-steps {
         position: relative;
-        
+
         .ui-steps-item {
             background-color: transparent;
             text-align: center;
-                        
+
             .ui-menuitem-link {
                 display: inline-block;
                 text-align: center;
                 background-color: transparent;
                 overflow: hidden;
-                
+
                 .ui-steps-number {
                     @include border-radius(50%);
                     display: inline-block;
@@ -58,26 +58,26 @@ body {
                     line-height: $stepsItemHeight - 4;
                     text-align: center;
                 }
-                
+
                 .ui-steps-title {
                     display: block;
                     margin-top: 6px;
                     color: $stepsItemTextColor;
                 }
             }
-                        
+
             &.ui-state-highlight {
                 .ui-steps-number {
                     background: $highlightBgColor;
                     color: $highlightColorText;
                 }
-                
-                .ui-steps-title { 
+
+                .ui-steps-title {
                     font-weight: 700;
                     color: $textColor;
                 }
             }
-            
+
             &:last-child {
                 .ui-menuitem-link {
                     display: block;
@@ -122,7 +122,7 @@ body {
             .ui-menuitem-text {
                 color: $menuitemHoverTextColor;
             }
-    
+
             .ui-menuitem-icon {
                 color: $menuitemHoverIconColor;
             }
@@ -136,6 +136,12 @@ body {
 
         .ui-menuitem {
             margin: $menuitemMargin;
+            .ui-menuitem-link {
+                border-left: 4px solid transparent;
+                &:hover {
+                    border-left: 4px solid $primaryColor;
+                }
+            }
         }
 
         &.ui-shadow {
@@ -167,6 +173,13 @@ body {
             > .ui-menuitem {
                 > .ui-menuitem-link {
                     padding: $menuitemPadding;
+                    border-top: 4px solid transparent;
+                    border-bottom: 4px solid transparent;
+                }
+                &.ui-menuitem-active {
+                    > .ui-menuitem-link {
+                        border-bottom: 4px solid $primaryColor;
+                    }
                 }
             }
         }
@@ -179,6 +192,17 @@ body {
 
             .ui-menuitem {
                 margin: $menuitemMargin;
+                .ui-menuitem-link {
+                    border-left: 4px solid transparent;
+                    &:hover {
+                        border-left: 4px solid $primaryColor;
+                    }
+                }
+                &.ui-menuitem-active {
+                    > .ui-menuitem-link {
+                        border-left: 4px solid $primaryColor;
+                    }
+                }
             }
 
             .ui-menu-separator {
@@ -189,7 +213,7 @@ body {
 
         .ui-menuitem {
             margin: $menuitemMargin;
-            
+
             &.ui-menuitem-active {
                 > .ui-menuitem-link {
                     background-color: $menuitemActiveBgColor;
@@ -197,8 +221,12 @@ body {
                     .ui-menuitem-text {
                         color: $menuitemActiveTextColor;
                     }
-            
+
                     .ui-menuitem-icon {
+                        color: $menuitemActiveIconColor;
+                    }
+
+                    .ui-submenu-icon {
                         color: $menuitemActiveIconColor;
                     }
                 }
@@ -223,6 +251,7 @@ body {
             margin: $menuitemMargin;
 
             .ui-menuitem-link {
+                border-left: 4px solid transparent;
                 .ui-submenu-icon {
                     right: 0.429em;
                 }
@@ -230,13 +259,18 @@ body {
 
             &.ui-menuitem-active {
                 > .ui-menuitem-link {
+                    border-left: 4px solid $primaryColor;
                     background-color: $menuitemActiveBgColor;
 
                     .ui-menuitem-text {
                         color: $menuitemActiveTextColor;
                     }
-            
+
                     .ui-menuitem-icon {
+                        color: $menuitemActiveIconColor;
+                    }
+
+                    .ui-submenu-icon {
                         color: $menuitemActiveIconColor;
                     }
                 }
@@ -265,6 +299,7 @@ body {
             margin: $menuitemMargin;
 
             .ui-menuitem-link {
+                border-left: 4px solid transparent;
                 .ui-submenu-icon {
                     right: 0.429em;
                 }
@@ -272,13 +307,18 @@ body {
 
             &.ui-menuitem-active {
                 > .ui-menuitem-link {
+                    border-left: 4px solid $primaryColor;
                     background-color: $menuitemActiveBgColor;
 
                     .ui-menuitem-text {
                         color: $menuitemActiveTextColor;
                     }
-            
+
                     .ui-menuitem-icon {
+                        color: $menuitemActiveIconColor;
+                    }
+
+                    .ui-submenu-icon {
                         color: $menuitemActiveIconColor;
                     }
                 }
@@ -306,20 +346,33 @@ body {
             margin: $menuitemMargin;
 
             .ui-menuitem-link {
+                border-left: 4px solid transparent;
                 .ui-submenu-icon {
                     right: 0.429em;
+                }
+                &:hover {
+                    border-left: 4px solid $primaryColor;
+
+                    .ui-submenu-icon {
+                        color: $menuitemActiveIconColor;
+                    }
                 }
             }
 
             &.ui-menuitem-active {
                 > .ui-menuitem-link {
+                    border-left: 4px solid $primaryColor;
                     background-color: $menuitemActiveBgColor;
 
                     .ui-menuitem-text {
                         color: $menuitemActiveTextColor;
                     }
-            
+
                     .ui-menuitem-icon {
+                        color: $menuitemActiveIconColor;
+                    }
+
+                    .ui-submenu-icon {
                         color: $menuitemActiveIconColor;
                     }
                 }
@@ -353,7 +406,7 @@ body {
             padding: 0;
             background: $tabsNavBgColor;
             border-bottom: $panelHeaderBorder;
-           
+
             .ui-tabmenuitem {
                 position: static;
                 border: $panelHeaderBorder;
@@ -433,7 +486,7 @@ body {
 
         .ui-menuitem {
             margin: $menuitemMargin;
-        
+
             .ui-menuitem-link {
                 .ui-submenu-icon {
                     right: 0.429em;
@@ -447,8 +500,12 @@ body {
                     .ui-menuitem-text {
                         color: $menuitemActiveTextColor;
                     }
-            
+
                     .ui-menuitem-icon {
+                        color: $menuitemActiveIconColor;
+                    }
+
+                    .ui-submenu-icon {
                         color: $menuitemActiveIconColor;
                     }
                 }
@@ -459,6 +516,7 @@ body {
             .ui-megamenu-root-list {
                 > .ui-menuitem {
                     > .ui-menuitem-link {
+                        border-left: 4px solid transparent;
                         > .ui-submenu-icon {
                             right: 0.429em;
                         }
@@ -492,22 +550,22 @@ body {
                     &.pi-caret-right {
                         @include icon_override("\e901");
                     }
-        
+
                     &.pi-caret-down {
                         @include icon_override("\e902");
                     }
                 }
             }
 
-            &:not(.ui-state-active) {                
+            &:not(.ui-state-active) {
                 > a:hover {
                     outline: 0 none;
-                    border: $panelHeaderHoverBorder;
-                    background-color: $panelHeaderHoverBgColor;
-                    color: $panelHeaderHoverTextColor;
+                    border: 1px solid $primaryDarkColor;
+                    background-color: $primaryDarkColor;
+                    color: $primaryTextColor;
 
                     .ui-panelmenu-icon {
-                        color: $panelHeaderHoverIconColor;
+                        color: $primaryTextColor;
                     }
                 }
             }
@@ -527,7 +585,7 @@ body {
                         border: $panelHeaderActiveHoverBorder;
                         background-color: $panelHeaderActiveHoverBgColor;
                         color: $panelHeaderActiveHoverTextColor;
-        
+
                         .ui-panelmenu-icon {
                             color: $panelHeaderActiveHoverIconColor;
                         }
@@ -558,17 +616,17 @@ body {
                 .ui-menuitem-link {
                     padding: $menuitemPadding;
                     color: $menuitemTextColor;
-    
+
                     &:hover {
                         background-color: $menuitemHoverBgColor;
- 
+
                         .ui-menuitem-icon, .ui-panelmenu-icon {
                             color: $menuitemHoverIconColor;
                         }
 
                         .ui-menuitem-text {
                             color: $menuitemHoverTextColor;
-                        }     
+                        }
                     }
                 }
             }
