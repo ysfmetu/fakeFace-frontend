@@ -12,7 +12,7 @@ export class AppComponent implements AfterViewInit {
 
   megaMenuMode = 'dark';
 
-  menuMode = 'gradient';
+  menuMode = 'light';
 
   profileMode = 'inline';
 
@@ -37,9 +37,9 @@ export class AppComponent implements AfterViewInit {
   rightPanelActive: boolean;
 
   rightPanelClick: boolean;
-  
+
   megaMenuActive: boolean;
-  
+
   megaMenuClick: boolean;
 
   @ViewChild('layoutMenuScroller') layoutMenuScrollerViewChild: ScrollPanel;
@@ -55,11 +55,11 @@ export class AppComponent implements AfterViewInit {
       this.activeTopbarItem = null;
       this.topbarMenuActive = false;
     }
-    
+
       if (!this.rightPanelClick) {
           this.rightPanelActive = false;
       }
-    
+
       if (!this.megaMenuClick) {
           this.megaMenuActive = false;
       }
@@ -118,23 +118,23 @@ export class AppComponent implements AfterViewInit {
   onTopbarSubItemClick(event) {
     event.preventDefault();
   }
-    
+
     onRightPanelButtonClick(event) {
         this.rightPanelClick = true;
         this.rightPanelActive = !this.rightPanelActive;
         event.preventDefault();
     }
-    
+
     onRightPanelClick() {
         this.rightPanelClick = true;
     }
-    
+
     onMegaMenuButtonClick(event) {
         this.megaMenuClick = true;
         this.megaMenuActive = !this.megaMenuActive;
         event.preventDefault();
     }
-    
+
     onMegaMenuClick() {
         this.megaMenuClick = true;
     }
