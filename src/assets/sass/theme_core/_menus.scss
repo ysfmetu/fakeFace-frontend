@@ -406,8 +406,8 @@ body {
 
         .ui-tabmenu-nav {
             padding: 0;
-            background: $tabsNavBgColor;
-            border: $tabsNavBorder;
+            background: $primaryColor;
+            border: 0 none;
 
             .ui-tabmenuitem {
                 position: static;

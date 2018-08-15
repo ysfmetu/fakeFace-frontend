@@ -198,7 +198,6 @@ body {
                 li {
                     border: $headerLightBorder;
                     top: 4px;
-                    //background-color: $headerLightBgColor;
                     @include transition($panelHeaderTransition);
 
                     a {
@@ -224,8 +223,6 @@ body {
                     }
 
                     &:not(.ui-state-active):not(.ui-state-disabled):hover {
-                        //background-color: $panelHeaderHoverBgColor;
-                        //border: $panelHeaderHoverBorder;
 
                         a {
                             color: $primaryColor;
@@ -237,11 +234,8 @@ body {
                     }
 
                     &.ui-state-active {
-                        //border-bottom: none;
                         top: 1px;
                         border-top: 4px solid $primaryColor;
-                       // background-color: $panelHeaderActiveBgColor;
-                       // border: $panelHeaderActiveBorder;
 
                         a {
                             color: $primaryColor;
@@ -252,8 +246,6 @@ body {
                         }
 
                         &:hover {
-                           // border: $panelHeaderActiveHoverBorder;
-                           // background-color: $panelHeaderActiveHoverBgColor;
 
                             a {
                                 color: $primaryColor;
