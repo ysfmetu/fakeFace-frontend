@@ -6,21 +6,19 @@
             <p>Angular 6 and PrimeNG 6</p>
 
             <h1>Dependencies</h1>
-            <p>Ecuador has no direct dependency other than PrimeNG. More information about dependencies is available at <a href="https://www.primefaces.org/why-primeng-templates/">Why PrimeNG Templates</a> article.</p>
+            <p>California has no direct dependency other than PrimeNG. More information about dependencies is available at <a href="https://www.primefaces.org/why-primeng-templates/">Why PrimeNG Templates</a> article.</p>
 
             <h1>Getting Started</h1>
-            <p>Ecuador is a true native application template for Angular and is distributed as a CLI project. In case CLI is not installed already, use
-                the command below to set it up.
-            </p>
+            <p>California is a true native application template for Angular and is distributed as a CLI project. In case CLI is not installed already, usethe command below to set it up.</p>
 
 <pre class="doc-command">
 npm install -g @angular/cli
 </pre>
 
-            <p>Once CLI is ready in your system, extract the contents of the Ecuador zip file distribution, cd to the directory,
+            <p>Once CLI is ready in your system, extract the contents of the California zip file distribution, cd to the directory,
             install the libraries from npm and then execute "ng serve" to run the application in your local environment.</p>
 <pre class="doc-command">
-cd ecuador
+cd california-ng
 npm install
 ng serve
 </pre>
@@ -44,40 +42,48 @@ Run 'ng help' for more options.
 </pre>
 
             <h1>Structure</h1>
-            <p>Ecuador consists of 3 main parts; the application layout, layout resources and theme resources for PrimeNG components. <i>app.component.html</i> inside app folder is the html template for the base layout,
+            <p>California consists of 3 main parts; the application layout, layout resources and theme resources for PrimeNG components. <i>app.component.html</i> inside app folder is the html template for the base layout,
                 required resources for the layout are placed inside the <i>src/assets/layout</i> folder and similarly theme resources are inside <i>src/assets/theme</i> folder.
             </p>
 
             <h1>Template</h1>
-            <p>Main layout is the html template of the app.component.ts, it is divided into a couple of sections such as topbar, sidebar and footer. Here is the code for
+            <p>Main layout is the html template of the app.component.ts, it is divided into a couple of sections such as topbar, megamenu, breadcrumb, sidebar and footer. Here is the code for
                 the main template. The component class app.component.ts implements the logic such as opening menus and managing layout modes.
             </p>
 <pre>
 <code class="language-markup" pCode>
-&lt;div class="layout-wrapper" [ngClass]="&#123;'layout-menu-horizontal': menuMode === 'horizontal',
-                                        'layout-menu-overlay': menuMode === 'overlay',
-                                        'layout-menu-static': menuMode === 'static',
-                                        'layout-menu-slim': menuMode === 'slim',
-                                        'layout-menu-light': lightMenu === true,
-                                        'layout-menu-overlay-active': overlayMenuActive,
-                                        'layout-menu-mobile-active': staticMenuMobileActive,
-                                        'layout-menu-static-inactive': staticMenuDesktopInactive&#125;" (click)="onLayoutClick()"&gt;
-    &lt;app-topbar&gt;&lt;/app-topbar&gt;
+&lt;div class="layout-wrapper" (click)="onLayoutClick()"
+    [ngClass]="&#123;'layout-wrapper-overlay-sidebar': isOverlay(),
+               'layout-wrapper-overlay-sidebar-active': overlayMenuActive,
+               'layout-wrapper-sidebar-inactive': staticMenuDesktopInactive,
+               'layout-wrapper-sidebar-mobile-active': staticMenuMobileActive&#125;">
+   &lt;app-topbar>&lt;/app-topbar>
 
-    &lt;app-rightpanel&gt;&lt;/app-rightpanel&gt;
+   &lt;app-megamenu>&lt;/app-megamenu>
 
-    &lt;app-menu [reset]="resetMenu"&gt;&lt;/app-menu&gt;
+   &lt;div class="layout-sidebar" (click)="onMenuClick($event)"
+        [ngClass]="&#123;'layout-sidebar-dark': menuMode !== 'light',
+        'layout-sidebar-gradient':  menuMode === 'gradient'&#125;">
+       &lt;p-scrollPanel #layoutMenuScroller [style]="&#123;height: '100%' &#125;">
+           &lt;div class="sidebar-scroll-content">
+               &lt;app-inline-profile *ngIf="profileMode=='inline'">&lt;/app-inline-profile>
+               &lt;app-menu [reset]="resetMenu">&lt;/app-menu>
+           &lt;/div>
+       &lt;/p-scrollPanel>
+   &lt;/div>
 
-    &lt;div class="layout-main"&gt;
-        &lt;app-breadcrumb&gt;&lt;/app-breadcrumb&gt;
+   &lt;app-rightpanel>&lt;/app-rightpanel>
 
-        &lt;div class="layout-content"&gt;
-            &lt;router-outlet&gt;&lt;/router-outlet&gt;
-        &lt;/div&gt;
+   &lt;div class="layout-main">
+       &lt;app-breadcrumb>&lt;/app-breadcrumb>
 
-        &lt;app-footer&gt;&lt;/app-footer&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+       &lt;div class="layout-main-content">
+           &lt;router-outlet>&lt;/router-outlet>
+       &lt;/div>
+
+       &lt;app-footer>&lt;/app-footer>
+   &lt;/div>
+&lt;/div>
 </code>
 </pre>
 
@@ -88,24 +94,23 @@ Run 'ng help' for more options.
 <div style="height:400px;overflow: auto;">
 <pre>
 <code class="language-javascript" pCode>
-import &#123;Component, Input,&#125; from '@angular/core';
+import &#123;Component, Input, OnInit&#125; from '@angular/core';
 import &#123;trigger, state, style, transition, animate&#125; from '@angular/animations';
-import &#123;Location&#125; from '@angular/common';
-import &#123;Router&#125; from '@angular/router';
-import &#123;MenuItem, ScrollPanel&#125; from 'primeng/primeng';
+import &#123;MenuItem&#125; from 'primeng/primeng';
 import &#123;AppComponent&#125; from './app.component';
 
 @Component(&#123;
     selector: 'app-menu',
-    templateUrl: './app.menu.component.html'
+    template: `
+        <ul app-submenu [item]="model" root="true" class="layout-menu"
+            [reset]="reset" visible="true" parentActive="true"></ul>
+    `
 &#125;)
-export class AppMenuComponent &#123;
+export class AppMenuComponent implements OnInit &#123;
 
     @Input() reset: boolean;
 
     model: any[];
-
-    @ViewChild('layoutMenuScroller') layoutMenuScrollerViewChild: ScrollPanel;
 
     constructor(public app: AppComponent) &#123;&#125;
 
@@ -113,147 +118,386 @@ export class AppMenuComponent &#123;
         this.model = [
             &#123;label: 'Dashboard', icon: 'fa fa-fw fa-home', routerLink: ['/']&#125;,
             &#123;
-                label: 'Menu Colors', icon: 'fa fa-fw fa-paint-brush',
+                label: 'Themes', icon: 'fa fa-fw fa-paint-brush', badge: '20',
                 items: [
-                    &#123;label: 'Light', icon: 'fa fa-fw fa-paint-brush', command: event => this.app.lightMenu = true &#125;,
-                    &#123;label: 'Dark', icon: 'fa fa-fw fa-paint-brush', command: event => this.app.lightMenu = false &#125;
-                ]
-            &#125;,
-            &#123;
-                label: 'Layouts', icon: 'fa fa-fw fa-cog',
-                items: [
-                    &#123;label: 'Static', icon: 'fa fa-fw fa-bars', command: event => this.app.menuMode = 'static' &#125;,
-                    &#123;label: 'Overlay', icon: 'fa fa-fw fa-bars', command: event => this.app.menuMode = 'overlay' &#125;,
-                    &#123;label: 'Slim', icon: 'fa fa-fw fa-bars', command: event => this.app.menuMode = 'slim' &#125;,
-                    &#123;label: 'Horizontal', icon: 'fa fa-fw fa-bars', command: event => this.app.menuMode = 'horizontal' &#125;
-                ]
-            &#125;,
-            &#123;
-                label: 'Themes', icon: 'fa fa-fw fa-paint-brush', badge: 15,
-                items: [
-                    &#123;label: 'Pink', icon: 'fa fa-fw fa-paint-brush',
+                    &#123;
+                        label: 'Solid',
+                        icon: 'fa fa-fw fa-paint-brush',
                         items: [
-                            &#123; label: 'Light', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('pink', 'light') &#125;,
-                            &#123; label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('pink', 'dark') &#125;
-                        ]&#125;,
-                    &#123;label: 'Indigo', icon: 'fa fa-fw fa-paint-brush',
-                        items: [
-                            &#123; label: 'Light', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('indigo', 'light') &#125;,
-                            &#123; label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('indigo', 'dark') &#125;
+                            &#123;
+                                label: 'Blue', icon: 'fa fa-fw fa-paint-brush',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('blue', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('blue', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('blue', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Cyan', icon: 'fa fa-fw fa-paint-brush',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('cyan', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('cyan', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('cyan', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Green', icon: 'fa fa-fw fa-paint-brush',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('green', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('green', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('green', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Yellow', icon: 'fa fa-fw fa-paint-brush',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('yellow', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('yellow', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('yellow', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Purple', icon: 'fa fa-fw fa-paint-brush',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('purple', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('purple', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('purple', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Pink', icon: 'fa fa-fw fa-paint-brush',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('pink', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('pink', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('pink', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Blue Grey', icon: 'fa fa-fw fa-paint-brush',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('bluegrey', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('bluegrey', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('bluegrey', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Teal', icon: 'fa fa-fw fa-paint-brush',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('teal', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('teal', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('teal', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Orange', icon: 'fa fa-fw fa-paint-brush',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('orange', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('orange', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('orange', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Grey', icon: 'fa fa-fw fa-paint-brush',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('grey', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('grey', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('grey', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;
                         ]
                     &#125;,
-                    &#123;label: 'Green', icon: 'fa fa-fw fa-paint-brush',
+                    &#123;
+                        label: 'Special',
+                        icon: 'fa fa-fw fa-paint-brush',
                         items: [
-                            &#123; label: 'Light', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('green', 'light') &#125;,
-                            &#123; label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('green', 'dark') &#125;
-                        ]
-                    &#125;,
-                    &#123;label: 'Amber', icon: 'fa fa-fw fa-paint-brush',
-                        items: [
-                            &#123; label: 'Light', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('amber', 'light') &#125;,
-                            &#123; label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('amber', 'dark') &#125;
-                        ]
-                    &#125;,
-                    &#123;label: 'Deep Purple', icon: 'fa fa-fw fa-paint-brush',
-                        items: [
-                            &#123; label: 'Light', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('deeppurple', 'light') &#125;,
-                            &#123; label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('deeppurple', 'dark') &#125;
-                        ]
-                    &#125;,
-                    &#123;label: 'Blue', icon: 'fa fa-fw fa-paint-brush',
-                        items: [
-                            &#123; label: 'Light', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('blue', 'light') &#125;,
-                            &#123; label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('blue', 'dark') &#125;
-                        ]
-                    &#125;,
-                    &#123;label: 'Dark Blue Grey', icon: 'fa fa-fw fa-paint-brush',
-                        items: [
-                            &#123; label: 'Light', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('darkblue', 'light') &#125;,
-                            &#123; label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('darkblue', 'dark') &#125;
-                        ]
-                    &#125;,
-                    &#123;label: 'Cyan', icon: 'fa fa-fw fa-paint-brush',
-                        items: [
-                            &#123; label: 'Light', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('cyan', 'light') &#125;,
-                            &#123; label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('cyan', 'dark') &#125;
-                        ]
-                    &#125;,
-                    &#123;label: 'Purple', icon: 'fa fa-fw fa-paint-brush',
-                        items: [
-                            &#123; label: 'Light', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('purple', 'light') &#125;,
-                            &#123; label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('purple', 'dark') &#125;
-                        ]
-                    &#125;,
-                    &#123;label: 'Deep Orange', icon: 'fa fa-fw fa-paint-brush',
-                        items: [
-                            &#123; label: 'Light', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('deeporange', 'light') &#125;,
-                            &#123; label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('deeporange', 'dark') &#125;
-                        ]
-                    &#125;,
-                    &#123;label: 'Lime', icon: 'fa fa-fw fa-paint-brush',
-                        items: [
-                            &#123; label: 'Light', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('lime', 'light') &#125;,
-                            &#123; label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('lime', 'dark') &#125;
-                        ]
-                    &#125;,
-                    &#123;label: 'Yellow', icon: 'fa fa-fw fa-paint-brush',
-                        items: [
-                            &#123; label: 'Light', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('yellow', 'light') &#125;,
-                            &#123; label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('yellow', 'dark') &#125;
-                        ]
-                    &#125;,
-                    &#123;label: 'Blue Grey', icon: 'fa fa-fw fa-paint-brush',
-                        items: [
-                            &#123; label: 'Light', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('bluegrey', 'light') &#125;,
-                            &#123; label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('bluegrey', 'dark') &#125;
-                        ]
-                    &#125;,
-                    &#123;label: 'Mojito', icon: 'fa fa-fw fa-paint-brush',
-                        items: [
-                            &#123; label: 'Light', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('mojito', 'light') &#125;,
-                            &#123; label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('mojito', 'dark') &#125;
-                        ]
-                    &#125;,
-                    &#123;label: 'Grey', icon: 'fa fa-fw fa-paint-brush',
-                        items: [
-                            &#123; label: 'Light', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('grey', 'light') &#125;,
-                            &#123; label: 'Dark', icon: 'fa fa-fw fa-paint-brush',
-                                command: (event) => this.changeTheme('grey', 'dark') &#125;
+                            &#123;
+                                label: 'Cappuccino', icon: 'fa fa-fw fa-picture-o',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('cappuccino', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('cappuccino', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('cappuccino', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Montreal', icon: 'fa fa-fw fa-picture-o',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('montreal', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('montreal', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('montreal', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Hollywood', icon: 'fa fa-fw fa-picture-o',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('hollywood', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('hollywood', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('hollywood', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Peak', icon: 'fa fa-fw fa-picture-o',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('peak', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('peak', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('peak', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Alive', icon: 'fa fa-fw fa-certificate',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('alive', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('alive', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('alive', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Emerald', icon: 'fa fa-fw fa-certificate',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('emerald', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('emerald', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('emerald', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Ash', icon: 'fa fa-fw fa-certificate',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('ash', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('ash', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('ash', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Noir', icon: 'fa fa-fw fa-certificate',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('noir', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('noir', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('noir', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Mantle', icon: 'fa fa-fw fa-certificate',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('mantle', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('mantle', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('mantle', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
+                            &#123;
+                                label: 'Predawn', icon: 'fa fa-fw fa-certificate',
+                                items: [
+                                    &#123;
+                                        label: 'Light', icon: 'fa fa-fw fa-square-o',
+                                        command: (event) => this.changeTheme('predawn', 'light')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Dark', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('predawn', 'dark')
+                                    &#125;,
+                                    &#123;
+                                        label: 'Gradient', icon: 'fa fa-fw fa-square',
+                                        command: (event) => this.changeTheme('predawn', 'gradient')
+                                    &#125;
+                                ]
+                            &#125;,
                         ]
                     &#125;
                 ]
             &#125;,
             &#123;
-                label: 'Components', icon: 'fa fa-fw fa-bars',
+                label: 'Menu Modes', icon: 'fa fa-fw fa-bars' ,
+                items: [
+                    &#123;label: 'Static Menu', icon: 'fa fa-fw fa-bars',  command: () => this.app.layoutMode = 'static'&#125;,
+                    &#123;label: 'Overlay Menu', icon: 'fa fa-fw fa-bars',  command: () => this.app.layoutMode = 'overlay'&#125;
+                ]
+            &#125;,
+            &#123;
+                label: 'Mega Menu', icon: 'fa fa-fw fa-bars' , badgeStyleClass: 'text-badge', badge: 'New',
+                items: [
+                    &#123;label: 'Light Menu', icon: 'fa fa-sun-o fa-fw',  command: () => this.app.megaMenuMode = 'light'&#125;,
+                    &#123;label: 'Dark Menu', icon: 'fa fa-moon-o fa-fw',  command: () => this.app.megaMenuMode = 'dark'&#125;,
+                    &#123;label: 'Gradient Menu', icon: 'fa fa-moon-o fa-fw',  command: () => this.app.megaMenuMode = 'gradient'&#125;
+                ]
+            &#125;,
+            &#123;
+                label: 'User Menu', icon: 'fa fa-fw fa-user' ,
+                items: [
+                    &#123;label: 'Inline Profile', icon: 'fa fa-sun-o fa-fw',  command: () => this.app.profileMode = 'inline'&#125;,
+                    &#123;label: 'Top Profile', icon: 'fa fa-moon-o fa-fw',  command: () => this.app.profileMode = 'top'&#125;
+                ]
+            &#125;,
+            &#123;
+                label: 'Components', icon: 'fa fa-fw fa-sitemap',
                 items: [
                     &#123;label: 'Sample Page', icon: 'fa fa-fw fa-columns', routerLink: ['/sample']&#125;,
                     &#123;label: 'Forms', icon: 'fa fa-fw fa-code', routerLink: ['/forms']&#125;,
@@ -267,20 +511,20 @@ export class AppMenuComponent &#123;
                     &#123;label: 'Misc', icon: 'fa fa-fw fa-user-secret', routerLink: ['/misc']&#125;
                 ]
             &#125;,
+            &#123;label: 'Landing', icon: 'fa fa-fw fa-certificate', url: 'assets/pages/landing.html', target: '_blank'&#125;,
             &#123;
-                label: 'Pages', icon: 'fa fa-fw fa-cube',
+                label: 'Template Pages', icon: 'fa fa-fw fa-life-saver',
                 items: [
                     &#123;label: 'Empty Page', icon: 'fa fa-fw fa-square-o', routerLink: ['/empty']&#125;,
-                    &#123;label: 'Landing Page', icon: 'fa fa-fw fa-globe', url: 'assets/pages/landing.html', target: '_blank'&#125;,
                     &#123;label: 'Login Page', icon: 'fa fa-fw fa-sign-in', url: 'assets/pages/login.html', target: '_blank'&#125;,
                     &#123;label: 'Error Page', icon: 'fa fa-fw fa-exclamation-circle', url: 'assets/pages/error.html', target: '_blank'&#125;,
                     &#123;label: '404 Page', icon: 'fa fa-fw fa-times', url: 'assets/pages/404.html', target: '_blank'&#125;,
-                    &#123;label: 'Access Denied', icon: 'fa fa-fw fa-exclamation-triangle',
+                    &#123;label: 'Access Denied Page', icon: 'fa fa-fw fa-exclamation-triangle',
                         url: 'assets/pages/access.html', target: '_blank'&#125;
                 ]
             &#125;,
             &#123;
-                label: 'Hierarchy', icon: 'fa fa-fw fa-sitemap',
+                label: 'Menu Hierarchy', icon: 'fa fa-fw fa-gg',
                 items: [
                     &#123;
                         label: 'Submenu 1', icon: 'fa fa-fw fa-sign-in',
@@ -324,22 +568,16 @@ export class AppMenuComponent &#123;
                     &#125;
                 ]
             &#125;,
-            &#123;
-                label: 'Documentation', icon: 'fa fa-fw fa-file-code-o', routerLink: ['/documentation']
-            &#125;,
-            &#123;
-                label: 'Buy Now', icon: 'fa fa-fw fa-credit-card-alt', url: ['https://www.primefaces.org/store']
-            &#125;
+            &#123;label: 'Documentation', icon: 'fa fa-fw fa-book', routerLink: ['/documentation']&#125;
         ];
     &#125;
-
 &#125;
 </code>
 </pre>
 </div>
 
             <h1>Integration with an Existing CLI Project</h1>
-            <p>To setup Ecuador in an existing project, follow the steps below;</p>
+            <p>To setup California in an existing project, follow the steps below;</p>
 
 <ul>
     <li>Copy the <i>src/assets</i> folder to your projects folder with the same name</li>
@@ -368,23 +606,24 @@ npm install primeicons@latest --save
             the fly by changing the path however if this is not a requirement, you may also add them to the styles configuration above so they go inside the bundle.</p>
 
             <h1>Theme</h1>
-            <p>Ecuador provides 30 PrimeNG themes out of the box where each theme provides 2 modes; light and dark, the main difference being the color scheme of the headers.
-                Setup of a theme is simple by including the css of theme to your bundle that are located inside assets/theme folder such as assets/theme/pink/theme-light.css.</p>
+            <p>California provides 20 PrimeNG themes out of the box.</p>
 
             <ul>
-                <li>amber</li>
+                <li>ash</li>
                 <li>blue</li>
                 <li>bluegrey</li>
+                <li>cappucino</li>
                 <li>cyan</li>
-                <li>darkblue</li>
-                <li>deeporange</li>
-                <li>deeppurple</li>
+                <li>emerald</li>
                 <li>green</li>
-                <li>gey</li>
-                <li>indigo</li>
-                <li>lime</li>
-                <li>mojito</li>
+                <li>hollywood</li>
+                <li>mantle</li>
+                <li>montreal</li>
+                <li>noir</li>
+                <li>orange</li>
+                <li>peak</li>
                 <li>pink</li>
+                <li>predawn</li>
                 <li>purple</li>
                 <li>yellow</li>
             </ul>
@@ -400,39 +639,16 @@ npm install primeicons@latest --save
             </ul>
 
             <p>Here are the variables required to create a theme.</p>
-<div style="height:400px;overflow: auto;">
 <pre>
 <code class="language-css" pCode>
-$primaryColor:#e02365;
-$primaryDarkerColor:#bf1c55;
-$primaryDarkestColor:#9d1645;
+$primaryColor:#0071bc;
+$primaryDarkColor:#205493;
+$primaryDarkerColor:#112e51;
 $primaryTextColor:#ffffff;
 
-$containerHeaderBgColor:#efefef;
-$containerHeaderBorder:1px solid #dedede;
-$containerHeaderTextColor:#333333;
-$containerHeaderIconColor:#6f6f6f;
-$containerHeaderIconHoverColor:#323232;
-
-$containerHeaderHoverBgColor:#d1d1d1;
-$containerHeaderHoverBorder:1px solid #d1d1d1;
-$containerHeaderHoverTextColor:#333333;
-$containerHeaderHoverIconColor:#333333;
-
-$containerHeaderActiveBgColor:$primaryColor;
-$containerHeaderActiveBorder:1px solid $primaryColor;
-$containerHeaderActiveTextColor:$primaryTextColor;
-$containerHeaderActiveIconColor:$primaryTextColor;
-
-$containerHeaderActiveHoverBgColor:$primaryDarkerColor;
-$containerHeaderActiveHoverHoverBorder:1px solid $primaryDarkerColor;
-$containerHeaderActiveHoverrTextColor:$primaryTextColor;
-$containerHeaderActiveHoverIconColor:$primaryTextColor;
-
-@import '../../sass/theme/_theme';
+@import '../sass/theme/_theme';
 </code>
 </pre>
-</div>
 
             <p> An example sass command to compile the css would be;</p>
 
@@ -458,18 +674,66 @@ sass -w src/assets/ --sourcemap=none
             <p>Here are the variables required to create a layout.</p>
 <pre>
 <code class="language-css" pCode>
-$primaryColor:#e02365;
-$primaryTextColor:#ffffff;
+$bodyBgColor:#f2f5fa;
+$topbarLeftBgColor:#122e51;
+$topbarRightBgColor:#122e51;
+$topbarIconHoverBgColor:rgba(255,255,255,.1);
+$topbarTextColor:#ffffff;
+$sidebarBorderColor:#d6d7d9;
+$footerBgColor:#122e51;
+$statsTopBorderColor:#205493;
+$teamContentHoverBorderColor:#205493;
 
-$topbarBgLeftColor:#e02365;
-$topbarBgRightColor:#db3c06;
-$topbarSidebarButtonColor:#ffffff;
-$topbarIconHoverBgColor:#A22650;
-$topbarMenuHoverBgColor:#C03213;
-$topbarProfileTextColor:#ffffff;
-$activeSubMenuItemTextColor:$primaryColor;
-$sidebarMenuItemActiveRouteTextColor:$primaryColor;
-$sidebarMenuItemActiveRouteIconColor:$primaryColor;
+$sidebarBgColor:#ffffff;
+$sidebarMenuitemTextColor:#212121;
+$sidebarMenuitemDividerColor:#e4e2e0;
+$sidebarMenuitemIconColor:#5b616a;
+$sidebarMenuitemHoverBgColor:#f1f1f1;
+$sidebarMenuitemActiveBorderLeftColor:#00a6d2;
+$sidebarMenuitemActiveTextColor:#00a6d2;
+$sidebarMenuitemActiveIconColor:#00a6d2;
+
+$darkSidebarBgColor:#122e51;
+$darkSidebarMenuitemTextColor:#ffffff;
+$darkSidebarMenuitemDividerColor:rgba(255,255,255,.075);
+$darkSidebarMenuitemIconColor:#ffffff;
+$darkSidebarMenuitemHoverBgColor:rgba(255,255,255,.1);
+$darkSidebarMenuItemHoverTextColor:#00a6d2;
+$darkSidebarMenuitemActiveBorderLeftColor:#00a6d2;
+$darkSidebarMenuitemActiveTextColor:#00a6d2;
+$darkSidebarMenuitemActiveIconColor:#00a6d2;
+
+$gradientSidebarTopBgColor:#122e51;
+$gradientSidebarBottomBgColor:#295b89;
+$gradientSidebarMenuitemTextColor:#ffffff;
+$gradientSidebarMenuitemDividerColor:rgba(255,255,255,.075);
+$gradientSidebarMenuitemIconColor:#ffffff;
+$gradientSidebarMenuitemHoverBgColor:rgba(255,255,255,.1);
+$gradientSidebarMenuItemHoverTextColor:#00a6d2;
+$gradientSidebarMenuitemActiveBorderLeftColor:#00a6d2;
+$gradientSidebarMenuitemActiveTextColor:#00a6d2;
+$gradientSidebarMenuitemActiveIconColor:#00a6d2;
+
+$megamenuButtonTextColor:#ffffff;
+$megamenuBgColor:#ffffff;
+$megamenuBorderColor:#d6d7d9;
+$megamenuTextColor:#5b616a;
+$megamenuHeaderColor:#205493;
+$megamenuIconColor:#5b616a;
+$megamenuHoverBgColor:#f1f1f1;
+$megamenuActiveTextColor:#00a6d2;
+$megamenuMobileBgColor:#294262;
+$megamenuMobileHoverBgColor:#35557e;
+
+$darkMegamenuBgColor:#122e51;
+$darkMegamenuTextColor:#ffffff;
+$darkMegamenuHeaderShadowColor:#000000;
+$darkMegamenuIconColor:#ffffff;
+$darkMegamenuHoverBgColor:rgba(255,255,255,.1);
+$darkMegamenuHoverTextColor:#00bfe7;
+
+$gradientMegamenuTopBgColor:#122e51;
+$gradientMegamenuBottomBgColor:#295b89;
 
 @import '../../sass/layout/_layout';
 </code>
@@ -481,62 +745,31 @@ $sidebarMenuItemActiveRouteIconColor:$primaryColor;
 <h3>sass/_variables.scss</h3>
 <pre>
 <code class="language-css" pCode>
-$fontFamily:'Montserrat',sans-serif;
-$fontSize:13px;
-$textColor:#333333;
-$textSecondaryColor:lighten($textColor,25%);
-$borderRadius:0px;
-$transitionDuration:.3s;
+$fontFamily:"Source Sans Pro",Arial,sans-serif;
+$fontSize:14px;
+$borderRadius:0;
+$dividerColor:#d6d7d9;
+$textColor:#212121;
+$textSecondaryColor:#aeb0b5;
+$transitionDuration:.2s;
+$mobileBreakPoint:1024px;
 </code>
 </pre>
 
 <h3>sass/layout/_variables</h3>
 <pre>
 <code class="language-css" pCode>
-@import '../_variables';
+@import '../variables';
 
-//main
-$bodyBgColor:#fdfdfd;
+/*Badge*/
+$badgeBgColor:#4aa564;
+$badgeTextColor:#ffffff;
 
-//menu
-$darkMenuTitleTextColor:#656565;
-$darkMenuTitleBorderBottomColor:#383838;
-$darkMenuBgColor:#050505;
-$darkMenuItemTextColor:#BBBBBB;
-$darkMenuItemIconColor:#BBBBBB;
-$darkMenuSubmenuBgColor:#1d1d1d;
-
-$lightMenuTitleTextColor:#828282;
-$lightMenuTitleBorderBottomColor:#9b9b9b;
-$lightMenuBgColor:#ffffff;
-$lightMenuItemTextColor:#333333;
-$lightMenuItemIconColor:#828282;
-$lightMenuSubmenuBgColor:#efefef;
-
-$badgeTextColor:$primaryTextColor;
-$badgeBgColor:$primaryColor;
-
-//route bar
-$routeBarBgColor:#EFEFEF;
-$routeBarMenuItemTextColor:#828282;
-$routeBarMenuItemIconColor:#828282;
-
-//slim menu tooltip
-$slimMenuTooltipBgColor:#1B1B1B;
-$slimMenuTooltipTextColor:#BBBBBB;
-
-//footer
-$footerBgColor:#F3F3F3;
-$footerTextColor:#1F1F1F;
-
-//right panel
-$rightPanelButtonBgColor:#050505;
-$rightPanelButtonIconColor:#BBBBBB;
-$rightPanelBgColor:#050505;
-$rightPanelHeaderBgColor:#323232;
-$rightPanelHeaderTextColor:#ffffff;
-$rightPanelContentBgColor:#323232;
-$rightPanelContentTextColor:#ffffff;
+/* RouteBar */
+$routeBarBgColor:#ffffff;
+$routeBarBorderColor:#d6d7d9;
+$routeBarIconColor:#5b616a;
+$routeBarIconHoverBgColor:#f1f1f1;
 </code>
 </pre>
 
@@ -544,144 +777,146 @@ $rightPanelContentTextColor:#ffffff;
 <div style="height:400px;overflow: auto;">
 <pre>
 <code class="language-css" pCode>
-@import '../_variables';
+@import '../variables';
 
-//anchor
+// header (accordion, tabview field ...)
+$headerLightBgColor:#f1f1f1;
+$headerLightTextColor:#212121;
+$headerLightHoverBgColor:#d6d7d9;
+$headerLightBorder:1px solid #d6d7d9;
+
+//icons
+$primeIconFontSize:1em;
+
+//anchors
 $linkColor:$primaryColor;
-$linkHoverColor:$primaryDarkerColor;
-$linkActiveColor:$primaryDarkestColor;
+$linkHoverColor:$primaryDarkColor;
+$linkActiveColor:$primaryDarkerColor;
 
 //highlight
 $highlightBgColor:$primaryColor;
 $highlightColorText:$primaryTextColor;
 
-//input field
-$inputPadding:.429em;
+//input field (e.g. inputtext, spinner, inputmask)
+$inputPadding:0.286em;
 $inputBgColor:#ffffff;
-$inputBorder:1px solid #c4c4c4;
-$inputHoverBorderColor:#7f7f7f;
-$inputFocusBorderColor:#7f7f7f;
-$inputErrorBorderColor:#a80000;
-$inputPlaceholderTextColor:#666666;
-$inputFocusShadow:0 0 6px 0 rgba(0, 0, 0, 0.16);
+$inputBorder:1px solid #aeb0b5;
+$inputHoverBorderColor:#5b616b;
+$inputFocusBorderColor:#0071bc;
+$inputFocusShadow:0 0 5px rgba(0,112,210,.35);
+$inputErrorBorder:1px solid #cd2026;
+$inputPlaceholderTextColor:#8c8c8c;
 $inputTransition:border-color $transitionDuration,box-shadow $transitionDuration;
 
-//groups
-$inputGroupBorderColor:#c4c4c4;
-$inputGroupBgColor:#f4f4f4;
+//input groups
+$inputGroupBorderColor:#aeb0b5;
+$inputGroupBgColor:#ffffff;
 $inputGroupTextColor:$textColor;
 
-//input lists
+//input lists (e.g. dropdown, autocomplete, multiselect, orderlist)
 $inputListMinWidth:12em;
 $inputListBgColor:#ffffff;
 $inputListPadding:0;
-
-$inputListItemPadding:0.429em 0.857em;
+$inputListItemPadding:0.286em 0.571em;
 $inputListItemBgColor:transparent;
-$inputListItemTextColor:#333333;
-$inputListItemHoverBgColor:#eaeaea;
-$inputListItemHoverTextColor:#333333;
+$inputListItemTextColor:#212121;
+$inputListItemHoverBgColor:#f1f1f1;
+$inputListItemHoverTextColor:#212121;
 $inputListItemHighlightBgColor:$highlightBgColor;
 $inputListItemHighlightTextColor:$highlightColorText;
 $inputListItemBorder:0 none;
 $inputListItemMargin:0;
-$inputListItemDividerColor:#d8dae2;
-
+$inputListItemDividerColor:#d6d7d9;
 $inputListHeaderPaddingTop:0.429em;
 $inputListHeaderPaddingLeft:0.857em;
 $inputListHeaderPaddingRight:0.857em;
 $inputListHeaderPaddingBottom:0.429em;
-$inputListHeaderBgColor:#ffffff;
-$inputListHeaderTextColor:$textColor;
-$inputListHeaderBorder:1px solid #eaeaea;
 $inputListHeaderMargin:0;
-
-$inputListHeaderSearchIconColor:$primaryColor;
+$inputListHeaderBgColor:#e4e2e0;
+$inputListHeaderTextColor:$textColor;
+$inputListHeaderBorder:none;
+$inputListHeaderSearchIconColor:$textColor;
 $inputListHeaderCloseIconColor:$textColor;
 $inputListHeaderCloseIconHoverColor:$primaryColor;
 $inputListHeaderCloseIconTransition:color $transitionDuration;
 
 //inputs with panels (e.g. password)
-$inputContentPanelPadding:.857em;
+$inputContentPanelPadding:12px;
 $inputContentPanelBgColor:#ffffff;
 $inputContentPanelTextColor:$textColor;
 
-//inputs with overlays
-$inputOverlayBorder:1px solid #dedede;
-$inputOverlayShadow:0 2px 4px 0 rgba(0, 0, 0, 0.10);
+//inputs with overlays (e.g. autocomplete, dropdown, multiselect)
+$inputOverlayBorder:1px solid #d6d7d9;
+$inputOverlayShadow:0 4px 6px 0 rgba(0, 0, 0, 0.15);
 
-//input dropdowns
+//input dropdowns (e.g. multiselect, dropdown)
 $inputDropdownIconColor:$textColor;
 
 //button
-$buttonTextOnlyPadding:0.429em 1em;
-$buttonWithLeftIconPadding:0.429em 1em 0.429em 2em;
-$buttonWithRightIconPadding:0.429em 2em 0.429em 1em;
-$buttonIconOnlyPadding:0.429em;
+$buttonTextOnlyPadding:0.286em 0.857em;
+$buttonWithLeftIconPadding:0.286em 0.857em 0.286em 2em;
+$buttonWithRightIconPadding:0.286em 2em 0.286em 0.857em;
+$buttonIconOnlyPadding:0.286em;
 $buttonIconOnlyWidth:2.143em;
-
 $buttonBgColor:$primaryColor;
 $buttonBorder:1px solid $primaryColor;
 $buttonTextColor:$primaryTextColor;
-
-$buttonHoverBgColor:$primaryDarkerColor;
+$buttonHoverBgColor:$primaryDarkColor;
 $buttonHoverTextColor:$primaryTextColor;
-$buttonHoverBorderColor:$primaryDarkerColor;
-
-$buttonActiveBgColor:$primaryDarkestColor;
+$buttonHoverBorderColor:$primaryDarkColor;
+$buttonActiveBgColor:$primaryDarkerColor;
 $buttonActiveTextColor:$primaryTextColor;
-$buttonActiveBorderColor:$primaryDarkestColor;
-
-$buttonFocusOutline:1px solid $primaryColor;
-$buttonFocusOutlineOffset:1px;
-$buttonFocusBorderColor:$primaryColor;
+$buttonActiveBorderColor:$primaryDarkerColor;
+$buttonFocusBorderColor:$primaryDarkerColor;
+$buttonFocusOutline:0 none;
+$buttonFocusOutlineOffset:0px;
 $buttonTransition:background-color $transitionDuration;
-$raisedButtonShadow:0 2px 4px 0 rgba(0, 0, 0, 0.10);
-$roundedButtonBorderRadius:1em;
+$raisedButtonShadow:0 2px 3px 0 rgba(0, 0, 0, 0.15);
+$roundedButtonBorderRadius:15px;
 
-$secondaryButtonBgColor:#f3f3f3;
-$secondaryButtonBorder:1px solid #f3f3f3;
+$secondaryButtonBgColor:#f4f4f4;
+$secondaryButtonBorder:1px solid #f4f4f4;
 $secondaryButtonTextColor:#333333;
-$secondaryButtonHoverBgColor:#d1d1d1;
-$secondaryButtonHoverTextColor:#212121;
-$secondaryButtonHoverBorderColor:#d1d1d1;
-$secondaryButtonActiveBgColor:$primaryColor;
-$secondaryButtonActiveTextColor:#ffffff;
-$secondaryButtonActiveBorderColor:$primaryColor;
+$secondaryButtonHoverBgColor:#c8c8c8;
+$secondaryButtonHoverTextColor:#333333;
+$secondaryButtonHoverBorderColor:#c8c8c8;
+$secondaryButtonActiveBgColor:#a0a0a0;
+$secondaryButtonActiveTextColor:#333333;
+$secondaryButtonActiveBorderColor:#a0a0a0;
 
-$warningButtonBgColor:#ffba01;
-$warningButtonTextColor:#333333;
-$warningButtonBorder:1px solid #ffba01;
-$warningButtonHoverBgColor:#ED990B;
-$warningButtonHoverTextColor:#333333;
-$warningButtonHoverBorderColor:#ED990B;
-$warningButtonActiveBgColor:#D38B10;
-$warningButtonActiveTextColor:#333333;
-$warningButtonActiveBorderColor:#D38B10;
-
-$successButtonBgColor:#34A835;
-$successButtonTextColor:#ffffff;
-$successButtonBorder:1px solid #34A835;
-$successButtonHoverBgColor:#107D11;
-$successButtonHoverTextColor:#ffffff;
-$successButtonHoverBorderColor:#107D11;
-$successButtonActiveBgColor:#0C6B0D;
-$successButtonActiveTextColor:#ffffff;
-$successButtonActiveBorderColor:#0C6B0D;
-
-$infoButtonBgColor:#007ad9;
+$infoButtonBgColor:#0071bc;
+$infoButtonBorder:1px solid #0071bc;
 $infoButtonTextColor:#ffffff;
-$infoButtonBorder:1px solid #007ad9;
-$infoButtonHoverBgColor:#116fbf;
+$infoButtonHoverBgColor:#205493;
 $infoButtonHoverTextColor:#ffffff;
-$infoButtonHoverBorderColor:#116fbf;
-$infoButtonActiveBgColor:#005b9f;
+$infoButtonHoverBorderColor:#205493;
+$infoButtonActiveBgColor:#122e51;
 $infoButtonActiveTextColor:#ffffff;
-$infoButtonActiveBorderColor:#005b9f;
+$infoButtonActiveBorderColor:#122e51;
+
+$successButtonBgColor:#4AA564;
+$successButtonBorder:1px solid #4AA564;
+$successButtonTextColor:#ffffff;
+$successButtonHoverBgColor:#378D4F;
+$successButtonHoverTextColor:#ffffff;
+$successButtonHoverBorderColor:#378D4F;
+$successButtonActiveBgColor:#1D6833;
+$successButtonActiveTextColor:#ffffff;
+$successButtonActiveBorderColor:#1D6833;
+
+$warningButtonBgColor:#F9C642;
+$warningButtonBorder:1px solid #F9C642;
+$warningButtonTextColor:#ffffff;
+$warningButtonHoverBgColor:#FDB81E;
+$warningButtonHoverTextColor:#ffffff;
+$warningButtonHoverBorderColor:#FDB81E;
+$warningButtonActiveBgColor:#EAA200;
+$warningButtonActiveTextColor:#ffffff;
+$warningButtonActiveBorderColor:#EAA200;
 
 $dangerButtonBgColor:#e91224;
-$dangerButtonTextColor:#ffffff;
 $dangerButtonBorder:1px solid #e91224;
+$dangerButtonTextColor:#ffffff;
 $dangerButtonHoverBgColor:#c01120;
 $dangerButtonHoverTextColor:#ffffff;
 $dangerButtonHoverBorderColor:#c01120;
@@ -694,13 +929,13 @@ $checkboxWidth:20px;
 $checkboxHeight:20px;
 $checkboxActiveBorderColor:$primaryColor;
 $checkboxActiveBgColor:$primaryColor;
-$checkboxActiveHoverBgColor:$primaryDarkestColor;
 $checkboxActiveTextColor:$primaryTextColor;
+$checkboxActiveHoverBgColor:$primaryColor;
 $checkboxActiveHoverTextColor:$primaryTextColor;
-$checkboxActiveHoverBorderColor:$primaryDarkestColor;
-$checkboxActiveFocusBgColor:$primaryDarkerColor;
+$checkboxActiveHoverBorderColor:$primaryColor;
+$checkboxActiveFocusBgColor:$primaryColor;
 $checkboxActiveFocusTextColor:$primaryTextColor;
-$checkboxActiveFocusBorderColor:$primaryDarkerColor;
+$checkboxActiveFocusBorderColor:$primaryColor;
 $checkboxFocusBgColor:$inputBgColor;
 $checkboxFocusTextColor:$primaryColor;
 $checkboxFocusBorderColor:$primaryColor;
@@ -710,340 +945,357 @@ $checkboxTransition:background-color $transitionDuration, border-color $transiti
 $radiobuttonWidth:20px;
 $radiobuttonHeight:20px;
 $radiobuttonActiveBorderColor:$primaryColor;
-$radiobuttonActiveBgColor:$primaryColor;
-$radiobuttonActiveTextColor:$primaryTextColor;
-$radiobuttonActiveHoverBgColor:$primaryDarkestColor;
-$radiobuttonActiveHoverTextColor:$primaryTextColor;
-$radiobuttonActiveHoverBorderColor:$primaryDarkestColor;
-$radiobuttonActiveFocusBgColor:$primaryDarkerColor;
-$radiobuttonActiveFocusTextColor:$primaryTextColor;
-$radiobuttonActiveFocusBorderColor:$primaryDarkerColor;
+$radiobuttonActiveBgColor:$primaryTextColor;
+$radiobuttonActiveTextColor:$primaryColor;
+$radiobuttonActiveHoverBgColor:$primaryTextColor;
+$radiobuttonActiveHoverTextColor:$primaryColor;
+$radiobuttonActiveHoverBorderColor:$primaryColor;
+$radiobuttonActiveFocusBgColor:$primaryTextColor;
+$radiobuttonActiveFocusTextColor:$primaryColor;
+$radiobuttonActiveFocusBorderColor:$primaryColor;
 $radiobuttonFocusBgColor:$inputBgColor;
 $radiobuttonFocusTextColor:$primaryColor;
 $radiobuttonFocusBorderColor:$primaryColor;
 $radiobuttonTransition:background-color $transitionDuration, border-color $transitionDuration;
 
 //togglebutton
-$toggleButtonBgColor:#d1d1d1;
-$toggleButtonBorder:1px solid #d1d1d1;
-$toggleButtonTextColor:#333333;
-$toggleButtonIconColor:#666666;
-$toggleButtonHoverBgColor:#c8c8c8;
-$toggleButtonHoverBorderColor:#c8c8c8;
-$toggleButtonHoverTextColor:#333333;
-$toggleButtonHoverIconColor:#212121;
-$toggleButtonActiveBgColor:$primaryColor;
-$toggleButtonActiveBorderColor:$primaryColor;
-$toggleButtonActiveTextColor:#ffffff;
-$toggleButtonActiveIconColor:#ffffff;
-$toggleButtonActiveHoverBgColor:$primaryDarkestColor;
-$toggleButtonActiveHoverBorderColor:$primaryDarkestColor;
-$toggleButtonActiveHoverTextColor:#ffffff;
-$toggleButtonActiveHoverIconColor:#ffffff;
+$toggleButtonBgColor:#0071bc;
+$toggleButtonBorder:1px solid #0071bc;
+$toggleButtonTextColor:#ffffff;
+$toggleButtonIconColor:#ffffff;
+$toggleButtonHoverBgColor:#205493;
+$toggleButtonHoverBorderColor:#205493;
+$toggleButtonHoverTextColor:#ffffff;
+$toggleButtonHoverIconColor:#ffffff;
+$toggleButtonActiveBgColor:$primaryDarkerColor;
+$toggleButtonActiveBorderColor:$primaryDarkerColor;
+$toggleButtonActiveTextColor:$primaryTextColor;
+$toggleButtonActiveIconColor:$primaryTextColor;
+$toggleButtonActiveHoverBgColor:$primaryDarkerColor;
+$toggleButtonActiveHoverBorderColor:$primaryDarkerColor;
+$toggleButtonActiveHoverTextColor:$primaryTextColor;
+$toggleButtonActiveHoverIconColor:$primaryTextColor;
 $toggleButtonFocusOutline:0 none;
-$toggleButtonFocusBgColor:#c8c8c8;
-$toggleButtonFocusBorderColor:#7f7f7f;
-$toggleButtonFocusTextColor:#333333;
-$toggleButtonFocusIconColor:#212121;
-$toggleButtonActiveFocusBgColor:$primaryColor;
-$toggleButtonActiveFocusBorderColor:#7f7f7f;
-$toggleButtonActiveFocusTextColor:#ffffff;
-$toggleButtonActiveFocusIconColor:#ffffff;
+$toggleButtonFocusBgColor:$primaryDarkColor;
+$toggleButtonFocusBorderColor:$primaryDarkColor;
+$toggleButtonFocusTextColor:#ffffff;
+$toggleButtonFocusIconColor:#ffffff;
+$toggleButtonActiveFocusBgColor:$primaryDarkColor;
+$toggleButtonActiveFocusBorderColor:$primaryDarkColor;
+$toggleButtonActiveFocusTextColor:$primaryTextColor;
+$toggleButtonActiveFocusIconColor:$primaryTextColor;
 
 //inplace
 $inplacePadding:$inputPadding;
-$inplaceHoverBgColor:#eaeaea;
+$inplaceHoverBgColor:#f1f1f1;
 $inplaceHoverTextColor:$textColor;
 $inplaceTransition:background-color $transitionDuration;
 
 //rating
 $ratingTransition:color $transitionDuration;
-$ratingCancelIconColor:#e4018d;
-$ratingCancelHoverIconColor:#b5019f;
-$ratingIconFontSize:1.429em;
-$ratingStarIconColor:$textColor;
-$ratingStarIconHoverColor:$primaryDarkestColor;
-$ratingStarActiveIconColor:$primaryColor;
+$ratingCancelIconColor:#000000;
+$ratingCancelHoverIconColor:#0d0d0d;
+$ratingIconFontSize:20px;
+$ratingStarIconColor:#aeb0b5;
+$ratingStarIconHoverColor:#5b616b;
 
 //slider
-$sliderBgColor:#c4c4c4;
+$sliderBgColor:#d6d7d9;
 $sliderBorder:0 none;
 $sliderHeight:.286em;
-$sliderWidth:.286em;
-$sliderHandleWidth:1.429em;
-$sliderHandleHeight:1.429em;
-$sliderHandleBgColor:#ffffff;
-$sliderHandleBorder:2px solid #7f7f7f;
-$sliderHandleHoverBorder:2px solid $primaryColor;
-$sliderHandleHoverBgColor:2px solid #7f7f7f;
-$sliderHandleBorderRadius:50%;
-$sliderHandleTransition:background-color $transitionDuration;
-$sliderRangeBgColor:$primaryColor;
+$sliderWidth:0.286em;
+$sliderHandleWidth:1.143em;
+$sliderHandleHeight:1.143em;
+$sliderHandleBgColor:$primaryColor;
+$sliderHandleBorder:2px solid $primaryColor;
+$sliderHandleBorderRadius:100%;
+$sliderHandleHoverBorder:2px solid darken($primaryColor, 5%);
+$sliderHandleHoverBgColor:darken($primaryColor, 5%);
+$sliderHandleTransition:border-color $transitionDuration;
+$sliderRangeBgColor:darken($primaryColor,10%);
 
 //calendar
-$calendarWidth:18.571em;
-$calendarNavIconColor:#3F4040;
-$calendarNavIconHoverColor:$primaryColor;
+$calendarWidth:20em;
+$calendarHeaderPadding:0.571em 1.143em;
+$calendarNavIconColor:$primaryTextColor;
+$calendarNavIconHoverColor:$primaryDarkColor;
 $calendarNavIconTransition:color $transitionDuration;
-$calendarPadding:0.857em;
-$calendarTableMargin:0.857em 0 0 0;
-$calendarCellPadding:0.286em;
-$calendarCellDatePadding:0.286em;
-$calendarCellDateWidth:1.714em;
-$calendarCellDateHeight:1.714em;
-$calendarCellDateHoverBgColor:#efefef;
+$calendarPadding:0;
+$calendarTableMargin:0 0 .4 0;
+$calendarHeaderCellPadding:.7em .3em;
+$calendarCellDatePadding:0.357em;
+$calendarCellDateHoverBgColor:#f1f1f1;
 $calendarCellDateBorderRadius:$borderRadius;
 $calendarCellDateSelectedBgColor:$primaryColor;
-$calendarCellDateSelectedTextColor:#ffffff;
-$calendarCellDateTodayBgColor:#ffffff;
+$calendarCellDateSelectedTextColor:$primaryTextColor;
+$calendarCellDateTodayBgColor:#d6d7d9;
 $calendarCellDateTodayTextColor:$textColor;
-
-$calendarTimePickerDivider: 1px solid #d8dae2;
+$calendarTimePickerDivider: 1px solid #d6d7d9;
 $calendarTimePickerPadding:0.857em;
 $calendarTimePickerIconColor:$textColor;
 $calendarTimePickerIconFontSize:1.286em;
 $calendarTimePickerTimeFontSize:1.286em;
 $calendarTimePickerIconHoverColor:$primaryColor;
+$calendarButtonBarDivider: 1px solid #d8dae2;
+$calendarMultipleMonthDivider: 1px solid #d8dae2;
 
 //spinner
-$spinnerButtonWidth:1.429em;
+$spinnerButtonWidth:2em;
 
 //input switch
-$inputSwitchBorderRadius:8px;
-$inputSwitchOffHandleBgColor:#a6a6a6;
-$inputSwitchOffHandleHoverBgColor:#848484;
-$inputSwitchOffHandleFocusBgColor:#848484;
-$inputSwitchOnBorderColor:$primaryColor;
-$inputSwitchOnBgColor:$primaryColor;
-$inputSwitchOnHandleBgColor:$primaryDarkerColor;
-$inputSwitchOnHandleFocusBgColor:$primaryDarkerColor;
-$inputSwitchOnHandleHoverBgColor:$primaryDarkestColor;
-$inputSwitchTransition:border-color $transitionDuration;
-$inputSwitchHandleTransition:background-color $transitionDuration;
+$inputSwitchWidth:2.8em;
+$inputSwitchHeight:1.64em;
+$inputSwitchBorderRadius:30px;
+$inputSwitchTransition:background-color $transitionDuration;
+$inputSwitchSliderOffBgColor:#a8acb1;
+$inputSwitchHandleOffBgColor:#ffffff;
+$inputSwitchSliderOffHoverBgColor:#a8acb1;
+$inputSwitchSliderOffFocusBgColor:#a8acb1;
+$inputSwitchSliderOnBgColor:$primaryColor;
+$inputSwitchSliderOnHoverBgColor:$primaryColor;
+$inputSwitchHandleOnBgColor:#a8acb1;
+$inputSwitchSliderOnFocusBgColor:$primaryColor;
 
-//panel common
-$panelHeaderBorder:$containerHeaderBorder;
-$panelHeaderBgColor:$containerHeaderBgColor;
-$panelHeaderTextColor:$containerHeaderTextColor;
-$panelHeaderIconColor:$containerHeaderIconColor;
-$panelHeaderIconHoverColor:$containerHeaderIconHoverColor;
+//panel common (e.g. accordion, panel, tabview)
+$panelHeaderBorder:1px solid #d6d7d9;
+$panelHeaderBgColor:$primaryColor;
+$panelHeaderTextColor:$primaryTextColor;
+$panelHeaderIconColor:$primaryTextColor;
+$panelHeaderIconHoverColor:#aeb0b5;
 $panelHeaderIconTransition:color $transitionDuration;
 $panelHeaderFontWeight:700;
-$panelHeaderPadding:.857em 1em;
-$panelContentBorder:1px solid #dedede;
+$panelHeaderPadding:0.571em 1.143em;
+$panelContentBorder:1px solid #d6d7d9;
 $panelContentBgColor:#ffffff;
 $panelContentTextColor:$textColor;
-$panelContentPadding:.571em 1em;
-$panelFooterBorder:1px solid #dedede;
+$panelContentPadding:1.143em;
+$panelFooterBorder:1px solid #d6d7d9;
 $panelFooterBgColor:#ffffff;
 $panelFooterTextColor:$textColor;
-$panelFooterPadding:.571em 1em;
-$panelHeaderHoverBgColor:$containerHeaderHoverBgColor;
-$panelHeaderHoverBorder:$containerHeaderHoverBorder;
-$panelHeaderHoverTextColor:$containerHeaderHoverTextColor;
-$panelHeaderHoverIconColor:$containerHeaderHoverIconColor;
-$panelHeaderActiveBgColor:$containerHeaderActiveBgColor;
-$panelHeaderActiveBorder:$containerHeaderActiveBorder;
-$panelHeaderActiveTextColor:$containerHeaderActiveTextColor;
-$panelHeaderActiveIconColor:$containerHeaderActiveIconColor;
-$panelHeaderActiveHoverBgColor:$containerHeaderActiveHoverBgColor;
-$panelHeaderActiveHoverBorder:$containerHeaderActiveHoverHoverBorder;
-$panelHeaderActiveHoverTextColor:$containerHeaderActiveHoverrTextColor;
-$panelHeaderActiveHoverIconColor:$containerHeaderActiveHoverIconColor;
+$panelFooterPadding:0.571em 1.143em;
+$panelHeaderHoverBgColor:#d6d7d9;
+$panelHeaderHoverBorder:1px solid #d6d7d9;
+$panelHeaderHoverTextColor:#212121;
+$panelHeaderHoverIconColor:#212121;
+$panelHeaderActiveBgColor:$primaryColor;
+$panelHeaderActiveBorder:1px solid $primaryColor;
+$panelHeaderActiveTextColor:$primaryTextColor;
+$panelHeaderActiveIconColor:$primaryTextColor;
+$panelHeaderActiveHoverBgColor:$primaryColor;
+$panelHeaderActiveHoverBorder:1px solid $primaryColor;
+$panelHeaderActiveHoverTextColor:$primaryTextColor;
+$panelHeaderActiveHoverIconColor:$primaryTextColor;
+$panelHeaderTransition:background-color $transitionDuration;
 
 //accordion
-$accordionSpacing:2px;
+$accordionSpacing:0.571em;
 
 //tabview
-$tabHeaderSpacing:.214em;
 $tabsNavBorder:0 none;
 $tabsNavBgColor:#ffffff;
+$tabHeaderSpacing: 2px;
 
 //scrollpanel
-$scrollPanelHandleBgColor:#dadada;
+$scrollPanelHandleBgColor:#a8acb1;
 $scrollPanelTrackBorder:0 none;
-$scrollPanelTrackBgColor:#f8f8f8;
+$scrollPanelTrackBgColor:#f0f3f5;
+
+//card
+$cardShadow:0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
 
 //paginator
 $paginatorBgColor:#ffffff;
-$paginatorBorder:1px solid #dedede;
-$paginatorIconColor:$textSecondaryColor;
+$paginatorBorder:1px solid #d6d7d9;
 $paginatorPadding:0;
-$paginatorElementPadding:0;
-$paginatorElementWidth:2.286em;
-$paginatorElementHeight:2.286em;
-$paginatorElementHoverBgColor:#eaeaea;
-$paginatorElementHoverIconColor:#333333;
+$paginatorIconColor:$textColor;
+$paginatorElementWidth:1.857em;
+$paginatorElementHeight:1.857em;
+$paginatorElementHoverBgColor:#ffffff;
+$paginatorElementHoverIconColor:$primaryColor;
 $paginatorElementMargin:0;
+$paginatorElementPadding:0.143em 0.429em;
 $paginatorElementBorder:0 none;
-$paginatorElementBorderRadius:0;
 
 //table
-$tableHeaderCellPadding:.500em 1.214em;
+$tableCaptionBgColor:$primaryColor;
+$tableCaptionTextColor:$primaryTextColor;
+$tableCaptionBorder:1px solid $primaryColor;
+$tableHeaderCellPadding:0.571em 1.143em;
 $tableHeaderCellBgColor:#ffffff;
 $tableHeaderCellTextColor:$textColor;
 $tableHeaderCellFontWeight:700;
-$tableHeaderCellBorder:1px solid #dedede;
-$tableHeaderCellHoverBgColor:#e0e0e0;
-$tableHeaderCellHoverTextColor:#333333;
+$tableHeaderCellBorder:1px solid #d6d7d9;
+$tableHeaderCellHoverBgColor:#f1f1f1;
+$tableHeaderCellHoverTextColor:#212121;
 $tableBodyRowBgColor:#ffffff;
 $tableBodyRowTextColor:$textColor;
-$tableBodyRowEvenBgColor:#f2f2f2;
-$tableBodyRowHoverBgColor:#e0e0e0;
-$tableBodyRowHoverTextColor:#333333;
-$tableBodyCellPadding:.500em 1.214em;
-$tableBodyCellBorder:1px solid #dedede;
-$tableFooterCellPadding:.500em 1.214em;
+$tableBodyRowEvenBgColor:#f8f8f8;
+$tableBodyRowHoverBgColor:#f1f1f1;
+$tableBodyRowHoverTextColor:#212121;
+$tableBodyCellBorder:1px solid #d6d7d9;
+$tableBodyCellPadding:0.286em 0.571em 0.357em 0.571em;
+$tableFooterCellPadding:0.571em 1.143em;
 $tableFooterCellBgColor:#ffffff;
 $tableFooterCellTextColor:$textColor;
-$tableFooterCellFontWeight:500;
-$tableFooterCellBorder:1px solid #dedede;
+$tableFooterCellFontWeight:700;
+$tableFooterCellBorder:1px solid #d6d7d9;
 $tableResizerHelperBgColor:$primaryColor;
 
 //schedule
-$scheduleEventBgColor:$primaryDarkestColor;
-$scheduleEventBorder:1px solid $primaryDarkestColor;
-$scheduleEventTextColor:#ffffff;
+$scheduleEventBgColor:$primaryDarkerColor;
+$scheduleEventBorder:1px solid $primaryDarkerColor;
+$scheduleEventTextColor:$primaryTextColor;
 
 //tree
 $treeNodePadding:0.143em 0;
-$treeNodeLabelPadding:0.286em;
-$treeNodeContentSpacing:0.143em;
+$treeNodeLabelPadding:0;
+$treeNodeContentSpacing:0.286em;
+$treeNodeIconColor:#5b616a;
 
 //lightbox
-$lightBoxNavIconFontSize:3em;
+$lightBoxNavIconFontSize:1.714em;
 $lightBoxNavIconColor:#ffffff;
 
 //org chart
-$organizationChartConnectorColor:#c8c8c8;
+$organizationChartConnectorColor:#d6d7d9;
 
 //messages
-$messagesMargin:1em 0;
-$messagesPadding:1em;
+$messagesMargin:0.714em 0;
+$messagesPadding:0.714em;
 $messagesIconFontSize:1.714em;
-$messageCloseIconFontSize:1.5em;
+$messageCloseIconFontSize:1.143em;
 
-$infoMessageBgColor:#F9FCFF;
-$infoMessageBorder:1px solid #82C2FF;
-$infoMessageTextColor:#071A38;
-$infoMessageIconColor:#071A38;
+//message
+$messagePadding: 0.143em 0.357em;
+$messageMargin: 0 0.357em;
+$messageIconFontSize: 1.25em;
+$messageTextFontSize: 1em;
 
+//toast
+$toastShadow: 0 4px 6px 0 rgba(0, 0, 0, 0.15);
+$toastMessageMargin:0 0 0.714em 0;
+
+//severities
+$infoMessageBgColor:#e1f3f8;
+$infoMessageBorder:0 none;
+$infoMessageTextColor:#212121;
+$infoMessageIconColor:#212121;
 $successMessageBgColor:#b7d8b7;
 $successMessageBorder:0 none;
 $successMessageTextColor:#212121;
 $successMessageIconColor:#212121;
-
-$warnMessageBgColor:#FFF0D2;
-$warnMessageBorder:1px solid #FFD66B;
-$warnMessageTextColor:#4D3B0A;
-$warnMessageIconColor:#4D3B0A;
-
-$errorMessageBgColor:#FF8474;
-$errorMessageBorder:1px solid #FF3318;
-$errorMessageTextColor:#370909;
-$errorMessageIconColor:#370909;
+$warnMessageBgColor:#fff1d2;
+$warnMessageBorder:0 none;
+$warnMessageTextColor:#212121;
+$warnMessageIconColor:#212121;
+$errorMessageBgColor:#f9dede;
+$errorMessageBorder:0 none;
+$errorMessageTextColor:#212121;
+$errorMessageIconColor:#212121;
 
 //growl
-$growlTopLocation:120px;
-$growlIconFontSize:3.429em;
-$growlMessageTextMargin: 0 0 0 4em;
-$growlMargin:0 0 1em 0;
-$growlPadding:1em;
-$growlShadow:0 3px .429em 0 rgba(0, 0, 0, 0.16);
-$growlOpacity:.9;
-
-//message
-$messagePadding:$inputPadding;
-$messageMargin:0;
+$growlTopLocation:85px;
+$growlIconFontSize:2.571em;
+$growlMessageTextMargin: 0 0 0.357em 3.5em;
+$growlMargin:0 0 0.714em 0;
+$growlPadding:0.714em 1.071em;
+$growlShadow:0 4px 6px 0 rgba(0, 0, 0, 0.15);
+$growlOpacity:.95;
 
 //overlays
-$overlayContentBorder:1px solid #dedede;
-$overlayContainerShadow:0 0 .429em 0 rgba(0, 0, 0, 0.16);
+$overlayContentBorder:1px solid #d6d7d9;
+$overlayContainerShadow:0 4px 6px 0 rgba(0, 0, 0, 0.15);
+
+//dialog
+$dialogHeaderPadding:0.571em 1.143em;
+$confirmDialogPadding:1.429em;
 
 //overlay panel
 $overlayPanelCloseIconBgColor:$primaryColor;
 $overlayPanelCloseIconColor:#ffffff;
-$overlayPanelCloseIconHoverBgColor:$primaryDarkestColor;
+$overlayPanelCloseIconHoverBgColor:$primaryDarkColor;
 $overlayPanelCloseIconHoverColor:#ffffff;
 
 //tooltip
-$tooltipBgColor:#333333;
+$tooltipBgColor:#2d353c;
 $tooltipTextColor:#ffffff;
 $tooltipPadding:$inputPadding;
 
 //steps
 $stepsItemBgColor:#ffffff;
-$stepsItemBorder:1px solid #dedede;
+$stepsItemBorder:1px solid #d6d7d9;
 $stepsItemNumberColor:$textColor;
 $stepsItemTextColor:$textSecondaryColor;
-$stepsItemWidth:2em;
-$stepsItemHeight:2em;
+$stepsItemWidth:28px;
+$stepsItemHeight:28px;
 
 //progressbar
-$progressBarHeight:1.714em;
-$progressBarBorder:0 none;
-$progressBarBgColor:#efefef;
+$progressBarHeight:24px;
+$progressBarBorder:1px solid #d6d7d9;
+$progressBarBgColor:#aeb0b5;
 $progressBarValueBgColor:$primaryColor;
 
-//menu
+//menu (e.g. menu, menubar, tieredmenu)
 $menuBgColor:#ffffff;
-$menuBorder:1px solid #dedede;
-$menuPadding:0;
+$menuBorder:1px solid #d6d7d9;
+$menuPadding:0.429em 0;
 $menuTextColor:$textColor;
-$menuitemPadding:.571em .857em;
+$menuitemPadding:0.429em 0.571em;
 $menuitemMargin:0;
-$menuitemTextColor:#333333;
-$menuitemIconColor:#333333;
-$menuitemHoverTextColor:#333333;
-$menuitemHoverIconColor:#333333;
-$menuitemHoverBgColor:#eaeaea;
-$menuitemActiveTextColor:#333333;
-$menuitemActiveIconColor:#333333;
-$menuitemActiveBgColor:#eaeaea;
+$menuitemTextColor:#5b616a;
+$menuitemIconColor:#5b616a;
+$menuitemHoverTextColor:$primaryTextColor;
+$menuitemHoverIconColor:$primaryTextColor;
+$menuitemHoverBgColor:$primaryDarkerColor;
+$menuitemActiveTextColor:$primaryTextColor;
+$menuitemActiveIconColor:$primaryTextColor;
+$menuitemActiveBgColor:$primaryDarkerColor;
 $submenuHeaderMargin: 0;
 $submenuPadding: 0;
-$overlayMenuBorder:1px solid #dedede;
-$overlayMenuShadow:0 2px 4px 0 rgba(0, 0, 0, 0.10);
+$overlayMenuBorder:1px solid #d6d7d9;
+$overlayMenuShadow:0 4px 6px 0 rgba(0, 0, 0, 0.15);
 
 //misc
-$maskBgColor:rgba(0, 0, 0, 0.4);
-$inlineSpacing:.429em;
-$chipsItemMargin:0 .286em 0 0;
-$dataIconColor:$textSecondaryColor;
-$dataIconHoverColor:$textColor;
-
-//dialog
-$dialogHeaderPadding:1em;
-$confirmDialogPadding:1.5em;
+$maskBgColor:rgba(0, 0, 0, 0.5);            //dialog mask
+$inlineSpacing:0.571em;                     //spacing between inline elements
+$chipsItemMargin:0 .286em 0 0;              //autocomplete and chips token spacing
+$dataIconColor:$textColor;                  //icon color of a data such as treetoggler, table expander
+$dataIconHoverColor:$textColor;             //hover icon color of a data such as treetoggler, table expander
 
 //general
-$disabledOpacity:.5;
+$disabledOpacity:.35;                      //opacity of a disabled item    
 </code>
 </pre>
 </div>
 
             <h1>Menu Modes</h1>
-            <p>Menu has 4 modes, static, overlay, slim and horizontal. Layout container element in app.component.html is used to define which mode to use by adding specific classes. List
-            below indicates the style classes for each mode. </p>
+            <p>Menu has 2 modes, static, overlay, slim and horizontal. Layout container element in app.component.html is used to define which mode to use by adding specific classes. List
+            below indicates the style classes for each mode.</p>
             <ul>
-                <li>Static: "layout-wrapper layout-menu-static"</li>
-                <li>Overlay: "layout-wrapper layout-menu-overlay"</li>
-                <li>Popup: "layout-wrapper layout-menu-popup"</li>
-                <li>Horizontal: "layout-wrapper layout-menu-horizontal"</li>
+                <li>Static: "layout-wrapper"</li>
+                <li>Overlay: "layout-wrapper layout-wrapper-overlay-sidebar"</li>
             </ul>
 
-            <p>For example to create a horizontal menu, the div element should be in following form;</p>
+            <p>For example to create an overlay menu, the div element should be in following form;</p>
 <pre>
 <code class="language-markup" pCode>
-&lt;div class="layout-wrapper layout-menu-horizontal"&gt;
+&lt;div class="layout-wrapper layout-wrapper-overlay-sidebar"&gt;
 </code>
 </pre>
+
+            <p>Each theme provides 3 color alternatives for the menu, list below indicates the style classes for each mode to be defined on the layout-sidebar element.</p>
+
+            <ul>
+                <li>Light: "layout-sidebar"</li>
+                <li>Dark: "layout-sidebar layout-sidebar-dark"</li>
+                <li>Gradient: "layout-sidebar layout-sidebar-dark layout-sidebar-gradient"</li>
+            </ul>
 
             <p>It is also possible to leave the choice to the user by keeping the preference at a component and using an ngClass expression so that user can switch between modes. Sample
                     application has an example implementation of such use case. Refer to app.component.ts for an example.</p>
 
             <h1>Breadcrumb</h1>
-            <p>Ecuador has an optional built-in breadcrumb section right below the topbar.
+            <p>California has an optional built-in breadcrumb section right below the topbar.
                 The items are dynamically generated using a BreadcrumbService where each main page that goes into the router-outlet should provide a collection of MenuItem instances.
                 Here is an example component that updates the breadcrumb.</p>
 <pre>
@@ -1068,20 +1320,12 @@ export class ControlPanelComponent &#123;
 </pre>
 
             <h1>Grid CSS</h1>
-            <p>Ecuador uses PrimeNG Grid CSS (ui-g-*) throughout the demos such as Dashboard, however any Grid library can be used with it since Ecuador itself does not depend on Grid CSS.</p>
+            <p>California uses PrimeNG Grid CSS (ui-g-*) throughout the demos such as Dashboard, however any Grid library can be used with it since California itself does not depend on Grid CSS.</p>
 
             <h1>Migration Guide</h1>
             <p>Most of the time updates are related to styling so sass/layout, sass/theme_core will be the commonly updated folders. For seamless updates and easier maintenance, we suggest avoiding editing sass/layout, sass/theme and sass/theme_core folders and keeping your CSS customizations
                 in a separate sass file such as styles.scss as defined in angular.json so that your changes are not overriden with an update.
                 Additionally you may also use the _theme_extensions.scss and _layout_styles.scss files under sass folder which are empty files provided for you to add your customizations to theme and layout respectively.</p>
-            <h4>1.0.0 to 6.0.0</h4>
-            <p>Brings support for Angular 6 and RxJS 6, adds theming for new components in PrimeNG such as the new TreeTable
-                and improves behaviors of the layout menus.</p>
-            <ul>
-                <li>Add PrimeIcons package.</li>
-                <li>Update layout css files.</li>
-                <li>Update theme css files.</li>
-            </ul>
         </div>
     </div>
 </div>
