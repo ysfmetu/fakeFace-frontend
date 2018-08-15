@@ -18,6 +18,8 @@ export class FormsDemoComponent implements OnInit {
 
     filteredBrands: any[];
 
+    yesterday: Date = new Date();
+
     selectedBrands: string[];
 
     carOptions: SelectItem[];
