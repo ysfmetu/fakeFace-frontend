@@ -8,11 +8,11 @@ body {
         @include transition($inputTransition);
         @include appearance(none);
 
-        &:enabled:hover:not(.ui-state-error) {
+        &:enabled:hover {
             border-color: $inputHoverBorderColor;
         }
 
-        &:enabled:focus:not(.ui-state-error) {
+        &:enabled:focus {
             @include focused-input();
         }
     }
