@@ -126,6 +126,10 @@ body {
             .ui-menuitem-icon {
                 color: $menuitemHoverIconColor;
             }
+
+            .ui-submenu-icon {
+                color: $menuitemActiveIconColor;
+            }
         }
     }
 
@@ -165,7 +169,7 @@ body {
     }
 
     .ui-menubar {
-        padding: $menuPadding;
+        padding: 0;
         background-color: $menuBgColor;
         border: $menuBorder;
 
@@ -388,8 +392,6 @@ body {
             border: 0 none;
 
             &:hover {
-                background-color: $panelHeaderHoverBgColor;
-                color: $panelHeaderTextColor;
             }
         }
 
@@ -405,15 +407,15 @@ body {
         .ui-tabmenu-nav {
             padding: 0;
             background: $tabsNavBgColor;
-            border-bottom: $panelHeaderBorder;
+            border: $tabsNavBorder;
 
             .ui-tabmenuitem {
                 position: static;
-                border: $panelHeaderBorder;
                 background-color: $panelHeaderBgColor;
-                margin-right: $tabHeaderSpacing;
-                margin-bottom: -1px;
+                margin: 0;
                 @include transition($panelHeaderTransition);
+                border-top: 4px solid transparent;
+                border-bottom: 4px solid transparent;
 
                 .ui-menuitem-link {
                     color: $panelHeaderTextColor;
@@ -431,23 +433,23 @@ body {
                 }
 
                 &:not(.ui-state-active):not(.ui-state-disabled):hover {
-                    background-color: $panelHeaderHoverBgColor;
-                    border: $panelHeaderHoverBorder;
+                    background-color: $menuitemHoverBgColor;
+                    border-bottom: 4px solid $menuitemHoverBgColor;
 
                     .ui-menuitem-link {
                         .ui-menuitem-text {
-                            color: $panelHeaderHoverTextColor;
+                            color: $menuitemHoverTextColor;
                         }
 
                         .ui-menuitem-icon {
-                            color: $panelHeaderIconHoverColor;
+                            color: $menuitemHoverTextColor;
                         }
                     }
                 }
 
                 &.ui-state-active {
-                    background-color: $panelHeaderActiveBgColor;
-                    border: $panelHeaderActiveBorder;
+                    background-color: $primaryColor;
+                    border-bottom: 4px solid $primaryDarkerColor;
 
                     .ui-menuitem-link {
                         .ui-menuitem-text {
@@ -464,7 +466,7 @@ body {
     }
 
     .ui-megamenu {
-        padding: $menuPadding;
+        padding: 0;
         background-color: $menuBgColor;
         border: $menuBorder;
 
@@ -512,6 +514,39 @@ body {
             }
         }
 
+
+        .ui-megamenu-submenu {
+            .ui-menuitem {
+                .ui-menuitem-link {
+                    border-left: 4px solid transparent;
+                    &:hover {
+                        border-left: 4px solid $primaryColor;
+                    }
+                }
+                &.ui-menuitem-active {
+                    > .ui-menuitem-link {
+                        border-left: 4px solid $primaryColor;
+                    }
+                }
+            }
+        }
+
+        &.ui-megamenu-horizontal {
+            .ui-megamenu-root-list {
+                > .ui-menuitem {
+                    > .ui-menuitem-link {
+                        border-top: 4px solid transparent;
+                        border-bottom: 4px solid transparent;
+                    }
+                    &.ui-menuitem-active {
+                        > .ui-menuitem-link {
+                            border-bottom: 4px solid $primaryColor;
+                        }
+                    }
+                }
+            }
+        }
+
         &.ui-megamenu-vertical {
             .ui-megamenu-root-list {
                 > .ui-menuitem {
@@ -519,6 +554,12 @@ body {
                         border-left: 4px solid transparent;
                         > .ui-submenu-icon {
                             right: 0.429em;
+                        }
+                    }
+
+                    &.ui-menuitem-active {
+                        > .ui-menuitem-link {
+                            border-left: 4px solid $primaryColor;
                         }
                     }
                 }

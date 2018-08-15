@@ -312,8 +312,8 @@ $panelHeaderTransition:background-color $transitionDuration;
 $accordionSpacing:0.571em;
 
 //tabview
-$tabsNavBorder:1px solid #d6d7d9;
-$tabsNavBgColor:#ffffff;
+$tabsNavBorder:0 none;
+$tabsNavBgColor:$primaryColor;
 $tabHeaderSpacing: 2px;
 
 //scrollpanel
@@ -459,7 +459,7 @@ $progressBarValueBgColor:$primaryColor;
 //menu (e.g. menu, menubar, tieredmenu)
 $menuBgColor:#ffffff;
 $menuBorder:1px solid #d6d7d9;
-$menuPadding:0;
+$menuPadding:0.429em 0;
 $menuTextColor:$textColor;
 $menuitemPadding:0.429em 0.571em;
 $menuitemMargin:0;
