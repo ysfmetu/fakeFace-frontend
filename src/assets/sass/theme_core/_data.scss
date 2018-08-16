@@ -141,7 +141,7 @@ body {
 
         .ui-table-caption {
             border-bottom: 0 none;
-            & + .ui-paginator-top {
+            & + p-paginator > .ui-paginator-top {
                 border-top: 0 none;
             }
         }
@@ -364,6 +364,10 @@ body {
             padding: $panelHeaderPadding;
             font-weight: $panelHeaderFontWeight;
             border-bottom: 0 none;
+        }
+
+        .ui-dataview-header + p-paginator > .ui-paginator-top {
+            border-top: 0 none;
         }
 
         .ui-dataview-content {

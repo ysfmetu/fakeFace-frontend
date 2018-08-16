@@ -291,7 +291,7 @@
         &.layout-sidebar-gradient {
             border-right-color: transparent;
             @if variable-exists(gradientMenuBgImage) {
-                background-image: url("\#{resource['california-layout:images/special/#{$gradientMenuBgImage}']}");
+                background-image: url("../images/special/#{$gradientMenuBgImage}");
                 background-size: 240px 100%;
                 background-repeat: no-repeat;
             }
