@@ -1013,6 +1013,7 @@ body {
                 padding-left: $calendarPadding;
                 padding-top: 0;
                 padding-bottom: 0;
+                min-width: 20em;
 
                 &:first-child {
                     padding-left: 0;
@@ -1040,6 +1041,11 @@ body {
         .ui-datepicker-trigger.ui-button {
             width: $buttonIconOnlyWidth;
             @include border-radius-left(0);
+
+            .ui-button-icon-left {
+                font-size: 1.25em;
+                margin-left: -.45em;
+            }
         }
     }
 
