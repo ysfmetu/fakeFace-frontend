@@ -102,8 +102,8 @@ import &#123;AppComponent&#125; from './app.component';
 @Component(&#123;
     selector: 'app-menu',
     template: `
-        <ul app-submenu [item]="model" root="true" class="layout-menu"
-            [reset]="reset" visible="true" parentActive="true"></ul>
+        &lt;ul app-submenu [item]="model" root="true" class="layout-menu"
+            [reset]="reset" visible="true" parentActive="true"&gt;&lt;/ul&gt;
     `
 &#125;)
 export class AppMenuComponent implements OnInit &#123;
@@ -1263,7 +1263,7 @@ $dataIconColor:$textColor;                  //icon color of a data such as treet
 $dataIconHoverColor:$textColor;             //hover icon color of a data such as treetoggler, table expander
 
 //general
-$disabledOpacity:.35;                      //opacity of a disabled item    
+$disabledOpacity:.35;                      //opacity of a disabled item
 </code>
 </pre>
 </div>

@@ -11,7 +11,7 @@ import { MessageService } from 'primeng/api';
             margin-left: .25em;
         }`
     ],
-    providers: [BreadcrumbService,MessageService]
+    providers: [BreadcrumbService, MessageService]
 })
 export class MessagesDemoComponent {
 
