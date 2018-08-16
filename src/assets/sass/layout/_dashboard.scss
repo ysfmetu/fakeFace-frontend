@@ -198,7 +198,7 @@ $profileTextColor:#212121;
                 }
                 .ui-chkbox {
                     vertical-align: middle;
-                    margin-right: 4px;
+                    margin-right: 6px;
                 }
                 >span {
                     vertical-align: middle;
@@ -208,7 +208,7 @@ $profileTextColor:#212121;
                     i {
                         font-size: 13px;
                         color: $textSecondaryColor;
-                        margin-left: 4px;
+                        margin-left: 6px;
                         width: 16px;
                     }
                     .day {
@@ -268,6 +268,7 @@ $profileTextColor:#212121;
                     height: 35px;
                     vertical-align: middle;
                     display: inline-block;
+                    margin-right: 6px;
                 }
                 a {
                     display: block;

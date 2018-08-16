@@ -79,7 +79,6 @@ body {
                 height: $paginatorElementHeight;
                 min-width: $paginatorElementWidth;
                 border: $paginatorElementBorder;
-                line-height: $paginatorElementHeight;
                 padding: $paginatorElementPadding;
                 margin: $paginatorElementMargin;
                 vertical-align: top;
@@ -141,9 +140,14 @@ body {
 
         .ui-table-caption {
             border-bottom: 0 none;
+            
             & + p-paginator > .ui-paginator-top {
                 border-top: 0 none;
             }
+        }
+
+        .ui-table-caption + p-paginator > .ui-paginator-top {
+            border-top: 0 none;
         }
 
         .ui-table-summary {
@@ -156,7 +160,6 @@ body {
             font-weight: $tableHeaderCellFontWeight;
             color: $tableHeaderCellTextColor;
             background-color: $tableHeaderCellBgColor;
-            font-size: $fontSize + 2;
         }
 
         .ui-table-tbody > tr > td {
@@ -169,12 +172,15 @@ body {
             font-weight: $tableFooterCellFontWeight;
             color: $tableFooterCellTextColor;
             background-color: $tableFooterCellBgColor;
-            font-size: $fontSize + 2;
         }
 
         .ui-sortable-column {
+            .ui-sortable-column-icon {
+                font-size: 1em;
+            }
+
             a, a:hover {
-                color: $tableHeaderCellTextColor;
+                color: $tableHeaderCellIconColor;
             }
 
             &:not(.ui-state-highlight):hover {
@@ -182,7 +188,7 @@ body {
                 color: $tableHeaderCellHoverTextColor;
 
                 a, a:hover {
-                    color: $tableHeaderCellHoverTextColor;
+                    color: $tableHeaderCellHoverIconColor;
                 }
             }
 
@@ -450,12 +456,6 @@ body {
     }
 
     .ui-picklist {
-        .ui-picklist-buttons {
-            button {
-                font-size: $fontSize + 2;
-            }
-        }
-
         .ui-picklist-caption {
             background-color: $panelHeaderBgColor;
             color: $panelHeaderTextColor;
@@ -528,10 +528,6 @@ body {
     .ui-orderlist {
         .ui-orderlist-controls {
             padding: $panelContentPadding;
-
-            button {
-                font-size: $fontSize + 2;
-            }
         }
 
         .ui-orderlist-caption {
@@ -674,12 +670,11 @@ body {
             padding-right: 0;
 
             .ui-treenode {
-
                 .ui-treenode-content {
                     border: $panelContentBorder;
                     background-color: $panelContentBgColor;
                     color: $panelContentTextColor;
-                    padding: $panelContentPadding;
+                    padding: .5em 1em;
 
                     &.ui-state-highlight {
                         background-color: $highlightBgColor;
@@ -861,8 +856,12 @@ body {
         }
 
         .ui-sortable-column {
+            .ui-sortable-column-icon {
+                font-size: 1em;
+            }
+
             a, a:hover {
-                color: $tableHeaderCellTextColor;
+                color: $tableHeaderCellIconColor;
             }
 
             &:not(.ui-state-highlight):hover {
@@ -870,7 +869,7 @@ body {
                 color: $tableHeaderCellHoverTextColor;
 
                 a, a:hover {
-                    color: $tableHeaderCellHoverTextColor;
+                    color: $tableHeaderCellHoverIconColor;
                 }
             }
 

@@ -39,6 +39,7 @@ import { MegaMenuModule } from 'primeng/megamenu';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { OrderListModule } from 'primeng/orderlist';
 import { OrganizationChartModule } from 'primeng/organizationchart';
@@ -64,6 +65,7 @@ import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
 import { TerminalModule } from 'primeng/terminal';
 import { TieredMenuModule } from 'primeng/tieredmenu';
+import { ToastModule } from 'primeng/toast';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
@@ -137,6 +139,7 @@ import { BreadcrumbService } from './breadcrumb.service';
     MegaMenuModule,
     MenuModule,
     MenubarModule,
+    MessageModule,
     MessagesModule,
     MultiSelectModule,
     OrderListModule,
@@ -163,6 +166,7 @@ import { BreadcrumbService } from './breadcrumb.service';
     TabViewModule,
     TerminalModule,
     TieredMenuModule,
+    ToastModule,
     ToggleButtonModule,
     ToolbarModule,
     TooltipModule,

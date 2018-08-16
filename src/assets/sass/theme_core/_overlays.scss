@@ -30,6 +30,11 @@ body {
                 background-color: $overlayPanelCloseIconHoverBgColor;
                 color: $overlayPanelCloseIconHoverColor;
             }
+
+            .ui-overlaypanel-close-icon {
+                font-size: 1.25em;
+                line-height: inherit;
+            }
         }
     }
 
@@ -204,5 +209,9 @@ body {
                 display: none;
             }
         }
+    }
+
+    p-lightbox img {
+        margin-right: $inlineSpacing;
     }
 }

@@ -322,6 +322,7 @@ body {
         border: $headerLightBorder;
         color: $headerLightTextColor;
         background-color: $headerLightBgColor;
+        padding: $panelHeaderPadding;
 
         button {
             vertical-align: middle;
