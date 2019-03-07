@@ -1,8 +1,10 @@
 <div class="layout-wrapper" (click)="onLayoutClick()"
      [ngClass]="{'layout-wrapper-overlay-sidebar': isOverlay(),
-                'layout-wrapper-overlay-sidebar-active': overlayMenuActive,
-                'layout-wrapper-sidebar-inactive': staticMenuDesktopInactive,
-                'layout-wrapper-sidebar-mobile-active': staticMenuMobileActive}">
+                 'layout-wrapper-slim-sidebar': isSlim(),
+                 'layout-wrapper-horizontal-sidebar': isHorizontal(),
+                 'layout-wrapper-overlay-sidebar-active': overlayMenuActive,
+                 'layout-wrapper-sidebar-inactive': staticMenuDesktopInactive,
+                 'layout-wrapper-sidebar-mobile-active': staticMenuMobileActive}">
     <app-topbar></app-topbar>
 
     <app-megamenu></app-megamenu>
@@ -12,7 +14,7 @@
          'layout-sidebar-gradient':  menuMode === 'gradient'}">
         <p-scrollPanel #layoutMenuScroller [style]="{height: '100%' }">
             <div class="sidebar-scroll-content">
-                <app-inline-profile *ngIf="profileMode=='inline'"></app-inline-profile>
+                <app-inline-profile *ngIf="profileMode=='inline' && !isHorizontal()"></app-inline-profile>
                 <app-menu [reset]="resetMenu"></app-menu>
             </div>
         </p-scrollPanel>

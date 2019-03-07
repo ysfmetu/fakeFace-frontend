@@ -1,123 +1,138 @@
-import {Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy} from '@angular/core';
+import {AfterViewInit, Component, Renderer2, ViewChild} from '@angular/core';
 import {ScrollPanel} from 'primeng/primeng';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit {
 
-  layoutMode = 'static';
+    layoutMode = 'static';
 
-  megaMenuMode = 'dark';
+    megaMenuMode = 'dark';
 
-  menuMode = 'light';
+    menuMode = 'light';
 
-  profileMode = 'inline';
+    profileMode = 'inline';
 
-  topbarMenuActive: boolean;
+    topbarMenuActive: boolean;
 
-  overlayMenuActive: boolean;
+    overlayMenuActive: boolean;
 
-  staticMenuDesktopInactive: boolean;
+    staticMenuDesktopInactive: boolean;
 
-  staticMenuMobileActive: boolean;
+    staticMenuMobileActive: boolean;
 
-  layoutMenuScroller: HTMLDivElement;
+    layoutMenuScroller: HTMLDivElement;
 
-  menuClick: boolean;
+    menuClick: boolean;
 
-  topbarItemClick: boolean;
+    topbarItemClick: boolean;
 
-  activeTopbarItem: any;
+    activeTopbarItem: any;
 
-  resetMenu: boolean;
+    resetMenu: boolean;
 
-  rightPanelActive: boolean;
+    menuHoverActive: boolean;
 
-  rightPanelClick: boolean;
+    rightPanelActive: boolean;
 
-  megaMenuActive: boolean;
+    rightPanelClick: boolean;
 
-  megaMenuClick: boolean;
+    megaMenuActive: boolean;
 
-  @ViewChild('layoutMenuScroller') layoutMenuScrollerViewChild: ScrollPanel;
+    megaMenuClick: boolean;
 
-  constructor(public renderer: Renderer2) {}
+    @ViewChild('layoutMenuScroller') layoutMenuScrollerViewChild: ScrollPanel;
 
-  ngAfterViewInit() {
-    setTimeout(() => {this.layoutMenuScrollerViewChild.moveBar(); }, 100);
-  }
-
-  onLayoutClick() {
-    if (!this.topbarItemClick) {
-      this.activeTopbarItem = null;
-      this.topbarMenuActive = false;
+    constructor(public renderer: Renderer2) {
     }
 
-      if (!this.rightPanelClick) {
-          this.rightPanelActive = false;
-      }
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.layoutMenuScrollerViewChild.moveBar();
+        }, 100);
+    }
 
-      if (!this.megaMenuClick) {
-          this.megaMenuActive = false;
-      }
+    onLayoutClick() {
+        if (!this.topbarItemClick) {
+            this.activeTopbarItem = null;
+            this.topbarMenuActive = false;
+        }
 
-    if (!this.menuClick) {
-      if (this.overlayMenuActive || this.staticMenuMobileActive) {
+        if (!this.rightPanelClick) {
+            this.rightPanelActive = false;
+        }
+
+        if (!this.megaMenuClick) {
+            this.megaMenuActive = false;
+        }
+
+        if (!this.menuClick) {
+            if (this.isHorizontal() || this.isSlim()) {
+                this.resetMenu = true;
+            }
+
+            if (this.overlayMenuActive || this.staticMenuMobileActive) {
+                this.hideOverlayMenu();
+            }
+
+            this.menuHoverActive = false;
+        }
+
+        this.topbarItemClick = false;
+        this.menuClick = false;
+        this.rightPanelClick = false;
+        this.megaMenuClick = false;
+    }
+
+    onMenuButtonClick(event) {
+        this.menuClick = true;
+        this.topbarMenuActive = false;
+
+        if (this.layoutMode === 'overlay') {
+            this.overlayMenuActive = !this.overlayMenuActive;
+        } else {
+            if (this.isDesktop()) {
+                this.staticMenuDesktopInactive = !this.staticMenuDesktopInactive;
+            } else {
+                this.staticMenuMobileActive = !this.staticMenuMobileActive;
+            }
+        }
+
+        event.preventDefault();
+    }
+
+    onMenuClick($event) {
+        this.menuClick = true;
+        this.resetMenu = false;
+    }
+
+    onTopbarMenuButtonClick(event) {
+        this.topbarItemClick = true;
+        this.topbarMenuActive = !this.topbarMenuActive;
+
         this.hideOverlayMenu();
-      }
+
+        event.preventDefault();
     }
 
-    this.topbarItemClick = false;
-    this.menuClick = false;
-      this.rightPanelClick = false;
-      this.megaMenuClick = false;
-  }
+    onTopbarItemClick(event, item) {
+        this.topbarItemClick = true;
 
-  onMenuButtonClick(event) {
-    this.menuClick = true;
-    this.topbarMenuActive = false;
+        if (this.activeTopbarItem === item) {
+            this.activeTopbarItem = null;
+        } else {
+            this.activeTopbarItem = item;
+        }
 
-    if (this.layoutMode === 'overlay') {
-      this.overlayMenuActive = !this.overlayMenuActive;
-    } else {
-      if (this.isDesktop()) {
-        this.staticMenuDesktopInactive = !this.staticMenuDesktopInactive; } else {
-        this.staticMenuMobileActive = !this.staticMenuMobileActive; }
+        event.preventDefault();
     }
 
-    event.preventDefault();
-  }
-
-  onMenuClick($event) {
-    this.menuClick = true;
-    this.resetMenu = false;
-  }
-
-  onTopbarMenuButtonClick(event) {
-    this.topbarItemClick = true;
-    this.topbarMenuActive = !this.topbarMenuActive;
-
-    this.hideOverlayMenu();
-
-    event.preventDefault();
-  }
-
-  onTopbarItemClick(event, item) {
-    this.topbarItemClick = true;
-
-    if (this.activeTopbarItem === item) {
-      this.activeTopbarItem = null; } else {
-      this.activeTopbarItem = item; }
-
-    event.preventDefault();
-  }
-
-  onTopbarSubItemClick(event) {
-    event.preventDefault();
-  }
+    onTopbarSubItemClick(event) {
+        event.preventDefault();
+    }
 
     onRightPanelButtonClick(event) {
         this.rightPanelClick = true;
@@ -139,25 +154,34 @@ export class AppComponent implements AfterViewInit {
         this.megaMenuClick = true;
     }
 
-  hideOverlayMenu() {
-    this.overlayMenuActive = false;
-    this.staticMenuMobileActive = false;
-  }
+    hideOverlayMenu() {
+        this.overlayMenuActive = false;
+        this.staticMenuMobileActive = false;
+    }
 
-  isTablet() {
-    const width = window.innerWidth;
-    return width <= 1024 && width > 640;
-  }
+    isTablet() {
+        const width = window.innerWidth;
+        return width <= 1024 && width > 640;
+    }
 
-  isDesktop() {
-    return window.innerWidth > 1024;
-  }
+    isDesktop() {
+        return window.innerWidth > 1024;
+    }
 
-  isMobile() {
-    return window.innerWidth <= 640;
-  }
+    isMobile() {
+        return window.innerWidth <= 640;
+    }
 
-  isOverlay() {
-    return this.layoutMode === 'overlay';
-  }
+    isHorizontal() {
+        return this.layoutMode === 'horizontal';
+    }
+
+    isSlim() {
+        return this.layoutMode === 'slim';
+    }
+
+    isOverlay() {
+        return this.layoutMode === 'overlay';
+    }
+
 }
