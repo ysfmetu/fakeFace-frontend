@@ -12,7 +12,8 @@ import {trigger, state, transition, style, animate} from '@angular/animations';
                 <span class="sidebar-profile-role">Administrator</span>
             </a>
 
-            <ul id="sidebar-usermenu" class="usermenu" [@menu]="active ? 'visible' : 'hidden'">
+            <ul id="sidebar-usermenu" class="usermenu" [ngClass]="{'usermenu-active':active}"
+                [@menu]="app.isSlim()? active ? 'visible' : 'hidden' : active ? 'visibleAnimated' : 'hiddenAnimated'">
                 <li #profile [ngClass]="{'menuitem-active':activeProfileItem === profile}">
                     <a href="#" (click)="onProfileItemClick($event,profile)">
                         <i class="fa fa-fw fa-user"></i>
@@ -129,14 +130,20 @@ import {trigger, state, transition, style, animate} from '@angular/animations';
     `,
     animations: [
         trigger('menu', [
-            state('hidden', style({
+            state('hiddenAnimated', style({
                 height: '0px'
+            })),
+            state('visibleAnimated', style({
+                height: '*'
             })),
             state('visible', style({
                 height: '*'
             })),
-            transition('visible => hidden', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)')),
-            transition('hidden => visible', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)'))
+            state('hidden', style({
+                height: '0px'
+            })),
+            transition('visibleAnimated => hiddenAnimated', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)')),
+            transition('hiddenAnimated => visibleAnimated', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)'))
         ])
     ]
 })
