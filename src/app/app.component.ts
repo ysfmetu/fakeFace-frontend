@@ -44,6 +44,12 @@ export class AppComponent implements AfterViewInit {
 
     megaMenuClick: boolean;
 
+    usermenuActive: boolean;
+
+    usermenuClick: boolean;
+    
+    activeProfileItem: any;
+
     @ViewChild('layoutMenuScroller') layoutMenuScrollerViewChild: ScrollPanel;
 
     constructor(public renderer: Renderer2) {
@@ -69,6 +75,11 @@ export class AppComponent implements AfterViewInit {
             this.megaMenuActive = false;
         }
 
+        if (!this.usermenuClick && this.isSlim()) {
+            this.usermenuActive = false;
+            this.activeProfileItem = null;
+        }
+
         if (!this.menuClick) {
             if (this.isHorizontal() || this.isSlim()) {
                 this.resetMenu = true;
@@ -85,6 +96,7 @@ export class AppComponent implements AfterViewInit {
         this.menuClick = false;
         this.rightPanelClick = false;
         this.megaMenuClick = false;
+        this.usermenuClick = false;
     }
 
     onMenuButtonClick(event) {

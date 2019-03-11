@@ -6,21 +6,22 @@ import {trigger, state, transition, style, animate} from '@angular/animations';
     selector: 'app-inline-profile',
     template: `
         <div class="user-profile">
-            <a href="#" (click)="onClick($event)" id="sidebar-profile-button">
+            <a href="#" (click)="onProfileClick($event)" id="sidebar-profile-button">
                 <img src="assets/layout/images/avatar.png" alt="california-layout"/>
                 <span class="sidebar-profile-name">Pauline Harrell</span>
                 <span class="sidebar-profile-role">Administrator</span>
             </a>
 
-            <ul id="sidebar-usermenu" class="usermenu" [ngClass]="{'usermenu-active':active}"
-                [@menu]="app.isSlim()? active ? 'visible' : 'hidden' : active ? 'visibleAnimated' : 'hiddenAnimated'">
-                <li #profile [ngClass]="{'menuitem-active':activeProfileItem === profile}">
+            <ul id="sidebar-usermenu" class="usermenu" [ngClass]="{'usermenu-active':app.usermenuActive}"
+                [@menu]="app.isSlim()? app.usermenuActive ? 'visible' : 'hidden' :
+                app.usermenuActive ? 'visibleAnimated' : 'hiddenAnimated'">
+                <li #profile [ngClass]="{'menuitem-active':app.activeProfileItem === profile}">
                     <a href="#" (click)="onProfileItemClick($event,profile)">
                         <i class="fa fa-fw fa-user"></i>
                         <span class="topbar-item-name">Profile</span>
                     </a>
                 </li>
-                <li #settings [ngClass]="{'menuitem-active':activeProfileItem === settings}">
+                <li #settings [ngClass]="{'menuitem-active':app.activeProfileItem === settings}">
                     <a href="#" (click)="onProfileItemClick($event,settings)">
                         <i class="fa fa-fw fa-cog"></i>
                         <span class="topbar-item-name">Settings</span>
@@ -28,32 +29,32 @@ import {trigger, state, transition, style, animate} from '@angular/animations';
                     </a>
                     <ul>
                         <li role="menuitem">
-                            <a href="#">
+                            <a href="#" (click)="onProfileSubItemClick($event)">
                                 <i class="fa fa-fw fa-paint-brush"></i>
                                 <span>Change Theme</span>
                             </a>
                         </li>
                         <li role="menuitem">
-                            <a href="#">
+                            <a href="#" (click)="onProfileSubItemClick($event)">
                                 <i class="fa fa-fw fa-star-o"></i>
                                 <span>Favorites</span>
                             </a>
                         </li>
                         <li role="menuitem">
-                            <a href="#">
+                            <a href="#" (click)="onProfileSubItemClick($event)">
                                 <i class="fa fa-fw fa-lock"></i>
                                 <span>Lock Screen</span>
                             </a>
                         </li>
                         <li role="menuitem">
-                            <a href="#">
+                            <a href="#" (click)="onProfileSubItemClick($event)">
                                 <i class="fa fa-fw fa-picture-o"></i>
                                 <span>Wallpaper</span>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li #messages [ngClass]="{'menuitem-active':activeProfileItem === messages}">
+                <li #messages [ngClass]="{'menuitem-active':app.activeProfileItem === messages}">
                     <a href="#" (click)="onProfileItemClick($event,messages)">
                         <i class="fa fa-fw fa-envelope-o"></i>
                         <span class="topbar-item-name">Messages</span>
@@ -61,38 +62,38 @@ import {trigger, state, transition, style, animate} from '@angular/animations';
                     </a>
                     <ul>
                         <li role="menuitem">
-                            <a href="#" class="topbar-message">
+                            <a href="#" class="topbar-message" (click)="onProfileSubItemClick($event)">
                                 <img src="assets/layout/images/avatar1.png" width="25"/>
                                 <span>Give me a call</span>
                             </a>
                         </li>
                         <li role="menuitem">
-                            <a href="#" class="topbar-message">
+                            <a href="#" class="topbar-message" (click)="onProfileSubItemClick($event)">
                                 <img src="assets/layout/images/avatar2.png" width="25"/>
                                 <span>Sales reports attached</span>
                             </a>
                         </li>
                         <li role="menuitem">
-                            <a href="#" class="topbar-message">
+                            <a href="#" class="topbar-message" (click)="onProfileSubItemClick($event)">
                                 <img src="assets/layout/images/avatar3.png" width="25"/>
                                 <span>About your invoice</span>
                             </a>
                         </li>
                         <li role="menuitem">
-                            <a href="#" class="topbar-message">
+                            <a href="#" class="topbar-message" (click)="onProfileSubItemClick($event)">
                                 <img src="assets/layout/images/avatar2.png" width="25"/>
                                 <span>Meeting today at 10pm</span>
                             </a>
                         </li>
                         <li role="menuitem">
-                            <a href="#" class="topbar-message">
+                            <a href="#" class="topbar-message" (click)="onProfileSubItemClick($event)">
                                 <img src="assets/layout/images/avatar4.png" width="25"/>
                                 <span>Out of office</span>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li #notifications [ngClass]="{'menuitem-active':activeProfileItem === notifications}">
+                <li #notifications [ngClass]="{'menuitem-active':app.activeProfileItem === notifications}">
                     <a href="#" (click)="onProfileItemClick($event,notifications)">
                         <i class="fa fa-fw fa-bell-o"></i>
                         <span class="topbar-item-name">Notifications</span>
@@ -100,25 +101,25 @@ import {trigger, state, transition, style, animate} from '@angular/animations';
                     </a>
                     <ul>
                         <li role="menuitem">
-                            <a href="#">
+                            <a href="#" (click)="onProfileSubItemClick($event)">
                                 <i class="fa fa-fw fa-tasks"></i>
                                 <span>Pending tasks</span>
                             </a>
                         </li>
                         <li role="menuitem">
-                            <a href="#">
+                            <a href="#" (click)="onProfileSubItemClick($event)">
                                 <i class="fa fa-fw fa-calendar-check-o"></i>
                                 <span>Meeting today at 3pm</span>
                             </a>
                         </li>
                         <li role="menuitem">
-                            <a href="#">
+                            <a href="#" (click)="onProfileSubItemClick($event)">
                                 <i class="fa fa-fw fa-download"></i>
                                 <span>Download documents</span>
                             </a>
                         </li>
                         <li role="menuitem">
-                            <a href="#">
+                            <a href="#" (click)="onProfileSubItemClick($event)">
                                 <i class="fa fa-fw fa-plane"></i>
                                 <span>Book flight</span>
                             </a>
@@ -149,22 +150,24 @@ import {trigger, state, transition, style, animate} from '@angular/animations';
 })
 export class AppProfileComponent {
 
-    active: boolean;
-
-    activeProfileItem: any;
-
     constructor(public app: AppComponent) {}
 
-    onClick(event) {
-        this.active = !this.active;
+    onProfileClick(event) {
+        this.app.usermenuClick = true;
+        this.app.usermenuActive = !this.app.usermenuActive;
         event.preventDefault();
     }
 
     onProfileItemClick(event, item) {
-        if (this.activeProfileItem === item) {
-            this.activeProfileItem = null; } else {
-            this.activeProfileItem = item; }
+        this.app.usermenuClick = true;
+        if (this.app.activeProfileItem === item) {
+            this.app.activeProfileItem = null; } else {
+            this.app.activeProfileItem = item; }
 
+        event.preventDefault();
+    }
+
+    onProfileSubItemClick(event) {
         event.preventDefault();
     }
 }
