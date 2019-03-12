@@ -54,9 +54,11 @@ Run 'ng help' for more options.
 <code class="language-markup" pCode>
 &lt;div class="layout-wrapper" (click)="onLayoutClick()"
     [ngClass]="&#123;'layout-wrapper-overlay-sidebar': isOverlay(),
-               'layout-wrapper-overlay-sidebar-active': overlayMenuActive,
-               'layout-wrapper-sidebar-inactive': staticMenuDesktopInactive,
-               'layout-wrapper-sidebar-mobile-active': staticMenuMobileActive&#125;">
+                 'layout-wrapper-slim-sidebar': isSlim(),
+                 'layout-wrapper-horizontal-sidebar': isHorizontal(),
+                 'layout-wrapper-overlay-sidebar-active': overlayMenuActive,
+                 'layout-wrapper-sidebar-inactive': staticMenuDesktopInactive,
+                 'layout-wrapper-sidebar-mobile-active': staticMenuMobileActive&#125;">
    &lt;app-topbar>&lt;/app-topbar>
 
    &lt;app-megamenu>&lt;/app-megamenu>
@@ -66,7 +68,7 @@ Run 'ng help' for more options.
         'layout-sidebar-gradient':  menuMode === 'gradient'&#125;">
        &lt;p-scrollPanel #layoutMenuScroller [style]="&#123;height: '100%' &#125;">
            &lt;div class="sidebar-scroll-content">
-               &lt;app-inline-profile *ngIf="profileMode=='inline'">&lt;/app-inline-profile>
+               &lt;app-inline-profile *ngIf="profileMode=='inline' && !isHorizontal()">&lt;/app-inline-profile>
                &lt;app-menu [reset]="resetMenu">&lt;/app-menu>
            &lt;/div>
        &lt;/p-scrollPanel>
@@ -479,6 +481,8 @@ export class AppMenuComponent implements OnInit &#123;
                 items: [
                     &#123;label: 'Static Menu', icon: 'fa fa-fw fa-bars',  command: () => this.app.layoutMode = 'static'&#125;,
                     &#123;label: 'Overlay Menu', icon: 'fa fa-fw fa-bars',  command: () => this.app.layoutMode = 'overlay'&#125;
+                    &#123;label: 'Slim Menu', icon: 'fa fa-fw fa-bars',  command: () => this.app.layoutMode = 'slim'&#125;
+                    &#123;label: 'Horizontal Menu', icon: 'fa fa-fw fa-bars',  command: () => this.app.layoutMode = 'horizontal'&#125;
                 ]
             &#125;,
             &#123;
@@ -1270,11 +1274,13 @@ $disabledOpacity:.35;                      //opacity of a disabled item
 </div>
 
             <h1>Menu Modes</h1>
-            <p>Menu has 2 modes, static and overlay. Layout container element in app.component.html is used to define which mode to use by adding specific classes. List
+            <p>Menu has 4 modes, static, overlay, slim and horizontal. Layout container element in app.component.html is used to define which mode to use by adding specific classes. List
             below indicates the style classes for each mode.</p>
             <ul>
                 <li>Static: "layout-wrapper"</li>
                 <li>Overlay: "layout-wrapper layout-wrapper-overlay-sidebar"</li>
+                <li>Slim: "layout-wrapper layout-wrapper-slim-sidebar"</li>
+                <li>Horizontal: "layout-wrapper layout-wrapper-horizontal-sidebar"</li>
             </ul>
 
             <p>For example to create an overlay menu, the div element should be in following form;</p>
@@ -1335,6 +1341,17 @@ export class ControlPanelComponent &#123;
             </ul>
 
             <h1>Migration Guide</h1>
+
+            <h4>7.0.0 to 7.0.1</h4>
+            <ul>
+                <li>Update app.component.html.</li>
+                <li>Update app.component.ts.</li>
+                <li>Update app.menu.component.ts.</li>
+                <li>Update app.profile.component.ts.</li>
+                <li>Update app.topbar.component.html.</li>
+                <li>Update layout css files.</li>
+                <li>Update theme css files.</li>
+            </ul>
 
             <h4>1.0.0 to 7.0.0</h4>
             <ul>
