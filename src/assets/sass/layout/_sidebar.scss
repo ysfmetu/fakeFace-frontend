@@ -745,6 +745,7 @@
                     .ui-scrollpanel-wrapper {
                         .ui-scrollpanel-content {
                             padding: 0;
+                            width: 100%;
                         }
                     }
                 }
@@ -784,6 +785,9 @@
                             }
 
                             .menuitem-badge {
+                                float: none;
+                                display: inline-block;
+                                vertical-align: middle;
                                 margin-right: 0;
                             }
 
@@ -1039,39 +1043,6 @@
             }
         }
     }
-
-    /*.layout-wrapper {
-        &.layout-wrapper-horizontal-sidebar,
-        &.layout-wrapper-slim-sidebar {
-            .layout-sidebar {
-                .nano {
-                    > .nano-content {
-                        &.sidebar-scroll-content {
-                            display: block;
-                            height: auto;
-                            position: static;
-                            overflow: visible;
-                            overflow-x: visible;
-                            margin-right: 0px !important;
-                            padding-right: 0px !important;
-                        }
-
-                        .nano-scroll-footer {
-                            height: 0px;
-                        }
-
-                        .layout-menu {
-                            padding-bottom: 0;
-                        }
-                    }
-
-                    > .nano-pane {
-                        display: none !important;
-                    }
-                }
-            }
-        }
-    }*/
 }
 
 @media screen and (max-width: $mobileBreakPoint) {
