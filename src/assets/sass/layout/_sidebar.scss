@@ -775,6 +775,7 @@
                             border-bottom: 0 none;
                             border-left: 4px solid transparent;
                             border-right: 1px solid $sidebarMenuitemDividerColor;
+                            min-height: 38px;
 
                             i {
                                 color: $routeBarIconColor;
@@ -787,7 +788,6 @@
                             .menuitem-badge {
                                 float: none;
                                 display: inline-block;
-                                vertical-align: middle;
                                 margin-right: 0;
                             }
 
@@ -800,7 +800,7 @@
                             background-color: $sidebarBgColor;
                             border: 1px solid $sidebarBorderColor;
                             color: $sidebarMenuitemTextColor;
-                            top: 36px;
+                            top: 38px;
                             left: -1px;
                             min-width: 200px;
                             position: absolute;
