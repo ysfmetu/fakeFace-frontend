@@ -17,6 +17,8 @@ $sidebarMenuitemActiveBorderLeftColor:#3f4381;
 $sidebarMenuitemActiveTextColor:#3f4381;
 $sidebarMenuitemActiveIconColor:#3f4381;
 $menuBgImage:'hollywood-light.png';
+$horizontalMenuBgImageLight: 'hollywood-horizontal-light.png';
+$horizontalMenuBgColor: #dedcdd;
 
 $darkSidebarBgColor:#1a1c1c;
 $darkSidebarMenuitemTextColor:#ffffff;
@@ -28,7 +30,11 @@ $darkSidebarMenuitemActiveBorderLeftColor:#d8a816;
 $darkSidebarMenuitemActiveTextColor:#d8a816;
 $darkSidebarMenuitemActiveIconColor:#d8a816;
 $darkMenuBgImage:'hollywood-dark.png';
+$horizontalMenuBgImageDark: 'hollywood-horizontal-dark.png';
+$horizontalDarkMenuBgColor: #252d2c;
 
+$gradientSidebarTopBgColor:#3f4381;
+$gradientSidebarBottomBgColor:#202352;
 $gradientSidebarMenuitemTextColor:#ffffff;
 $gradientSidebarMenuitemDividerColor:rgba(255,255,255,.075);
 $gradientSidebarMenuitemIconColor:#ffffff;
@@ -38,6 +44,8 @@ $gradientSidebarMenuitemActiveBorderLeftColor:#2fafa4;
 $gradientSidebarMenuitemActiveTextColor:#2fafa4;
 $gradientSidebarMenuitemActiveIconColor:#2fafa4;
 $gradientMenuBgImage:'hollywood-gradient.png';
+$horizontalMenuBgImageGradient: 'hollywood-horizontal-gradient.png';
+$horizontalGradientMenuBgColor: #697479;
 
 $megamenuButtonTextColor:#ffffff;
 $megamenuBgColor:#ffffff;

@@ -17,6 +17,8 @@ $sidebarMenuitemActiveBorderLeftColor:#31827b;
 $sidebarMenuitemActiveTextColor:#31827b;
 $sidebarMenuitemActiveIconColor:#31827b;
 $menuBgImage:'peak-light.png';
+$horizontalMenuBgImageLight: 'peak-horizontal-light.png';
+$horizontalMenuBgColor: #ebf0f0;
 
 $darkSidebarBgColor:#1a1c1c;
 $darkSidebarMenuitemTextColor:#ffffff;
@@ -28,7 +30,11 @@ $darkSidebarMenuitemActiveBorderLeftColor:#eb725b;
 $darkSidebarMenuitemActiveTextColor:#eb725b;
 $darkSidebarMenuitemActiveIconColor:#eb725b;
 $darkMenuBgImage:'peak-dark.png';
+$horizontalMenuBgImageDark: 'peak-horizontal-dark.png';
+$horizontalDarkMenuBgColor: #463f3e;
 
+$gradientSidebarTopBgColor:#31827b;
+$gradientSidebarBottomBgColor:#223735;
 $gradientSidebarMenuitemTextColor:#ffffff;
 $gradientSidebarMenuitemDividerColor:rgba(255,255,255,.075);
 $gradientSidebarMenuitemIconColor:#ffffff;
@@ -38,6 +44,8 @@ $gradientSidebarMenuitemActiveBorderLeftColor:#2fafa4;
 $gradientSidebarMenuitemActiveTextColor:#2fafa4;
 $gradientSidebarMenuitemActiveIconColor:#2fafa4;
 $gradientMenuBgImage:'peak-gradient.png';
+$horizontalMenuBgImageGradient: 'peak-horizontal-gradient.png';
+$horizontalGradientMenuBgColor: #46847d;
 
 $megamenuButtonTextColor:#ffffff;
 $megamenuBgColor:#ffffff;

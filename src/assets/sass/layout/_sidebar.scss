@@ -432,10 +432,14 @@
 
                             &.menuitem-active {
                                 > a {
-                                    color: $sidebarMenuitemActiveTextColor;
+                                    color: $sidebarMenuitemTextColor;
+
+                                    span {
+                                        color: $sidebarMenuitemIconColor;
+                                    }
 
                                     i {
-                                        color: $sidebarMenuitemActiveIconColor;
+                                        color: $sidebarMenuitemIconColor;
                                     }
                                 }
                             }
@@ -577,10 +581,14 @@
 
                                 &.menuitem-active {
                                     > a {
-                                        color: $darkSidebarMenuitemActiveTextColor;
+                                        color: $darkSidebarMenuitemTextColor;
+
+                                        span {
+                                            color: $darkSidebarMenuitemTextColor;
+                                        }
 
                                         i {
-                                            color: $darkSidebarMenuitemActiveIconColor;
+                                            color: $darkSidebarMenuitemIconColor;
                                         }
                                     }
                                 }
@@ -648,10 +656,14 @@
 
                                 &.menuitem-active {
                                     > a {
-                                        color: $gradientSidebarMenuitemActiveTextColor;
+                                        color: $gradientSidebarMenuitemTextColor;
+
+                                        span {
+                                            color: $gradientSidebarMenuitemTextColor;
+                                        }
 
                                         i {
-                                            color: $gradientSidebarMenuitemActiveIconColor;
+                                            color: $gradientSidebarMenuitemIconColor;
                                         }
                                     }
                                 }

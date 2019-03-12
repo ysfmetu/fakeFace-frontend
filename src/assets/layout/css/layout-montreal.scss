@@ -17,6 +17,8 @@ $sidebarMenuitemActiveBorderLeftColor:#3f94a6;
 $sidebarMenuitemActiveTextColor:#3f94a6;
 $sidebarMenuitemActiveIconColor:#3f94a6;
 $menuBgImage:'montreal-light.png';
+$horizontalMenuBgImageLight: 'montreal-horizontal-light.png';
+$horizontalMenuBgColor: #ebf0f0;
 
 $darkSidebarBgColor:#231e20;
 $darkSidebarMenuitemTextColor:#ffffff;
@@ -28,7 +30,11 @@ $darkSidebarMenuitemActiveBorderLeftColor:#3f94a6;
 $darkSidebarMenuitemActiveTextColor:#3f94a6;
 $darkSidebarMenuitemActiveIconColor:#3f94a6;
 $darkMenuBgImage:'montreal-dark.png';
+$horizontalMenuBgImageDark: 'montreal-horizontal-dark.png';
+$horizontalDarkMenuBgColor: #100d0e;
 
+$gradientSidebarTopBgColor:#8f3b4f;
+$gradientSidebarBottomBgColor:#231e20;
 $gradientSidebarMenuitemTextColor:#ffffff;
 $gradientSidebarMenuitemDividerColor:rgba(255,255,255,.075);
 $gradientSidebarMenuitemIconColor:#ffffff;
@@ -38,6 +44,8 @@ $gradientSidebarMenuitemActiveBorderLeftColor:#49b2c9;
 $gradientSidebarMenuitemActiveTextColor:#49b2c9;
 $gradientSidebarMenuitemActiveIconColor:#49b2c9;
 $gradientMenuBgImage:'montreal-gradient.png';
+$horizontalMenuBgImageGradient: 'montreal-horizontal-gradient.png';
+$horizontalGradientMenuBgColor: #4e5155;
 
 $megamenuButtonTextColor:#ffffff;
 $megamenuBgColor:#ffffff;
