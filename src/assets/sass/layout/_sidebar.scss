@@ -723,7 +723,7 @@
                 position: static;
                 padding: 0;
                 @if variable-exists(horizontalMenuBgImageLight) {
-                    background-image: url("\#{resource['california-layout:images/special/#{$horizontalMenuBgImageLight}']}");
+                    background-image: url("../images/special/#{$horizontalMenuBgImageLight}");
                     background-size: auto;
                     background-repeat: no-repeat;
                     background-color: $horizontalMenuBgColor;
@@ -820,7 +820,7 @@
 
                 &.layout-sidebar-dark {
                     @if variable-exists(horizontalMenuBgImageDark) {
-                        background-image: url("\#{resource['california-layout:images/special/#{$horizontalMenuBgImageDark}']}");
+                        background-image: url("../images/special/#{$horizontalMenuBgImageDark}");
                         background-color: $horizontalDarkMenuBgColor;
                     }
 
@@ -833,6 +833,7 @@
                             }
 
                             > a {
+                                padding-left: 12px;
                                 color: $darkSidebarMenuitemTextColor;
                                 border-right: 1px solid $darkSidebarMenuitemDividerColor;
 
@@ -877,7 +878,7 @@
 
                 &.layout-sidebar-gradient {
                     @if variable-exists(horizontalMenuBgImageGradient) {
-                        background-image: url("\#{resource['california-layout:images/special/#{$horizontalMenuBgImageGradient}']}");
+                        background-image: url("../images/special/#{$horizontalMenuBgImageGradient}");
                         background-color: $horizontalGradientMenuBgColor;
                     }
 
