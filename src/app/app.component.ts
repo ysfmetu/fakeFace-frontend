@@ -47,10 +47,10 @@ export class AppComponent implements AfterViewInit {
     usermenuActive: boolean;
 
     usermenuClick: boolean;
-    
+
     activeProfileItem: any;
 
-    @ViewChild('layoutMenuScroller') layoutMenuScrollerViewChild: ScrollPanel;
+    @ViewChild('layoutMenuScroller', { static: true }) layoutMenuScrollerViewChild: ScrollPanel;
 
     constructor(public renderer: Renderer2) {
     }

@@ -1,14 +1,14 @@
-import { AppPage } from './app.po';
+import {CaliforniaPage} from './app.po';
 
-describe('workspace-project App', () => {
-  let page: AppPage;
+describe('California App', () => {
+    let page: CaliforniaPage;
 
-  beforeEach(() => {
-    page = new AppPage();
-  });
+    beforeEach(() => {
+        page = new CaliforniaPage();
+    });
 
-  it('should display welcome message', () => {
-    page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to california!');
-  });
+    it('should display welcome message', () => {
+        page.navigateTo();
+        expect(page.getTitleText()).toEqual('Welcome to California!');
+    });
 });

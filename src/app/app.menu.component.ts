@@ -479,10 +479,10 @@ export class AppMenuComponent implements OnInit {
     }
 
     changeTheme(theme: string, scheme: string) {
-        const layoutLink: HTMLLinkElement = <HTMLLinkElement>document.getElementById('layout-css');
+        const layoutLink: HTMLLinkElement = document.getElementById('layout-css') as HTMLLinkElement;
         layoutLink.href = 'assets/layout/css/layout-' + theme + '.css';
 
-        const themeLink: HTMLLinkElement = <HTMLLinkElement>document.getElementById('theme-css');
+        const themeLink: HTMLLinkElement = document.getElementById('theme-css') as HTMLLinkElement;
         themeLink.href = 'assets/theme/theme-' + theme + '.css';
 
         this.app.menuMode = scheme;
@@ -575,7 +575,7 @@ export class AppSubMenuComponent {
 
         // execute command
         if (item.command) {
-            item.command({originalEvent: event, item: item});
+            item.command({originalEvent: event, item});
         }
 
         // prevent hash change
@@ -599,7 +599,7 @@ export class AppSubMenuComponent {
             this.app.menuHoverActive = !this.app.menuHoverActive;
         }
     }
-    
+
     onMouseEnter(index: number) {
         if (this.root && this.app.menuHoverActive && (this.app.isHorizontal() || this.app.isSlim())
             && !this.app.isMobile() && !this.app.isTablet()) {
