@@ -8,7 +8,7 @@ import { BreadcrumbService } from '../../breadcrumb.service';
 
 @Component({
     templateUrl: './sampledemo.component.html',
-    styles:[ `
+    styles: [ `
         .ui-carousel .ui-carousel-content .ui-carousel-item .car-details > .p-grid {
 			border: 1px solid #b3c2ca;
 			border-radius: 3px;
