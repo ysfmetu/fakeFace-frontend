@@ -9,7 +9,12 @@
     height: 100%;
     padding: 0;
     margin: 0;
+    overflow: auto;
     @include transition(right $transitionDuration);
+
+    .right-panel-scroll-content {
+        padding-bottom: 150px;
+    }
 
     &.layout-right-sidebar-active {
         right: 0;

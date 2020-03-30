@@ -3,7 +3,7 @@
         <div class="card docs no-margin">
 
             <h1>Current Version</h1>
-            <p>Angular 8 and PrimeNG 8</p>
+            <p>Angular 9 and PrimeNG 0</p>
 
             <h1>Dependencies</h1>
             <p>California has no direct dependency other than PrimeNG. More information about dependencies is available at <a href="https://www.primefaces.org/why-primeng-templates/">Why PrimeNG Templates</a> article.</p>
@@ -66,12 +66,10 @@ Run 'ng help' for more options.
    &lt;div class="layout-sidebar" (click)="onMenuClick($event)"
         [ngClass]="&#123;'layout-sidebar-dark': menuMode !== 'light',
         'layout-sidebar-gradient':  menuMode === 'gradient'&#125;">
-       &lt;p-scrollPanel #layoutMenuScroller [style]="&#123;height: '100%' &#125;">
-           &lt;div class="sidebar-scroll-content">
-               &lt;app-inline-profile *ngIf="profileMode=='inline' && !isHorizontal()">&lt;/app-inline-profile>
-               &lt;app-menu [reset]="resetMenu">&lt;/app-menu>
-           &lt;/div>
-       &lt;/p-scrollPanel>
+       &lt;div class="sidebar-scroll-content">
+           &lt;app-inline-profile *ngIf="profileMode=='inline' && !isHorizontal()">&lt;/app-inline-profile>
+           &lt;app-menu>&lt;/app-menu>
+       &lt;/div>
    &lt;/div>
 
    &lt;app-rightpanel>&lt;/app-rightpanel>
@@ -91,26 +89,23 @@ Run 'ng help' for more options.
 
             <h1>Menu</h1>
             <p>Menu is a separate component defined in app.menu.component.ts file based on PrimeNG MenuModel API. In order to define the menuitems,
-            navigate to this file and define your own model as a nested structure. Here is the menu component from the sample application. The helper
-            app-submenu component is also available in the same file.</p>
+            navigate to this file and define your own model as a nested structure. Here is the menu component from the sample application.</p>
+
 <div style="height:400px;overflow: auto;">
 <pre>
 <code class="language-javascript" pCode>
-import &#123;Component, Input, OnInit&#125; from '@angular/core';
-import &#123;trigger, state, style, transition, animate&#125; from '@angular/animations';
-import &#123;MenuItem&#125; from 'primeng/primeng';
+import &#123;Component, OnInit&#125; from '@angular/core';
 import &#123;AppComponent&#125; from './app.component';
 
 @Component(&#123;
     selector: 'app-menu',
     template: `
-        &lt;ul app-submenu [item]="model" root="true" class="layout-menu"
-            [reset]="reset" visible="true" parentActive="true"&gt;&lt;/ul&gt;
+		&lt;ul class=&quot;layout-menu&quot;&gt;
+			&lt;li app-menuitem *ngFor=&quot;let item of model; let i = index;&quot; [item]=&quot;item&quot; [index]=&quot;i&quot; [root]=&quot;true&quot;&gt;&lt;/li&gt;
+		&lt;/ul&gt;
     `
 &#125;)
 export class AppMenuComponent implements OnInit &#123;
-
-    @Input() reset: boolean;
 
     model: any[];
 
@@ -480,8 +475,8 @@ export class AppMenuComponent implements OnInit &#123;
                 label: 'Menu Modes', icon: 'fa fa-fw fa-bars' ,
                 items: [
                     &#123;label: 'Static Menu', icon: 'fa fa-fw fa-bars',  command: () => this.app.layoutMode = 'static'&#125;,
-                    &#123;label: 'Overlay Menu', icon: 'fa fa-fw fa-bars',  command: () => this.app.layoutMode = 'overlay'&#125;
-                    &#123;label: 'Slim Menu', icon: 'fa fa-fw fa-bars',  command: () => this.app.layoutMode = 'slim'&#125;
+                    &#123;label: 'Overlay Menu', icon: 'fa fa-fw fa-bars',  command: () => this.app.layoutMode = 'overlay'&#125;,
+                    &#123;label: 'Slim Menu', icon: 'fa fa-fw fa-bars',  command: () => this.app.layoutMode = 'slim'&#125;,
                     &#123;label: 'Horizontal Menu', icon: 'fa fa-fw fa-bars',  command: () => this.app.layoutMode = 'horizontal'&#125;
                 ]
             &#125;,
@@ -501,25 +496,25 @@ export class AppMenuComponent implements OnInit &#123;
                 ]
             &#125;,
             &#123;
-                label: 'Components', icon: 'fa fa-fw fa-sitemap',
+                label: 'Components', icon: 'fa fa-fw fa-sitemap', routerLink: ['/components'],
                 items: [
-                    &#123;label: 'Sample Page', icon: 'fa fa-fw fa-columns', routerLink: ['/sample']&#125;,
-                    &#123;label: 'Forms', icon: 'fa fa-fw fa-code', routerLink: ['/forms']&#125;,
-                    &#123;label: 'Data', icon: 'fa fa-fw fa-table', routerLink: ['/data']&#125;,
-                    &#123;label: 'Panels', icon: 'fa fa-fw fa-list-alt', routerLink: ['/panels']&#125;,
-                    &#123;label: 'Overlays', icon: 'fa fa-fw fa-square', routerLink: ['/overlays']&#125;,
-                    &#123;label: 'Menus', icon: 'fa fa-fw fa-minus-square-o', routerLink: ['/menus']&#125;,
-                    &#123;label: 'Messages', icon: 'fa fa-fw fa-circle-o-notch', routerLink: ['/messages']&#125;,
-                    &#123;label: 'Charts', icon: 'fa fa-fw fa-area-chart', routerLink: ['/charts']&#125;,
-                    &#123;label: 'File', icon: 'fa fa-fw fa-arrow-circle-o-up', routerLink: ['/file']&#125;,
-                    &#123;label: 'Misc', icon: 'fa fa-fw fa-user-secret', routerLink: ['/misc']&#125;
+                    &#123;label: 'Sample Page', icon: 'fa fa-fw fa-columns', routerLink: ['/components/sample']&#125;,
+                    &#123;label: 'Forms', icon: 'fa fa-fw fa-code', routerLink: ['/components/forms']&#125;,
+                    &#123;label: 'Data', icon: 'fa fa-fw fa-table', routerLink: ['/components/data']&#125;,
+                    &#123;label: 'Panels', icon: 'fa fa-fw fa-list-alt', routerLink: ['/components/panels']&#125;,
+                    &#123;label: 'Overlays', icon: 'fa fa-fw fa-square', routerLink: ['/components/overlays']&#125;,
+                    &#123;label: 'Menus', icon: 'fa fa-fw fa-minus-square-o', routerLink: ['/components/menus']&#125;,
+                    &#123;label: 'Messages', icon: 'fa fa-fw fa-circle-o-notch', routerLink: ['/components/messages']&#125;,
+                    &#123;label: 'Charts', icon: 'fa fa-fw fa-area-chart', routerLink: ['/components/charts']&#125;,
+                    &#123;label: 'File', icon: 'fa fa-fw fa-arrow-circle-o-up', routerLink: ['/components/file']&#125;,
+                    &#123;label: 'Misc', icon: 'fa fa-fw fa-user-secret', routerLink: ['/components/misc']&#125;
                 ]
             &#125;,
             &#123;label: 'Landing', icon: 'fa fa-fw fa-certificate', url: 'assets/pages/landing.html', target: '_blank'&#125;,
             &#123;
-                label: 'Template Pages', icon: 'fa fa-fw fa-life-saver',
+                label: 'Template Pages', icon: 'fa fa-fw fa-life-saver', routerLink: ['/pages'],
                 items: [
-                    &#123;label: 'Empty Page', icon: 'fa fa-fw fa-square-o', routerLink: ['/empty']&#125;,
+                    &#123;label: 'Empty Page', icon: 'fa fa-fw fa-square-o', routerLink: ['/pages/empty']&#125;,
                     &#123;label: 'Login Page', icon: 'fa fa-fw fa-sign-in', url: 'assets/pages/login.html', target: '_blank'&#125;,
                     &#123;label: 'Error Page', icon: 'fa fa-fw fa-exclamation-circle', url: 'assets/pages/error.html', target: '_blank'&#125;,
                     &#123;label: '404 Page', icon: 'fa fa-fw fa-times', url: 'assets/pages/404.html', target: '_blank'&#125;,
@@ -1341,6 +1336,17 @@ export class ControlPanelComponent &#123;
             </ul>
 
             <h1>Migration Guide</h1>
+
+            <h4>8.0.0 to 9.0.0</h4>
+            <p>Angular 9 and PrimeNG 9</p>
+            <ul>
+                <li>Update dependencies with <a href="https://angular.io/cli/update">ng update</a>.</li>
+                <li>Update theme.css and layout.css files.</li>
+                <li>Update app.menu.component.ts while retaining your MenuModel.</li>
+                <li>Include app.menuitem.component.ts under app folder and define it app.module.ts with declarations property.</li>
+                <li>Include app.menu.service.ts under app folder and define it app.module.ts with providers property.</li>
+            </ul>
+
             <h4>7.0.1 to 8.0.0</h4>
             <ul>
                 <li>Update your project to Angular 8 with ng update. View the official update guide -<a href="https://update.angular.io/">https://update.angular.io/</a>- for more information.</li>

@@ -8,6 +8,7 @@
         top: 60px;
         left: 0;
         height: 100%;
+        overflow: auto;
         @include border-box();
         @include transition(left $transitionDuration);
         @if variable-exists(menuBgImage) {
@@ -15,6 +16,7 @@
             background-size: 240px 100%;
             background-repeat: no-repeat;
         }
+
         .user-profile {
             text-align: center;
             color: $textColor;
@@ -47,16 +49,20 @@
                 }
             }
         }
+
         .layout-menu {
             list-style-type: none;
             padding: 0;
+            padding-bottom: 150px;
             margin: 0;
+
             .text-badge {
                 .menuitem-badge {
                     width: 40px;
                     margin-right: 22px;
                 }
             }
+
             li {
                 >a {
                     display: block;
@@ -188,27 +194,6 @@
             }
         }
 
-        .ui-scrollpanel {
-            background-color: transparent;
-            border-radius: 0;
-            border: none;
-
-            .ui-scrollpanel-bar {
-                background: #e0e0e0;
-            }
-
-            .ui-scrollpanel-hidden {
-                display: block;
-                visibility: hidden;
-            }
-
-            .sidebar-scroll-content {
-                width: 248px;
-                padding-right: 18px;
-                padding-bottom: 120px;
-            }
-        }
-
         &.layout-sidebar-dark {
             background-color: $darkSidebarBgColor;
             border-right-color: $darkSidebarBgColor;
@@ -279,12 +264,6 @@
                             border-top: 1px solid $darkSidebarMenuitemDividerColor;
                         }
                     }
-                }
-            }
-
-            .ui-scrollpanel {
-                .ui-scrollpanel-bar {
-                    background: rgba(255, 255, 255, 0.1);
                 }
             }
         }
@@ -374,6 +353,7 @@
 
             .layout-sidebar {
                 width: 50px;
+                overflow: visible;
 
                 .user-profile {
                     #sidebar-profile-button {
@@ -734,20 +714,12 @@
                 min-height: 36px;
                 position: static;
                 padding: 0;
+                overflow: visible;
                 @if variable-exists(horizontalMenuBgImageLight) {
                     background-image: url("../images/special/#{$horizontalMenuBgImageLight}");
                     background-size: auto;
                     background-repeat: no-repeat;
                     background-color: $horizontalMenuBgColor;
-                }
-
-                .ui-scrollpanel {
-                    .ui-scrollpanel-wrapper {
-                        .ui-scrollpanel-content {
-                            padding: 0;
-                            width: 100%;
-                        }
-                    }
                 }
 
                 .layout-menu {
@@ -966,29 +938,6 @@
             }
 
             .layout-sidebar {
-                .ui-scrollpanel {
-                    .ui-scrollpanel-wrapper {
-                        overflow: visible;
-                        float: none;
-                        .ui-scrollpanel-content {
-                            display: block;
-                            height: auto;
-                            position: static;
-                            overflow: visible;
-                            overflow-x: visible;
-                        }
-                    }
-
-                    .ui-scrollpanel-bar {
-                        display: none;
-                    }
-
-                    .sidebar-scroll-content {
-                        width: 100%;
-                        padding: 0;
-                    }
-                }
-
                 .layout-menu {
                     ul {
                         li {

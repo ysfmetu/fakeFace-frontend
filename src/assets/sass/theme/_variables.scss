@@ -389,7 +389,7 @@ $messagesIconFontSize:1.714em;
 $messageCloseIconFontSize:1.143em;
 
 //message
-$messagePadding: 0.143em 0.357em;
+$messagePadding: 0.3em;
 $messageMargin: 0 0.357em;
 $messageIconFontSize: 1.25em;
 $messageTextFontSize: 1em;
@@ -488,3 +488,19 @@ $dataIconHoverColor:$textColor;           //hover icon color of a data such as t
 
 //general
 $disabledOpacity:.35;                      //opacity of a disabled item
+
+//carousel
+$carouselNavButtonsBgColor: $buttonBgColor;
+$carouselNavButtonsBorder: $buttonBorder;
+$carouselNavButtonsBorderRadius: 0;
+$carouselNavButtonsMargin: .2em;
+$carouselNavButtonsColor: $buttonTextColor;
+$carouselNavButtonsHoverBgColor: $buttonHoverBgColor;
+$carouselNavButtonsHoverColor: $buttonHoverTextColor;
+$carouselNavButtonsHoverBorderColor: $buttonHoverBorderColor;
+$carouselNavButtonsTransition: color $transitionDuration;
+$carouselDotIconWidth: 20px;
+$carouselDotIconHeight: 6px;
+$carouselDotIconBgColor: #b2c1cd;
+$carouselDotIconMargin: 0 .2em;
+$carouselActiveDotIconBgColor: $primaryColor;

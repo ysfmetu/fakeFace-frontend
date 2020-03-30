@@ -894,7 +894,7 @@ body {
             .ui-datepicker-prev,
             .ui-datepicker-next {
                 cursor: pointer;
-                top: 0.143em;
+                top: 9px;
                 color: $calendarNavIconColor;
                 @include transition($calendarNavIconTransition);
             }
@@ -914,7 +914,7 @@ body {
             .ui-datepicker-title {
                 margin: 0;
                 padding: 0;
-                line-height: 1;
+                line-height: 1.8em;
 
                 select {
                     margin-top: -.35em;
@@ -959,6 +959,11 @@ body {
                     a {
                         background-color: $calendarCellDateTodayBgColor;
                         color: $calendarCellDateTodayTextColor;
+
+                        &.ui-state-active {
+                            color: $calendarCellDateSelectedTextColor;
+                            background-color: $calendarCellDateSelectedBgColor;
+                        }
                     }
                 }
             }
@@ -1164,6 +1169,10 @@ body {
                 }
             }
         }
+    }
+
+    .ui-calendar .ui-datepicker {
+        min-width: 17em;
     }
 
     ::-webkit-input-placeholder {color:$inputPlaceholderTextColor}

@@ -12,12 +12,10 @@
     <div class="layout-sidebar" (click)="onMenuClick($event)"
          [ngClass]="{'layout-sidebar-dark': menuMode !== 'light',
          'layout-sidebar-gradient':  menuMode === 'gradient'}">
-        <p-scrollPanel #layoutMenuScroller [style]="{height: '100%' }">
-            <div class="sidebar-scroll-content">
-                <app-inline-profile *ngIf="profileMode=='inline' && !isHorizontal()"></app-inline-profile>
-                <app-menu [reset]="resetMenu"></app-menu>
-            </div>
-        </p-scrollPanel>
+        <div class="sidebar-scroll-content">
+            <app-inline-profile *ngIf="profileMode=='inline' && !isHorizontal()"></app-inline-profile>
+            <app-menu></app-menu>
+        </div>
     </div>
 
     <app-rightpanel></app-rightpanel>

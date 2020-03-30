@@ -1,18 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {trigger, state, style, transition, animate} from '@angular/animations';
-import {MenuItem} from 'primeng/primeng';
+import {Component, OnInit} from '@angular/core';
 import {AppComponent} from './app.component';
 
 @Component({
     selector: 'app-menu',
     template: `
-        <ul app-submenu [item]="model" root="true" class="layout-menu"
-            [reset]="reset" visible="true" parentActive="true"></ul>
+		<ul class="layout-menu">
+			<li app-menuitem *ngFor="let item of model; let i = index;" [item]="item" [index]="i" [root]="true"></li>
+		</ul>
     `
 })
 export class AppMenuComponent implements OnInit {
-
-    @Input() reset: boolean;
 
     model: any[];
 
@@ -403,25 +400,25 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             {
-                label: 'Components', icon: 'fa fa-fw fa-sitemap',
+                label: 'Components', icon: 'fa fa-fw fa-sitemap', routerLink: ['/components'],
                 items: [
-                    {label: 'Sample Page', icon: 'fa fa-fw fa-columns', routerLink: ['/sample']},
-                    {label: 'Forms', icon: 'fa fa-fw fa-code', routerLink: ['/forms']},
-                    {label: 'Data', icon: 'fa fa-fw fa-table', routerLink: ['/data']},
-                    {label: 'Panels', icon: 'fa fa-fw fa-list-alt', routerLink: ['/panels']},
-                    {label: 'Overlays', icon: 'fa fa-fw fa-square', routerLink: ['/overlays']},
-                    {label: 'Menus', icon: 'fa fa-fw fa-minus-square-o', routerLink: ['/menus']},
-                    {label: 'Messages', icon: 'fa fa-fw fa-circle-o-notch', routerLink: ['/messages']},
-                    {label: 'Charts', icon: 'fa fa-fw fa-area-chart', routerLink: ['/charts']},
-                    {label: 'File', icon: 'fa fa-fw fa-arrow-circle-o-up', routerLink: ['/file']},
-                    {label: 'Misc', icon: 'fa fa-fw fa-user-secret', routerLink: ['/misc']}
+                    {label: 'Sample Page', icon: 'fa fa-fw fa-columns', routerLink: ['/components/sample']},
+                    {label: 'Forms', icon: 'fa fa-fw fa-code', routerLink: ['/components/forms']},
+                    {label: 'Data', icon: 'fa fa-fw fa-table', routerLink: ['/components/data']},
+                    {label: 'Panels', icon: 'fa fa-fw fa-list-alt', routerLink: ['/components/panels']},
+                    {label: 'Overlays', icon: 'fa fa-fw fa-square', routerLink: ['/components/overlays']},
+                    {label: 'Menus', icon: 'fa fa-fw fa-minus-square-o', routerLink: ['/components/menus']},
+                    {label: 'Messages', icon: 'fa fa-fw fa-circle-o-notch', routerLink: ['/components/messages']},
+                    {label: 'Charts', icon: 'fa fa-fw fa-area-chart', routerLink: ['/components/charts']},
+                    {label: 'File', icon: 'fa fa-fw fa-arrow-circle-o-up', routerLink: ['/components/file']},
+                    {label: 'Misc', icon: 'fa fa-fw fa-user-secret', routerLink: ['/components/misc']}
                 ]
             },
             {label: 'Landing', icon: 'fa fa-fw fa-certificate', url: 'assets/pages/landing.html', target: '_blank'},
             {
-                label: 'Template Pages', icon: 'fa fa-fw fa-life-saver',
+                label: 'Template Pages', icon: 'fa fa-fw fa-life-saver', routerLink: ['/pages'],
                 items: [
-                    {label: 'Empty Page', icon: 'fa fa-fw fa-square-o', routerLink: ['/empty']},
+                    {label: 'Empty Page', icon: 'fa fa-fw fa-square-o', routerLink: ['/pages/empty']},
                     {label: 'Login Page', icon: 'fa fa-fw fa-sign-in', url: 'assets/pages/login.html', target: '_blank'},
                     {label: 'Error Page', icon: 'fa fa-fw fa-exclamation-circle', url: 'assets/pages/error.html', target: '_blank'},
                     {label: '404 Page', icon: 'fa fa-fw fa-times', url: 'assets/pages/404.html', target: '_blank'},
@@ -479,159 +476,42 @@ export class AppMenuComponent implements OnInit {
     }
 
     changeTheme(theme: string, scheme: string) {
-        const layoutLink: HTMLLinkElement = document.getElementById('layout-css') as HTMLLinkElement;
-        layoutLink.href = 'assets/layout/css/layout-' + theme + '.css';
-
-        const themeLink: HTMLLinkElement = document.getElementById('theme-css') as HTMLLinkElement;
-        themeLink.href = 'assets/theme/theme-' + theme + '.css';
+        this.changeStyleSheetsColor('theme-css', 'theme-' + theme + '.css');
+        this.changeStyleSheetsColor('layout-css', 'layout-' + theme + '.css');
 
         this.app.menuMode = scheme;
     }
-}
 
-@Component({
-    /* tslint:disable:component-selector */
-    selector: '[app-submenu]',
-    /* tslint:enable:component-selector */
-    template: `
-        <ng-template ngFor let-child let-i="index" [ngForOf]="(root ? item : item.items)">
-            <li [ngClass]="{'active-menuitem': isActive(i)}" [class]="child.badgeStyleClass" *ngIf="child.visible === false ? false : true">
-                <a [href]="child.url||'#'" (click)="itemClick($event,child,i)" (mouseenter)="onMouseEnter(i)"
-                   class="ripplelink" *ngIf="!child.routerLink"
-                   [attr.tabindex]="!visible ? '-1' : null" [attr.target]="child.target">
-                    <i [ngClass]="child.icon"></i><span>{{child.label}}</span>
-                    <span class="menuitem-badge" *ngIf="child.badge">{{child.badge}}</span>
-                    <i class="fa fa-fw fa-angle-down layout-menuitem-toggler" *ngIf="child.items"></i>
-                </a>
+    changeStyleSheetsColor(id, value) {
+        const element = document.getElementById(id);
+        const urlTokens = element.getAttribute('href').split('/');
+        urlTokens[urlTokens.length - 1] = value;
 
-                <a (click)="itemClick($event,child,i)" (mouseenter)="onMouseEnter(i)" class="ripplelink" *ngIf="child.routerLink"
-                   [routerLink]="child.routerLink" routerLinkActive="active-menuitem-routerlink"
-                   [routerLinkActiveOptions]="{exact: true}" [attr.tabindex]="!visible ? '-1' : null" [attr.target]="child.target">
-                    <i [ngClass]="child.icon"></i><span>{{child.label}}</span>
-                    <span class="menuitem-badge" *ngIf="child.badge">{{child.badge}}</span>
-                    <i class="fa fa-fw fa-angle-down layout-menuitem-toggler" *ngIf="child.items"></i>
-                </a>
-                <div class="submenu-arrow" *ngIf="child.items"></div>
-                <ul app-submenu [item]="child" *ngIf="child.items" [visible]="isActive(i)" [reset]="reset" [parentActive]="isActive(i)"
-                    [@children]="(app.isSlim()||app.isHorizontal())&&root ? isActive(i) ?
-                    'visible' : 'hidden' : isActive(i) ? 'visibleAnimated' : 'hiddenAnimated'"></ul>
-            </li>
-        </ng-template>
-    `,
-    animations: [
-        trigger('children', [
-            state('hiddenAnimated', style({
-                height: '0px',
-                opacity: 0
-            })),
-            state('visibleAnimated', style({
-                height: '*',
-                opacity: 1
-            })),
-            state('visible', style({
-                height: '*',
-                'z-index': 100,
-                opacity: 1
-            })),
-            state('hidden', style({
-                height: '0px',
-                'z-index': '*',
-                opacity: 0
-            })),
-            transition('visibleAnimated => hiddenAnimated', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)')),
-            transition('hiddenAnimated => visibleAnimated', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)'))
-        ])
-    ]
-})
-export class AppSubMenuComponent {
+        const newURL = urlTokens.join('/');
 
-    @Input() item: MenuItem;
-
-    @Input() root: boolean;
-
-    @Input() visible: boolean;
-
-    _reset: boolean;
-
-    _parentActive: boolean;
-
-    activeIndex: number;
-
-    constructor(public app: AppComponent) {}
-
-    itemClick(event: Event, item: MenuItem, index: number) {
-        if (this.root) {
-            this.app.menuHoverActive = !this.app.menuHoverActive;
-        }
-
-        // avoid processing disabled items
-        if (item.disabled) {
-            event.preventDefault();
-            return true;
-        }
-
-        // activate current item and deactivate active sibling if any
-        this.activeIndex = (this.activeIndex === index) ? null : index;
-
-        // execute command
-        if (item.command) {
-            item.command({originalEvent: event, item});
-        }
-
-        // prevent hash change
-        if (item.items || (!item.url && !item.routerLink)) {
-            setTimeout(() => {
-                this.app.layoutMenuScrollerViewChild.moveBar();
-            }, 450);
-            event.preventDefault();
-        }
-
-        // hide menu
-        if (!item.items) {
-            if (this.app.isHorizontal() || this.app.isSlim()) {
-                this.app.resetMenu = true;
-            } else {
-                this.app.resetMenu = false;
-            }
-
-            this.app.overlayMenuActive = false;
-            this.app.staticMenuMobileActive = false;
-            this.app.menuHoverActive = !this.app.menuHoverActive;
-        }
+        this.replaceLink(element, newURL);
     }
 
-    onMouseEnter(index: number) {
-        if (this.root && this.app.menuHoverActive && (this.app.isHorizontal() || this.app.isSlim())
-            && !this.app.isMobile() && !this.app.isTablet()) {
-            this.activeIndex = index;
-        }
+    isIE() {
+        return /(MSIE|Trident\/|Edge\/)/i.test(window.navigator.userAgent);
     }
 
-    isActive(index: number): boolean {
-        return this.activeIndex === index;
-    }
+    replaceLink(linkElement, href) {
+        if (this.isIE()) {
+            linkElement.setAttribute('href', href);
+        } else {
+            const id = linkElement.getAttribute('id');
+            const cloneLinkElement = linkElement.cloneNode(true);
 
-    @Input() get reset(): boolean {
-        return this._reset;
-    }
+            cloneLinkElement.setAttribute('href', href);
+            cloneLinkElement.setAttribute('id', id + '-clone');
 
-    set reset(val: boolean) {
-        this._reset = val;
+            linkElement.parentNode.insertBefore(cloneLinkElement, linkElement.nextSibling);
 
-        if (this._reset && (this.app.isHorizontal() || this.app.isSlim())) {
-            this.activeIndex = null;
-        }
-    }
-
-    @Input() get parentActive(): boolean {
-        return this._parentActive;
-    }
-
-    set parentActive(val: boolean) {
-        this._parentActive = val;
-
-        if (!this._parentActive) {
-            this.activeIndex = null;
+            cloneLinkElement.addEventListener('load', () => {
+                linkElement.remove();
+                cloneLinkElement.setAttribute('id', id);
+            });
         }
     }
 }

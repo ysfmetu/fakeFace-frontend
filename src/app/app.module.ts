@@ -3,9 +3,10 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {AppRoutes} from './app.routes';
 
+// PrimeNG Components for demos
 import {AccordionModule} from 'primeng/accordion';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {BreadcrumbModule} from 'primeng/breadcrumb';
@@ -28,7 +29,6 @@ import {FieldsetModule} from 'primeng/fieldset';
 import {FileUploadModule} from 'primeng/fileupload';
 import {FullCalendarModule} from 'primeng/fullcalendar';
 import {GalleriaModule} from 'primeng/galleria';
-import {GrowlModule} from 'primeng/growl';
 import {InplaceModule} from 'primeng/inplace';
 import {InputMaskModule} from 'primeng/inputmask';
 import {InputSwitchModule} from 'primeng/inputswitch';
@@ -73,14 +73,18 @@ import {TreeModule} from 'primeng/tree';
 import {TreeTableModule} from 'primeng/treetable';
 import {VirtualScrollerModule} from 'primeng/virtualscroller';
 
+// Application Components
 import {AppComponent} from './app.component';
-import {AppRightPanelComponent} from './app.rightpanel.component';
-import {AppProfileComponent} from './app.profile.component';
-import {AppMenuComponent, AppSubMenuComponent} from './app.menu.component';
-import {AppMegamenuComponent} from './app.megamenu.component';
+import {AppMenuComponent} from './app.menu.component';
+import {AppMenuitemComponent} from './app.menuitem.component';
 import {AppBreadcrumbComponent} from './app.breadcrumb.component';
+import {AppMegamenuComponent} from './app.megamenu.component';
+import {AppProfileComponent} from './app.profile.component';
+import {AppRightPanelComponent} from './app.rightpanel.component';
 import {AppTopBarComponent} from './app.topbar.component';
 import {AppFooterComponent} from './app.footer.component';
+
+// Demo pages
 import {DashboardDemoComponent} from './demo/view/dashboarddemo.component';
 import {SampleDemoComponent} from './demo/view/sampledemo.component';
 import {FormsDemoComponent} from './demo/view/formsdemo.component';
@@ -95,11 +99,15 @@ import {ChartsDemoComponent} from './demo/view/chartsdemo.component';
 import {FileDemoComponent} from './demo/view/filedemo.component';
 import {DocumentationComponent} from './demo/view/documentation.component';
 
+// Demo services
 import {CarService} from './demo/service/carservice';
 import {CountryService} from './demo/service/countryservice';
 import {EventService} from './demo/service/eventservice';
 import {NodeService} from './demo/service/nodeservice';
+
+// Application services
 import {BreadcrumbService} from './breadcrumb.service';
+import {MenuService} from './app.menu.service';
 
 @NgModule({
     imports: [
@@ -130,7 +138,6 @@ import {BreadcrumbService} from './breadcrumb.service';
         FileUploadModule,
         FullCalendarModule,
         GalleriaModule,
-        GrowlModule,
         InplaceModule,
         InputMaskModule,
         InputSwitchModule,
@@ -177,14 +184,14 @@ import {BreadcrumbService} from './breadcrumb.service';
     ],
     declarations: [
         AppComponent,
-        AppRightPanelComponent,
         AppMenuComponent,
-        AppSubMenuComponent,
-        AppMegamenuComponent,
-        AppBreadcrumbComponent,
+        AppMenuitemComponent,
         AppTopBarComponent,
         AppFooterComponent,
+        AppRightPanelComponent,
+        AppMegamenuComponent,
         AppProfileComponent,
+        AppBreadcrumbComponent,
         DashboardDemoComponent,
         SampleDemoComponent,
         FormsDemoComponent,
@@ -202,9 +209,8 @@ import {BreadcrumbService} from './breadcrumb.service';
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
-        CarService, CountryService, EventService, NodeService, BreadcrumbService
+        CarService, CountryService, EventService, NodeService, BreadcrumbService, MenuService
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }
