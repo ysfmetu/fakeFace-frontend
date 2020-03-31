@@ -69,6 +69,9 @@
                     padding: 8px 12px;
                     color: $sidebarMenuitemTextColor;
                     position: relative;
+                    cursor: pointer;
+                    user-select: none;
+                    
                     .menuitem-badge {
                         margin-right: 25px;
                         float: right;
