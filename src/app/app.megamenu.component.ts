@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AppComponent} from './app.component';
+import {AppMainComponent} from './app.main.component';
 import {trigger, state, style, transition, animate} from '@angular/animations';
 
 @Component({
@@ -20,6 +20,6 @@ import {trigger, state, style, transition, animate} from '@angular/animations';
 })
 export class AppMegamenuComponent {
 
-    constructor(public app: AppComponent) {}
+    constructor(public app: AppMainComponent) {}
 
 }

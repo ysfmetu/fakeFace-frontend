@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import { AppComponent} from './app.component';
+import { AppMainComponent} from './app.main.component';
 import {trigger, state, transition, style, animate} from '@angular/animations';
 
 @Component({
@@ -17,38 +17,38 @@ import {trigger, state, transition, style, animate} from '@angular/animations';
                 app.usermenuActive ? 'visibleAnimated' : 'hiddenAnimated'">
                 <li #profile [ngClass]="{'menuitem-active':app.activeProfileItem === profile}">
                     <a href="#" (click)="onProfileItemClick($event,profile)">
-                        <i class="fa fa-fw fa-user"></i>
+                        <i class="pi pi-fw pi-user"></i>
                         <span class="topbar-item-name">Profile</span>
                     </a>
                 </li>
                 <li #settings [ngClass]="{'menuitem-active':app.activeProfileItem === settings}">
                     <a href="#" (click)="onProfileItemClick($event,settings)">
-                        <i class="fa fa-fw fa-cog"></i>
+                        <i class="pi pi-fw pi-cog"></i>
                         <span class="topbar-item-name">Settings</span>
-                        <i class="layout-menuitem-toggler fa fa-fw fa-angle-down"></i>
+                        <i class="layout-menuitem-toggler pi pi-fw pi-angle-down"></i>
                     </a>
                     <ul>
                         <li role="menuitem">
                             <a href="#" (click)="onProfileSubItemClick($event)">
-                                <i class="fa fa-fw fa-paint-brush"></i>
+                                <i class="pi pi-fw pi-palette"></i>
                                 <span>Change Theme</span>
                             </a>
                         </li>
                         <li role="menuitem">
                             <a href="#" (click)="onProfileSubItemClick($event)">
-                                <i class="fa fa-fw fa-star-o"></i>
+                                <i class="pi pi-fw pi-star"></i>
                                 <span>Favorites</span>
                             </a>
                         </li>
                         <li role="menuitem">
                             <a href="#" (click)="onProfileSubItemClick($event)">
-                                <i class="fa fa-fw fa-lock"></i>
+                                <i class="pi pi-fw pi-lock"></i>
                                 <span>Lock Screen</span>
                             </a>
                         </li>
                         <li role="menuitem">
                             <a href="#" (click)="onProfileSubItemClick($event)">
-                                <i class="fa fa-fw fa-picture-o"></i>
+                                <i class="pi pi-fw pi-image"></i>
                                 <span>Wallpaper</span>
                             </a>
                         </li>
@@ -56,9 +56,9 @@ import {trigger, state, transition, style, animate} from '@angular/animations';
                 </li>
                 <li #messages [ngClass]="{'menuitem-active':app.activeProfileItem === messages}">
                     <a href="#" (click)="onProfileItemClick($event,messages)">
-                        <i class="fa fa-fw fa-envelope-o"></i>
+                        <i class="pi pi-fw pi-envelope"></i>
                         <span class="topbar-item-name">Messages</span>
-                        <i class="layout-menuitem-toggler fa fa-fw fa-angle-down"></i>
+                        <i class="layout-menuitem-toggler pi pi-fw pi-angle-down"></i>
                     </a>
                     <ul>
                         <li role="menuitem">
@@ -95,32 +95,32 @@ import {trigger, state, transition, style, animate} from '@angular/animations';
                 </li>
                 <li #notifications [ngClass]="{'menuitem-active':app.activeProfileItem === notifications}">
                     <a href="#" (click)="onProfileItemClick($event,notifications)">
-                        <i class="fa fa-fw fa-bell-o"></i>
+                        <i class="pi pi-fw pi-bell"></i>
                         <span class="topbar-item-name">Notifications</span>
-                        <i class="layout-menuitem-toggler fa fa-fw fa-angle-down"></i>
+                        <i class="layout-menuitem-toggler pi pi-fw pi-angle-down"></i>
                     </a>
                     <ul>
                         <li role="menuitem">
                             <a href="#" (click)="onProfileSubItemClick($event)">
-                                <i class="fa fa-fw fa-tasks"></i>
+                                <i class="pi pi-fw pi-sliders-h"></i>
                                 <span>Pending tasks</span>
                             </a>
                         </li>
                         <li role="menuitem">
                             <a href="#" (click)="onProfileSubItemClick($event)">
-                                <i class="fa fa-fw fa-calendar-check-o"></i>
+                                <i class="pi pi-fw pi-calendar"></i>
                                 <span>Meeting today at 3pm</span>
                             </a>
                         </li>
                         <li role="menuitem">
                             <a href="#" (click)="onProfileSubItemClick($event)">
-                                <i class="fa fa-fw fa-download"></i>
+                                <i class="pi pi-fw pi-download"></i>
                                 <span>Download documents</span>
                             </a>
                         </li>
                         <li role="menuitem">
                             <a href="#" (click)="onProfileSubItemClick($event)">
-                                <i class="fa fa-fw fa-plane"></i>
+                                <i class="pi pi-fw pi-ticket"></i>
                                 <span>Book flight</span>
                             </a>
                         </li>
@@ -150,7 +150,7 @@ import {trigger, state, transition, style, animate} from '@angular/animations';
 })
 export class AppProfileComponent {
 
-    constructor(public app: AppComponent) {}
+    constructor(public app: AppMainComponent) {}
 
     onProfileClick(event) {
         this.app.usermenuClick = true;

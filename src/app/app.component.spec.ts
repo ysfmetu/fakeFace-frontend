@@ -6,7 +6,7 @@ import { AppTopBarComponent } from './app.topbar.component';
 import { AppBreadcrumbComponent } from './app.breadcrumb.component';
 import { AppRightPanelComponent } from './app.rightpanel.component';
 import { AppProfileComponent } from './app.profile.component';
-import { BreadcrumbService } from './breadcrumb.service';
+import { BreadcrumbService } from './app.breadcrumb.service';
 import { MenuService } from './app.menu.service';
 import { AppFooterComponent } from './app.footer.component';
 import { AppMenuComponent } from './app.menu.component';

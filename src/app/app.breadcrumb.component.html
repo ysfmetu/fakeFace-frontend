@@ -1,6 +1,6 @@
 <div class="route-bar">
     <div class="route-bar-breadcrumb">
-        <i class="fa fa-home"></i>
+        <i class="pi pi-home"></i>
         <span>/ </span>
         <ng-template ngFor let-item let-last="last" [ngForOf]="items">
             <a [routerLink]="item.routerLink" *ngIf="item.routerLink">{{item.label}}</a>
@@ -11,22 +11,22 @@
 
     <ul class="route-bar-menu">
         <li class="search-item">
-            <i class="fa fa-search" ></i>
+            <i class="pi pi-search" ></i>
             <input type="text" placeholder="Search..."/>
         </li>
         <li>
             <a href="#" pTooltip="Notifications" tooltipPosition="bottom">
-                <i class="fa fa-globe" ></i>
+                <i class="pi pi-globe" ></i>
             </a>
         </li>
         <li>
             <a href="#" pTooltip="Calendar" tooltipPosition="bottom">
-                <i class="fa fa-calendar"></i>
+                <i class="pi pi-calendar"></i>
             </a>
         </li>
         <li>
             <a href="#" pTooltip="Help" tooltipPosition="bottom">
-                <i class="fa fa-life-saver" ></i>
+                <i class="pi pi-question-circle" ></i>
             </a>
         </li>
     </ul>

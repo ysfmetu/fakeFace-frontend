@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { CarService } from '../service/carservice';
-import { EventService } from '../service/eventservice';
-import { Car } from '../domain/car';
-import { SelectItem } from 'primeng/primeng';
-import { MenuItem } from 'primeng/primeng';
-import { BreadcrumbService } from '../../breadcrumb.service';
+import {Component, OnInit} from '@angular/core';
+import {EventService} from '../service/eventservice';
+import {SelectItem} from 'primeng/api';
+import {Product} from '../domain/product';
+import {ProductService} from '../service/productservice';
+import {BreadcrumbService} from '../../app.breadcrumb.service';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -16,47 +15,34 @@ export class DashboardDemoComponent implements OnInit {
 
     cities: SelectItem[];
 
-    cars: Car[];
-
-    cols: any[];
+    products: Product[];
 
     chartData: any;
 
     events: any[];
 
-    selectedCity: any;
-
-    selectedCar: Car;
-
-    items: MenuItem[];
-
     fullcalendarOptions: any;
 
-    constructor(private carService: CarService, private eventService: EventService, private breadcrumbService: BreadcrumbService) {
+    constructor(private eventService: EventService, private productService: ProductService,
+                private breadcrumbService: BreadcrumbService) {
         this.breadcrumbService.setItems([
-            { label: 'Dashboard', routerLink: [''] }
+            {label: 'Dashboard', routerLink: ['']}
         ]);
     }
 
     ngOnInit() {
-        this.carService.getCarsMedium().then(cars => this.cars = cars);
-
-        this.cols = [
-            { field: 'vin', header: 'Vin' },
-            { field: 'year', header: 'Year' },
-            { field: 'brand', header: 'Brand' },
-            { field: 'color', header: 'Color' }
-        ];
-
-        this.eventService.getEvents().then(events => { this.events = events; });
+        this.productService.getProducts().then(data => this.products = data);
+        this.eventService.getEvents().then(events => {
+            this.events = events;
+        });
 
         this.cities = [];
-        this.cities.push({ label: 'Select City', value: null });
-        this.cities.push({ label: 'New York', value: { id: 1, name: 'New York', code: 'NY' } });
-        this.cities.push({ label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } });
-        this.cities.push({ label: 'London', value: { id: 3, name: 'London', code: 'LDN' } });
-        this.cities.push({ label: 'Istanbul', value: { id: 4, name: 'Istanbul', code: 'IST' } });
-        this.cities.push({ label: 'Paris', value: { id: 5, name: 'Paris', code: 'PRS' } });
+        this.cities.push({label: 'Select City', value: null});
+        this.cities.push({label: 'New York', value: {id: 1, name: 'New York', code: 'NY'}});
+        this.cities.push({label: 'Rome', value: {id: 2, name: 'Rome', code: 'RM'}});
+        this.cities.push({label: 'London', value: {id: 3, name: 'London', code: 'LDN'}});
+        this.cities.push({label: 'Istanbul', value: {id: 4, name: 'Istanbul', code: 'IST'}});
+        this.cities.push({label: 'Paris', value: {id: 5, name: 'Paris', code: 'PRS'}});
 
         this.chartData = {
             labels: ['0', '1', '2', '3', '4', '5', '6'],
@@ -76,18 +62,13 @@ export class DashboardDemoComponent implements OnInit {
             ]
         };
 
-        this.items = [
-            { label: 'Save', icon: 'fa fa-check' },
-            { label: 'Update', icon: 'fa fa-refresh' },
-            { label: 'Delete', icon: 'fa fa-trash' }
-        ];
-
         this.fullcalendarOptions = {
-            plugins: [ dayGridPlugin, timeGridPlugin, interactionPlugin ],
-            defaultDate: '2016-01-12',
+            plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+            defaultDate: '2017-02-12',
             header: {
-                right: 'prev,next, today',
-                left: 'title'
+                left: 'prev,next,today',
+                center: 'title',
+                right: ''
             }
         };
     }
