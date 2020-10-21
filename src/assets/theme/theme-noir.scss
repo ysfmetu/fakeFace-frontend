@@ -1,8 +1,3 @@
-/*$primaryColor:#4b6cb7;
-$primaryDarkColor:#38569C;
-$primaryDarkerColor:#2C447B;
-$primaryTextColor:#ffffff;*/
-
 $primaryColor: #2196F3;
 $primaryLightColor: scale-color($primaryColor, $lightness: 60%) !default;
 $primaryDarkColor: scale-color($primaryColor, $lightness: -10%) !default;
