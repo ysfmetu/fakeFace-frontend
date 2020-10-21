@@ -275,10 +275,14 @@ npm install primeicons@latest --save
 
             <p>Here are the variables required to create a theme.</p>
 <app-code ngPreserveWhitespaces ngNonBindable lang="css">
-$primaryColor:#0071bc;
-$primaryDarkColor:#205493;
-$primaryDarkerColor:#112e51;
-$primaryTextColor:#ffffff;
+$primaryColor: #2196F3;
+$primaryLightColor: scale-color($primaryColor, $lightness: 60%) !default;
+$primaryDarkColor: scale-color($primaryColor, $lightness: -10%) !default;
+$primaryDarkerColor: scale-color($primaryColor, $lightness: -20%) !default;
+$primaryTextColor: #ffffff;
+
+$highlightBg: #E3F2FD;
+$highlightTextColor: #495057;
 
 @import '../sass/theme/_theme';
 </app-code>

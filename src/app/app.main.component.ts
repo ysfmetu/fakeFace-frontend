@@ -10,7 +10,7 @@ export class AppMainComponent implements OnInit{
 
     layoutMode = 'static';
 
-    megaMenuMode = 'dark';
+    megaMenuMode = 'gradient';
 
     menuMode = 'light';
 
@@ -182,17 +182,8 @@ export class AppMainComponent implements OnInit{
         this.configClick = true;
     }
 
-    isTablet() {
-        const width = window.innerWidth;
-        return width <= 1024 && width > 640;
-    }
-
     isDesktop() {
         return window.innerWidth > 1024;
-    }
-
-    isMobile() {
-        return window.innerWidth <= 640;
     }
 
     isHorizontal() {

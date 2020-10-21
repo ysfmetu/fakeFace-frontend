@@ -92,7 +92,6 @@
 
                     i {
                         color: $sidebarMenuitemIconColor;
-                        font-weight: 700;
                         vertical-align: middle;
 
                         &.layout-menuitem-toggler {
@@ -816,6 +815,7 @@
                             border-left: 4px solid transparent;
                             border-right: 1px solid $sidebarMenuitemDividerColor;
                             min-height: 38px;
+                            margin-bottom: -4px;
 
                             i {
                                 color: $routeBarIconColor;
