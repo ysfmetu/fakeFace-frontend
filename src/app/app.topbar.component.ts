@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AppMainComponent} from './app.main.component';
+import { AppComponent } from './app.component';
+import { AppMainComponent } from './app.main.component';
 
 @Component({
   selector: 'app-topbar',
@@ -7,5 +8,5 @@ import { AppMainComponent} from './app.main.component';
 })
 export class AppTopBarComponent {
 
-    constructor(public app: AppMainComponent) {}
+    constructor(public app: AppComponent, public appMain: AppMainComponent) {}
 }

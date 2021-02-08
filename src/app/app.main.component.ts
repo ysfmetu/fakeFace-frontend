@@ -43,7 +43,7 @@ export class AppMainComponent {
 
     configClick: boolean;
 
-    constructor(private menuService: MenuService, private app: AppComponent) { }
+    constructor(private menuService: MenuService, public app: AppComponent) { }
 
     onLayoutClick() {
         if (!this.topbarItemClick) {
