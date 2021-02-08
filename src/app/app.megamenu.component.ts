@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {AppMainComponent} from './app.main.component';
 import {trigger, state, style, transition, animate} from '@angular/animations';
+import { AppComponent } from './app.component';
 
 @Component({
     selector: 'app-megamenu',
@@ -20,6 +21,6 @@ import {trigger, state, style, transition, animate} from '@angular/animations';
 })
 export class AppMegamenuComponent {
 
-    constructor(public app: AppMainComponent) {}
+    constructor(public app: AppComponent, public appMain: AppMainComponent) {}
 
 }

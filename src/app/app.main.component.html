@@ -4,16 +4,16 @@
                  'layout-wrapper-horizontal-sidebar': isHorizontal(),
                  'layout-wrapper-overlay-sidebar-active': overlayMenuActive,
                  'layout-wrapper-sidebar-inactive': staticMenuDesktopInactive,
-                 'layout-wrapper-sidebar-mobile-active': staticMenuMobileActive, 'p-ripple-disabled': !ripple, 'p-input-filled': inputStyle === 'filled'}">
+                 'layout-wrapper-sidebar-mobile-active': staticMenuMobileActive, 'p-ripple-disabled': !app.ripple, 'p-input-filled': app.inputStyle === 'filled'}">
     <app-topbar></app-topbar>
 
     <app-megamenu></app-megamenu>
 
     <div class="layout-sidebar" (click)="onMenuClick($event)"
-         [ngClass]="{'layout-sidebar-dark': menuMode !== 'light',
-         'layout-sidebar-gradient':  menuMode === 'gradient'}">
+         [ngClass]="{'layout-sidebar-dark': app.menuMode !== 'light',
+         'layout-sidebar-gradient':  app.menuMode === 'gradient'}">
         <div class="sidebar-scroll-content">
-            <app-inline-profile *ngIf="profileMode=='inline' && !isHorizontal()"></app-inline-profile>
+            <app-inline-profile *ngIf="app.profileMode=='inline' && !isHorizontal()"></app-inline-profile>
             <app-menu></app-menu>
         </div>
     </div>

@@ -1,20 +1,13 @@
 import {Component, OnInit } from '@angular/core';
 import { MenuService } from './app.menu.service';
 import { PrimeNGConfig } from 'primeng/api';
+import { AppComponent } from './app.component';
 
 @Component({
     selector: 'app-main',
     templateUrl: './app.main.component.html'
 })
-export class AppMainComponent implements OnInit{
-
-    layoutMode = 'static';
-
-    megaMenuMode = 'gradient';
-
-    menuMode = 'light';
-
-    profileMode = 'inline';
+export class AppMainComponent {
 
     topbarMenuActive: boolean;
 
@@ -46,19 +39,11 @@ export class AppMainComponent implements OnInit{
 
     activeProfileItem: any;
 
-    inputStyle = 'outlined';
-
-    ripple: boolean;
-
     configActive: boolean;
 
     configClick: boolean;
 
-    constructor(private menuService: MenuService, private primengConfig: PrimeNGConfig) { }
-
-    ngOnInit() {
-        this.primengConfig.ripple = true;
-    }
+    constructor(private menuService: MenuService, private app: AppComponent) { }
 
     onLayoutClick() {
         if (!this.topbarItemClick) {
@@ -107,7 +92,7 @@ export class AppMainComponent implements OnInit{
         this.menuClick = true;
         this.topbarMenuActive = false;
 
-        if (this.layoutMode === 'overlay') {
+        if (this.app.layoutMode === 'overlay') {
             this.overlayMenuActive = !this.overlayMenuActive;
         } else {
             if (this.isDesktop()) {
@@ -175,7 +160,7 @@ export class AppMainComponent implements OnInit{
     }
 
     onRippleChange(event) {
-        this.ripple = event.checked;
+        this.app.ripple = event.checked;
     }
 
     onConfigClick(event) {
@@ -187,15 +172,15 @@ export class AppMainComponent implements OnInit{
     }
 
     isHorizontal() {
-        return this.layoutMode === 'horizontal';
+        return this.app.layoutMode === 'horizontal';
     }
 
     isSlim() {
-        return this.layoutMode === 'slim';
+        return this.app.layoutMode === 'slim';
     }
 
     isOverlay() {
-        return this.layoutMode === 'overlay';
+        return this.app.layoutMode === 'overlay';
     }
 
 }
