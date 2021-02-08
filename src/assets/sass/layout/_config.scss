@@ -1,20 +1,20 @@
 .layout-config {
-    width: 16em;
+    width: $rightSidebarWidth;
     height: 100%;
     position: fixed;
     right: 0;
     top: 0;
     padding: 1rem;
     overflow: auto;
-    background: #ffffff;
+    background: $rightSidebarBg;
     z-index: 999;
-    border-left: 0 none;
+    border-left: $overlayBorder;
     transform: translateX(100%);
-    transition: transform .4s cubic-bezier(.05,.74,.2,.99);
+    transition: transform $animationDuration $animationTimingFunction;
 
     &.layout-config-active {
         transform: translateX(0);
-        box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+        box-shadow: $overlayShadow;
 
         .layout-config-content {
             .layout-config-button {
@@ -30,12 +30,6 @@
         color: $textSecondaryColor;
     }
 
-    .p-col-6 {
-        .p-field-radiobutton {
-            margin-bottom: 0;
-        }
-    }
-
     .layout-themes {
         @include flex();
         @include flex-wrap(wrap);
@@ -44,9 +38,10 @@
             padding: .25rem;
         }
 
+
         a {
-            width: 2.5rem;
-            height: 2.5rem;
+            width: 2rem;
+            height: 2rem;
             border-radius: $borderRadius;
             display: block;
             position: relative;
@@ -62,12 +57,11 @@
                 left: 50%;
                 margin-left: -.5rem;
                 margin-top: -.5rem;
-                color: #ffffff;
             }
 
             img {
-                width: 2.5rem;
-                height: 2.5rem;
+                width: 2rem;
+                height: 2rem;
             }
 
             &:hover {
@@ -83,8 +77,8 @@
     width: 3rem;
     height: 3rem;
     line-height: 3rem;
-    background: $topbarRightBgColor;
-    color: $topbarTextColor;
+    background: $accentColor;
+    color: $accentTextColor;
     text-align: center;
     top: 50%;
     right: 0;
@@ -105,6 +99,6 @@
     }
 
     &:hover {
-        background: lighten($topbarRightBgColor, 5%);
+        background: lighten($accentColor, 5%);
     }
 }
