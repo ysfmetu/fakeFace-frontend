@@ -131,6 +131,7 @@ import {TypographyComponent} from './utilities/typography.component';
 import {TextComponent} from './utilities/text.component';
 import {AppCrudComponent} from './pages/app.crud.component';
 import {AppCalendarComponent} from './pages/app.calendar.component';
+import {AppTimelineDemoComponent} from './pages/app.timelinedemo.component';
 import {AppInvoiceComponent} from './pages/app.invoice.component';
 import {AppHelpComponent} from './pages/app.help.component';
 import {AppNotfoundComponent} from './pages/app.notfound.component';
@@ -282,6 +283,7 @@ import {MenuService} from './app.menu.service';
         TextComponent,
         AppCrudComponent,
         AppCalendarComponent,
+        AppTimelineDemoComponent,
         AppLoginComponent,
         AppInvoiceComponent,
         AppHelpComponent,
