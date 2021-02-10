@@ -9,7 +9,16 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
 @Component({
-    templateUrl: './dashboard.component.html'
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./tabledemo.scss'],
+    styles: [`
+        @media screen and (max-width: 960px) {
+            :host ::ng-deep .fc-header-toolbar {
+                display: flex;
+                flex-wrap: wrap;
+            }
+        }
+    `]
 })
 export class DashboardDemoComponent implements OnInit {
 
