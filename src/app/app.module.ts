@@ -94,7 +94,6 @@ import {AppConfigComponent} from './app.config.component';
 import {AppMenuComponent} from './app.menu.component';
 import {AppMenuitemComponent} from './app.menuitem.component';
 import {AppBreadcrumbComponent} from './app.breadcrumb.component';
-import {AppMegamenuComponent} from './app.megamenu.component';
 import {AppProfileComponent} from './app.profile.component';
 import {AppRightPanelComponent} from './app.rightpanel.component';
 import {AppTopBarComponent} from './app.topbar.component';
@@ -249,7 +248,6 @@ import {MenuService} from './app.menu.service';
         AppTopBarComponent,
         AppFooterComponent,
         AppRightPanelComponent,
-        AppMegamenuComponent,
         AppProfileComponent,
         AppBreadcrumbComponent,
         DashboardDemoComponent,

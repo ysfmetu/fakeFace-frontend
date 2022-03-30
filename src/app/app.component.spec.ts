@@ -10,7 +10,6 @@ import { BreadcrumbService } from './app.breadcrumb.service';
 import { MenuService } from './app.menu.service';
 import { AppFooterComponent } from './app.footer.component';
 import { AppMenuComponent } from './app.menu.component';
-import { AppMegamenuComponent } from './app.megamenu.component';
 import { ButtonModule } from 'primeng/button';
 import { TabViewModule } from 'primeng/tabview';
 import { PanelModule } from 'primeng/panel';
@@ -23,7 +22,6 @@ describe('AppComponent', () => {
         AppComponent,
         AppTopBarComponent,
         AppMenuComponent,
-        AppMegamenuComponent,
         AppRightPanelComponent,
         AppProfileComponent,
         AppFooterComponent,

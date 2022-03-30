@@ -7,7 +7,6 @@
                  'layout-wrapper-sidebar-mobile-active': staticMenuMobileActive, 'p-ripple-disabled': !app.ripple, 'p-input-filled': app.inputStyle === 'filled'}">
     <app-topbar></app-topbar>
 
-    <app-megamenu></app-megamenu>
 
     <div class="layout-sidebar" (click)="onMenuClick($event)"
          [ngClass]="{'layout-sidebar-dark': app.menuMode !== 'light',
@@ -30,5 +29,5 @@
         <app-footer></app-footer>
     </div>
 
-    <app-config></app-config>
+
 </div>
